@@ -1,12 +1,13 @@
 package com.fiatalis.windows.components;
 
-import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAOImpl;
 import com.fiatalis.CRUD.entytis.Reports;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,29 +16,41 @@ import java.util.List;
 
 public class ListReports extends JTable {
     private final DefaultTableModel model;
-    private final String[] employee = new String[]{"Наименование", "Дата", "Периодичность", "Напоминание"};
+    private final String[] employee = new String[]{"id", "Наименование", "Дата", "Периодичность", "Напоминание"};
 
-    private Object[][] array = new String[][]{{"Сахар", "кг", "1.5"},
-            {"Мука", "кг", "4.0"},
-            {"Молоко", "л", "2.2"}};
+    private static volatile ListReports instance;
 
+    public static ListReports getInstance() {
+        ListReports localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ListReports.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new ListReports();
+                }
+            }
+        }
+        return localInstance;
+    }
 
     public ListReports() {
         super();
         model = getTableModel();
         this.setModel(model);
         updateList();
-        this.setAutoCreateRowSorter(true);
+        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //this.setAutoCreateRowSorter(true);
+        this.removeColumn(this.getColumnModel().getColumn(0));
         listeners(this);
     }
 
     @SneakyThrows
-    private void updateList() {
-        ReportsDAO rp = new ReportsDAOImpl(ConnectDataBaseUtils.getInstance().getStmt());
-        for (Reports r: rp.findAll()) {
-            model.addRow(new Object[]{r.getName(), r.getDateString(), r.getFrequency(), r.getSubmitted()});
+    public void updateList() {
+        model.setRowCount(0);
+        ReportsDAO rp = new ReportsDAOImpl();
+        for (Reports r : rp.findAll()) {
+            model.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency(), r.getSubmitted()});
         }
-        this.repaint();
     }
 
 
@@ -47,20 +60,31 @@ public class ListReports extends JTable {
                 List<Object> list = new ArrayList<>();
                 if (e.getClickCount() == 2) {
                     try {
-                        if (table.getValueAt(table.getSelectedRow(), table.getSelectedColumn()) instanceof Boolean) {
-                        } else{
-                            int index = table.getSelectedRow();
-                            list.add(table.getValueAt(index, getIndexColumn(0)));
-                            list.add(table.getValueAt(index, getIndexColumn(1)));
-                            list.add(table.getValueAt(index, getIndexColumn(2)));
-                            list.add(table.getValueAt(index, getIndexColumn(3)));
+                        if (model.getValueAt(table.getSelectedRow(), table.getSelectedColumn()) instanceof Boolean) {
+                        } else {
+                            int row = table.getSelectedRow();
+                            list.add(model.getValueAt(row, getIndexColumn(0)));
+                            list.add(model.getValueAt(row, getIndexColumn(1)));
+                            list.add(model.getValueAt(row, getIndexColumn(2)));
+                            list.add(model.getValueAt(row, getIndexColumn(3)));
+                            list.add(model.getValueAt(row, getIndexColumn(4)));
                             System.out.println(list);
                         }
                     } catch (ArrayIndexOutOfBoundsException a) {
                     }
-
                 }
-
+            }
+        });
+        this.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                ReportsDAOImpl rp = new ReportsDAOImpl();
+                int row = e.getFirstRow();
+                if (e.getColumn() == 4) {
+                    Reports reports = rp.findById((Long) model.getValueAt(row, getIndexColumn(0)));
+                    reports.setSubmitted((Boolean) model.getValueAt(row, getIndexColumn(4)));
+                    rp.saveOrUpdate(reports);
+                }
             }
         });
     }
@@ -85,23 +109,31 @@ public class ListReports extends JTable {
                 }
                 return false;
             }
+
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (this.getValueAt(0, column) instanceof Boolean) {
+                    return Boolean.class;
+                }
+                return String.class;
+            }
+
+
         };
     }
 
-    @Override
-    public Class<?> getColumnClass(int column) {
-        if (this.getValueAt(0, column) instanceof Boolean) {
-            return Boolean.class;
-        }
-        return String.class;
-    }
-
     private int getIndexColumn(Integer searchColumn) {
-        for (int i = 0; i < 4; i++) {
-            if (this.getColumnName(i).equals(employee[searchColumn])) {
+        for (int i = 0; i < 5; i++) {
+            if (this.getModel().getColumnName(i).equals(employee[searchColumn])) {
                 return i;
             }
         }
         return -1;
+    }
+
+    public void deleteRow() {
+        ReportsDAO reportsDAO = new ReportsDAOImpl();
+        reportsDAO.deleteById((Long) model.getValueAt(this.getSelectedRow(), 0));
+        updateList();
     }
 }

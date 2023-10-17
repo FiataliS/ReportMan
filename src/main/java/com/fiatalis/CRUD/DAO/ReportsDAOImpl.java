@@ -1,5 +1,6 @@
 package com.fiatalis.CRUD.DAO;
 
+import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Reports;
 import lombok.SneakyThrows;
@@ -14,8 +15,8 @@ import java.util.List;
 public class ReportsDAOImpl implements ReportsDAO {
     private Statement statement;
 
-    public ReportsDAOImpl(Statement statement) {
-        this.statement = statement;
+    public ReportsDAOImpl() {
+        this.statement = ConnectDataBaseUtils.getInstance().getStmt();
     }
 
     @SneakyThrows
@@ -45,7 +46,7 @@ public class ReportsDAOImpl implements ReportsDAO {
             reports.setName(rs.getString(2));
             reports.setDate(Date.valueOf(rs.getString(3)));
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(rs.getBoolean(5));
+            reports.setSubmitted(Boolean.valueOf(rs.getBoolean(4)));
             return reports;
         } catch (NullPointerException e) {
             return null;
@@ -63,7 +64,7 @@ public class ReportsDAOImpl implements ReportsDAO {
             reports.setName(rs.getString(2));
             reports.setDate(Date.valueOf(rs.getString(3)));
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(rs.getBoolean(5));
+            reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
             list.add(reports);
         }
         return list;
@@ -78,24 +79,44 @@ public class ReportsDAOImpl implements ReportsDAO {
         }
         try {
             if (reports.getId() == -1) {
-                statement.executeUpdate("insert into reportMain\n" +
+                int x = statement.executeUpdate("insert into reportMain\n" +
                         " (name, date, frequency, submitted)\n" +
                         "values ('"
                         + reports.getName() + "', '"
                         + reports.getDate() + "', '"
                         + reports.getFrequency() + "', '"
                         + reports.getSubmitted() + "');");
-                return true;
+                return x == 1 ? true : false;
             } else {
-                statement.executeUpdate("update reportMain set " +
+                int x = statement.executeUpdate("update reportMain set " +
                         "name= '" + reports.getName() + "', " +
                         "date= '" + reports.getDate() + "', " +
                         "frequency= '" + reports.getFrequency() + "', " +
                         "submitted= '" + reports.getSubmitted() + "' " +
                         "WHERE id= " + reports.getId() + ";");
-                return true;
+                return x == 1 ? true : false;
             }
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        try {
+            int x = statement.executeUpdate("delete from reportMain WHERE id = " + id + ";");
+            return x == 1 ? true : false;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteByName(String name) {
+        try {
+            int x = statement.executeUpdate("delete from reportMain WHERE name ='" + name + "';");
+            return x == 1 ? true : false;
+        } catch (SQLException e) {
             return false;
         }
     }

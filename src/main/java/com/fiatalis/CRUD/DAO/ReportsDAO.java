@@ -6,11 +6,9 @@ import java.util.List;
 
 public interface ReportsDAO {
     Reports findById(Long id);
-
     Reports findByName(String name);
-
     List<Reports> findAll();
-
     boolean saveOrUpdate(Reports reports);
-
+    boolean deleteById(Long id);
+    boolean deleteByName(String name);
 }

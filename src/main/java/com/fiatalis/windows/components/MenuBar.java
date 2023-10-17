@@ -12,7 +12,7 @@ public class MenuBar extends JMenuBar {
         Buttons save = new ButtonSave();
         Buttons edit = new ButtonEdit();
         this.add(Box.createHorizontalGlue());
-        this.add(add, BorderLayout.CENTER);
+        this.add(add);
         this.add(Box.createHorizontalGlue());
         this.add(delete);
         this.add(Box.createHorizontalGlue());
