@@ -7,6 +7,7 @@ public class ButtonEdit extends Buttons {
 
     public ButtonEdit() {
         this.setText("Изменить задачу");
+        listener();
     }
 
     @Override

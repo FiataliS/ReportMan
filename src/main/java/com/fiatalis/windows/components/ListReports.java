@@ -2,6 +2,7 @@ package com.fiatalis.windows.components;
 
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAOImpl;
+import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Reports;
 import lombok.SneakyThrows;
 
@@ -11,6 +12,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,8 +119,6 @@ public class ListReports extends JTable {
                 }
                 return String.class;
             }
-
-
         };
     }
 
@@ -133,7 +133,16 @@ public class ListReports extends JTable {
 
     public void deleteRow() {
         ReportsDAO reportsDAO = new ReportsDAOImpl();
-        reportsDAO.deleteById((Long) model.getValueAt(this.getSelectedRow(), 0));
+        try {
+            reportsDAO.deleteById((Long) model.getValueAt(this.getSelectedRow(), 0));
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+        updateList();
+    }
+
+    public void addRow(Reports reports){
+        ReportsDAO reportsDAO = new ReportsDAOImpl();
+        reportsDAO.saveOrUpdate(reports);
         updateList();
     }
 }

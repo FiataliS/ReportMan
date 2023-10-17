@@ -41,6 +41,7 @@ public class ReportsDAOImpl implements ReportsDAO {
     public Reports findByName(String name) {
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM reportMain WHERE name LIKE '" + name + "';");
+            if (rs == null || rs.getString(0).equals("Id")) return null;
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
             reports.setName(rs.getString(2));
@@ -48,7 +49,7 @@ public class ReportsDAOImpl implements ReportsDAO {
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(Boolean.valueOf(rs.getBoolean(4)));
             return reports;
-        } catch (NullPointerException e) {
+        } catch (SQLException e) {
             return null;
         }
     }

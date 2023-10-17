@@ -1,8 +1,5 @@
 package com.fiatalis.windows.components.buttons;
 
-
-import com.fiatalis.CRUD.DAO.ReportsDAO;
-import com.fiatalis.CRUD.DAO.ReportsDAOImpl;
 import com.fiatalis.windows.components.ListReports;
 
 import javax.swing.*;

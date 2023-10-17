@@ -7,6 +7,7 @@ public class ButtonSave extends Buttons {
 
     public ButtonSave() {
         this.setText("Сохранить задачу");
+        listener();
     }
 
     public void listener() {

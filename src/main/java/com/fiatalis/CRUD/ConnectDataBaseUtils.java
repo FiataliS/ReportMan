@@ -1,7 +1,9 @@
 package com.fiatalis.CRUD;
 
 import lombok.Data;
+import lombok.SneakyThrows;
 
+import java.io.File;
 import java.sql.*;
 
 @Data
@@ -23,10 +25,14 @@ public class ConnectDataBaseUtils {
         return localInstance;
     }
 
-    public void connect() throws Exception {
+    @SneakyThrows
+    public void connect() {
+        String fileName = "date/reportMan.db";
+        Boolean check = checkFileIni(fileName);
         Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbc:sqlite:reportMan.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:" + fileName);
         stmt = connection.createStatement();
+        if (!check) createTable();
     }
 
     public void disconnect() {
@@ -35,5 +41,33 @@ public class ConnectDataBaseUtils {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @SneakyThrows
+    public void createTable() {
+        stmt.execute("CREATE TABLE reportMain (\n" +
+                "    id        INTEGER     PRIMARY KEY AUTOINCREMENT\n" +
+                "                          NOT NULL,\n" +
+                "    name      TEXT        NOT NULL\n" +
+                "                          UNIQUE,\n" +
+                "    date      DATE        NOT NULL,\n" +
+                "    frequency TEXT        NOT NULL,\n" +
+                "    submitted TEXT (5, 5) NOT NULL\n" +
+                ");");
+        stmt.execute("CREATE TABLE reportHistory (\n" +
+                "    id        INTEGER PRIMARY KEY AUTOINCREMENT\n" +
+                "                      NOT NULL,\n" +
+                "    name      TEXT    NOT NULL,\n" +
+                "    date      TEXT    NOT NULL,\n" +
+                "    frequency TEXT    NOT NULL\n" +
+                ");");
+    }
+
+    private boolean checkFileIni(String fileCheck) {
+        File file = new File(fileCheck);
+        if (!file.exists()) {
+            return false;
+        }
+        return true;
     }
 }
