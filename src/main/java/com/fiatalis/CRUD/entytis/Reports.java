@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
-public class Reports {
+public class Reports implements Entity{
 
     private Long id = -1L;
 

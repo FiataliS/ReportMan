@@ -14,9 +14,9 @@ public class EditableChekBox extends JCheckBoxMenuItem {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (EditableChekBox.this.getState()) {
-                    ListReports.getInstance().isEditable = true;
+                    ListReports.getInstance().setEditableModel(true);
                 } else {
-                    ListReports.getInstance().isEditable = false;
+                    ListReports.getInstance().setEditableModel(false);
                 }
             }
         });
