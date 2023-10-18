@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Executor implements Entity {
-    private Long id = 1L;
+    private Long id;
     private String name;
     private String Responsible;
     private String phone;

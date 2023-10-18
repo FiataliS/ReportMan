@@ -8,8 +8,6 @@ import com.fiatalis.windows.modelTable.SecondModel;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ListReports extends JTable {
     private static volatile ListReports instance;
@@ -42,9 +40,12 @@ public class ListReports extends JTable {
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
-                    System.out.println(model.getValueAt(ListReports.getInstance().getSelectedRow(),0));
-                    ListReports.getInstance().setModel(new SecondModel());
+                    if (ListReports.getInstance().getModel() instanceof MainModel) {
+                        model = new SecondModel();
+                        ListReports.getInstance().setModel(model);
+                        ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
+                    }
+                    //System.out.println(model.getValueAt(ListReports.getInstance().getSelectedRow(), 1));
                 }
             }
         });

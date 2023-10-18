@@ -58,9 +58,9 @@ public class ExecutorDAO implements DAO {
         while (rs.next()) {
             Executor executor = new Executor();
             executor.setId((long) rs.getInt(1));
-            executor.setName(rs.getString(2));
-            executor.setResponsible(rs.getString(3));
-            executor.setPhone(rs.getString(4));
+            executor.setName(rs.getString(3));
+            executor.setResponsible(rs.getString(4));
+            executor.setPhone(rs.getString(5));
             list.add(executor);
         }
         return list;

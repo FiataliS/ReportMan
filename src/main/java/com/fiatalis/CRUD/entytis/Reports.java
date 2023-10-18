@@ -9,9 +9,9 @@ import java.util.Calendar;
 
 @Data
 @NoArgsConstructor
-public class Reports implements Entity{
+public class Reports implements Entity {
 
-    private Long id = -1L;
+    private Long id;
 
     private String name;
     private Date date;

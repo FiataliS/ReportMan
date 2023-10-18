@@ -11,7 +11,6 @@ import javax.swing.event.TableModelListener;
 
 public class SecondModel extends Model {
     private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Сдан отчет?"};
-
     private static volatile SecondModel instance;
 
     public static SecondModel getInstance() {

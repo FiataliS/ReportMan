@@ -16,10 +16,6 @@ public abstract class Model extends DefaultTableModel {
 
     public abstract void deleteRow();
 
-    public boolean getEditableModel() {
-        return this.isEditable;
-    }
-
     public void setEditableModel(boolean editableModel) {
         this.isEditable = editableModel;
     }
