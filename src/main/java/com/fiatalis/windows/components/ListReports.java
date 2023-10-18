@@ -3,6 +3,7 @@ package com.fiatalis.windows.components;
 import com.fiatalis.CRUD.entytis.Reports;
 import com.fiatalis.windows.modelTable.MainModel;
 import com.fiatalis.windows.modelTable.Model;
+import com.fiatalis.windows.modelTable.SecondModel;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -13,7 +14,6 @@ import java.util.List;
 public class ListReports extends JTable {
     private static volatile ListReports instance;
     private static Model model;
-    public Boolean isEditableModel;
 
     public static ListReports getInstance() {
         ListReports localInstance = instance;
@@ -31,7 +31,6 @@ public class ListReports extends JTable {
     public ListReports() {
         super();
         model = MainModel.getInstance();
-        isEditableModel = model.getEditableModel();
         this.setModel(model);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //this.setAutoCreateRowSorter(true);
@@ -42,14 +41,10 @@ public class ListReports extends JTable {
     private void listeners(JTable table) {
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                List<Object> list = new ArrayList<>();
                 if (e.getClickCount() == 2) {
-                    list.add(model.getValueAt(ListReports.getInstance().getSelectedRow(),0));
-                    list.add(model.getValueAt(ListReports.getInstance().getSelectedRow(),1));
-                    list.add(model.getValueAt(ListReports.getInstance().getSelectedRow(),2));
-                    list.add(model.getValueAt(ListReports.getInstance().getSelectedRow(),3));
-                    list.add(model.getValueAt(ListReports.getInstance().getSelectedRow(),4));
-                    System.out.println(list);
+                    ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
+                    System.out.println(model.getValueAt(ListReports.getInstance().getSelectedRow(),0));
+                    ListReports.getInstance().setModel(new SecondModel());
                 }
             }
         });

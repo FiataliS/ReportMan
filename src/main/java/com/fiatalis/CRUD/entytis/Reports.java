@@ -14,11 +14,8 @@ public class Reports implements Entity{
     private Long id = -1L;
 
     private String name;
-
     private Date date;
-
     private Frequency frequency;
-
     private Boolean submitted;
 
     public Reports(String name, Date date, Frequency frequency, Boolean submitted) {

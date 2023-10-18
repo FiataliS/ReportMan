@@ -56,17 +56,19 @@ public class ConnectDataBaseUtils {
                 "    submitted TEXT (5, 5) NOT NULL\n" +
                 ");");
 
-        stmt.execute("CREATE TABLE reportHistory (\n" +
-                "    id        INTEGER PRIMARY KEY AUTOINCREMENT\n" +
-                "                      NOT NULL,\n" +
-                "    name      TEXT    NOT NULL,\n" +
-                "    date      TEXT    NOT NULL,\n" +
-                "    frequency TEXT    NOT NULL\n" +
-                ");");
+//        stmt.execute("CREATE TABLE reportHistory (\n" +
+//                "    id        INTEGER PRIMARY KEY AUTOINCREMENT\n" +
+//                "                      NOT NULL,\n" +
+//                "    name      TEXT    NOT NULL,\n" +
+//                "    date      TEXT    NOT NULL,\n" +
+//                "    frequency TEXT    NOT NULL\n" +
+//                ");");
 
         stmt.execute("CREATE TABLE executor (\n" +
                 "    id          INTEGER PRIMARY KEY\n" +
                 "                        UNIQUE\n" +
+                "                        NOT NULL,\n" +
+                "    id_report   INTEGER REFERENCES reportMain (id) \n" +
                 "                        NOT NULL,\n" +
                 "    name        TEXT    NOT NULL,\n" +
                 "    responsible TEXT    NOT NULL,\n" +

@@ -22,7 +22,7 @@ public class ReportsDAO implements DAO {
 
     @SneakyThrows
     @Override
-    public Reports findById(Long id) {
+    public Entity findById(Long id) {
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM reportMain WHERE ID LIKE " + id + ";");
             Reports reports = new Reports();
@@ -42,7 +42,7 @@ public class ReportsDAO implements DAO {
     public Entity findByName(String name) {
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM reportMain WHERE name LIKE '" + name + "';");
-            if (rs == null || rs.getString(0).equals("Id")) return null;
+            if (rs == null || rs.getString(1).equals("id")) return null;
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
             reports.setName(rs.getString(2));
@@ -50,7 +50,7 @@ public class ReportsDAO implements DAO {
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(Boolean.valueOf(rs.getBoolean(4)));
             return reports;
-        } catch (SQLException e) {
+        } catch (NullPointerException e) {
             return null;
         }
     }
