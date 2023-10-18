@@ -77,9 +77,8 @@ public class ReportsDAO implements DAO {
     public boolean saveOrUpdate(Entity entity) {
         Reports reports = (Reports) entity;
         Reports r = (Reports) findByName(reports.getName());
-        if (r != null) {
-            reports.setId(r.getId());
-        }
+        if (r != null) reports.setId(r.getId());
+
         try {
             if (reports.getId() == -1) {
                 int x = statement.executeUpdate("insert into reportMain\n" +

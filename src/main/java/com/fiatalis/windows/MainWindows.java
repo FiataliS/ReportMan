@@ -1,6 +1,7 @@
 package com.fiatalis.windows;
 
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
+import com.fiatalis.windows.components.ButtonBack;
 import com.fiatalis.windows.components.ListReports;
 import com.fiatalis.windows.components.MenuBar;
 
@@ -34,6 +35,7 @@ public class MainWindows extends JFrame {
     private void addComponent() {
         this.add(new MenuBar(), BorderLayout.NORTH);
         this.add(new JScrollPane(ListReports.getInstance()), BorderLayout.CENTER);
+        this.add(ButtonBack.getInstance(),BorderLayout.SOUTH);
     }
 
 

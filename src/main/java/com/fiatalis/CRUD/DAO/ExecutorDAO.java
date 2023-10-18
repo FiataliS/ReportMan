@@ -6,6 +6,7 @@ import com.fiatalis.CRUD.entytis.Executor;
 import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class ExecutorDAO implements DAO {
         }
         try {
             if (executor.getId() == -1) {
-                int x = statement.executeUpdate("insert into reportMain\n" +
+                int x = statement.executeUpdate("insert into executor\n" +
                         " (name, date, frequency, submitted)\n" +
                         "values ('"
                         + executor.getName() + "', '"
@@ -84,7 +85,7 @@ public class ExecutorDAO implements DAO {
                         + executor.getPhone() + "');");
                 return x == 1 ? true : false;
             } else {
-                int x = statement.executeUpdate("update reportMain set " +
+                int x = statement.executeUpdate("update executor set " +
                         "name= '" + executor.getName() + "', " +
                         "responsible= '" + executor.getResponsible() + "', " +
                         "phone= '" + executor.getPhone() + "', " +
@@ -98,11 +99,21 @@ public class ExecutorDAO implements DAO {
 
     @Override
     public boolean deleteById(Long id) {
-        return false;
+        try {
+            int x = statement.executeUpdate("delete from executor WHERE id = " + id + ";");
+            return x == 1 ? true : false;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     @Override
     public boolean deleteByName(String name) {
-        return false;
+        try {
+            int x = statement.executeUpdate("delete from executor WHERE name ='" + name + "';");
+            return x == 1 ? true : false;
+        } catch (SQLException e) {
+            return false;
+        }
     }
 }

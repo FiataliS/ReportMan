@@ -1,6 +1,6 @@
 package com.fiatalis.windows.components;
 
-import com.fiatalis.CRUD.entytis.Reports;
+import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.windows.modelTable.MainModel;
 import com.fiatalis.windows.modelTable.Model;
 import com.fiatalis.windows.modelTable.SecondModel;
@@ -44,22 +44,35 @@ public class ListReports extends JTable {
                         model = new SecondModel();
                         ListReports.getInstance().setModel(model);
                         ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
+                        ButtonBack.getInstance().setVisible(true);
                     }
-                    //System.out.println(model.getValueAt(ListReports.getInstance().getSelectedRow(), 1));
+
                 }
             }
         });
     }
 
     public void setEditableModel(Boolean editableModel) {
-        model.setEditableModel(editableModel);
+        if (this.getModel() instanceof MainModel) {
+            MainModel.getInstance().setEditableModel(editableModel);
+        } else {
+            SecondModel.getInstance().setEditableModel(editableModel);
+        }
     }
 
     public void deleteRow() {
-        model.deleteRow();
+        if (this.getModel() instanceof MainModel) {
+            MainModel.getInstance().deleteRow();
+        } else {
+            SecondModel.getInstance().deleteRow();
+        }
     }
 
-    public void addRow(Reports reports) {
-        model.addRow(reports);
+    public void addRow(Entity entity) {
+        if (this.getModel() instanceof MainModel) {
+            MainModel.getInstance().addRow(entity);
+        } else {
+            SecondModel.getInstance().addRow(entity);
+        }
     }
 }

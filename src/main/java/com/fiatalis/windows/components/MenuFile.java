@@ -2,6 +2,7 @@ package com.fiatalis.windows.components;
 
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Reports;
+import com.fiatalis.windows.modelTable.MainModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,7 @@ public class MenuFile extends JMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ListReports.getInstance().addRow(new Reports("Отчет 1" + Math.random(), new Date(123), Frequency.Monthly, false));
+                //MainModel.getInstance().addRow(new Reports("Отчет 1" + Math.random(), new Date(123), Frequency.Monthly, false));
             }
         });
     }

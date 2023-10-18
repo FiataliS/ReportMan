@@ -36,11 +36,8 @@ public class SecondModel extends Model {
         this.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                ExecutorDAO rp = new ExecutorDAO();
                 int row = e.getFirstRow();
-                if (e.getColumn() == 4) {
-
-                }
+                System.out.println("Second");
             }
         });
     }
@@ -60,6 +57,7 @@ public class SecondModel extends Model {
     public void addRow(Entity entity) {
         DAO executorDAO = new ExecutorDAO();
         executorDAO.saveOrUpdate(entity);
+        update();
     }
 
     @Override
@@ -71,5 +69,4 @@ public class SecondModel extends Model {
         }
         update();
     }
-
 }

@@ -11,7 +11,7 @@ import java.util.Calendar;
 @NoArgsConstructor
 public class Reports implements Entity {
 
-    private Long id;
+    private Long id = -1L;
 
     private String name;
     private Date date;

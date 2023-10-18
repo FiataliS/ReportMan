@@ -43,4 +43,5 @@ public abstract class Model extends DefaultTableModel {
         }
         return -1;
     }
+
 }
