@@ -2,7 +2,6 @@ package com.fiatalis.windows.components;
 
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAOImpl;
-import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Reports;
 import lombok.SneakyThrows;
 
@@ -12,15 +11,18 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListReports extends JTable {
     private final DefaultTableModel model;
     private final String[] employee = new String[]{"id", "Наименование", "Дата", "Периодичность", "Напоминание"};
-
     private static volatile ListReports instance;
+    public Boolean saveShow = false;
+    public Boolean deleteShow = false;
+    public Boolean editShow = true;
+    public Boolean isEditable = false;
+
 
     public static ListReports getInstance() {
         ListReports localInstance = instance;
@@ -70,7 +72,7 @@ public class ListReports extends JTable {
                             list.add(model.getValueAt(row, getIndexColumn(2)));
                             list.add(model.getValueAt(row, getIndexColumn(3)));
                             list.add(model.getValueAt(row, getIndexColumn(4)));
-                            System.out.println(list);
+                            //System.out.println(list);
                         }
                     } catch (ArrayIndexOutOfBoundsException a) {
                     }
@@ -89,6 +91,7 @@ public class ListReports extends JTable {
                 }
             }
         });
+
     }
 
     private DefaultTableModel getTableModel() {
@@ -106,10 +109,7 @@ public class ListReports extends JTable {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (this.getValueAt(row, column) instanceof Boolean) {
-                    return true;
-                }
-                return false;
+                return isEditable;
             }
 
             @Override
@@ -121,6 +121,7 @@ public class ListReports extends JTable {
             }
         };
     }
+
 
     private int getIndexColumn(Integer searchColumn) {
         for (int i = 0; i < 5; i++) {
@@ -140,7 +141,7 @@ public class ListReports extends JTable {
         updateList();
     }
 
-    public void addRow(Reports reports){
+    public void addRow(Reports reports) {
         ReportsDAO reportsDAO = new ReportsDAOImpl();
         reportsDAO.saveOrUpdate(reports);
         updateList();

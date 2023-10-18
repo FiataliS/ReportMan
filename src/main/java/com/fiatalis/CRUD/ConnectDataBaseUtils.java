@@ -27,7 +27,8 @@ public class ConnectDataBaseUtils {
 
     @SneakyThrows
     public void connect() {
-        String fileName = "date/reportMan.db";
+        createFolder("date");
+        String fileName = "date/report.db";
         Boolean check = checkFileIni(fileName);
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:" + fileName);
@@ -69,5 +70,10 @@ public class ConnectDataBaseUtils {
             return false;
         }
         return true;
+    }
+
+    private void createFolder(String folderName){
+        File folder = new File(folderName);
+        if (!folder.exists()) folder.mkdir();
     }
 }
