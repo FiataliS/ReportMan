@@ -31,9 +31,9 @@ public class ButtonBack extends JButton {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ListReports.getInstance().setModel(new MainModel());
+                ListReports.getInstance().setModel(MainModel.getInstance());
                 ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
-                ButtonBack.this.setVisible(false);
+                ButtonBack.getInstance().setVisible(false);
             }
         });
     }
