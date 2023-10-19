@@ -57,7 +57,7 @@ public class ReportsDAO implements DAO {
 
     @SneakyThrows
     @Override
-    public List<Entity> findAll() {
+    public List<Entity> findAll(Long entityId) {
         ResultSet rs = statement.executeQuery("SELECT * FROM reportMain");
         List<Entity> list = new ArrayList<>();
         while (rs.next()) {

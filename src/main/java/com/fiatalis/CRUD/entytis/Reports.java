@@ -12,7 +12,6 @@ import java.util.Calendar;
 public class Reports implements Entity {
 
     private Long id = -1L;
-
     private String name;
     private Date date;
     private Frequency frequency;

@@ -28,31 +28,30 @@ public class ListReports extends JTable {
         super();
         this.setModel(MainModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //this.setAutoCreateRowSorter(true);
         this.removeColumn(this.getColumnModel().getColumn(0));
-        listeners(this);
+        listeners();
     }
 
-    private void listeners(JTable table) {
+    private void listeners() {
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !MainModel.getInstance().isEditable) {
                     if (ListReports.getInstance().getModel() instanceof MainModel) {
-                        ListReports.getInstance().setModel(SecondModel.getInstance());
+                        ListReports.getInstance().setModel(SecondModel.getInstance((Long) MainModel.getInstance().getValueAt(ListReports.getInstance().getSelectedRow(), 0)));
                         ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
                         ButtonBack.getInstance().setVisible(true);
                     }
-
                 }
             }
         });
     }
 
     public void setEditableModel(Boolean editableModel) {
+
         if (this.getModel() instanceof MainModel) {
             MainModel.getInstance().setEditableModel(editableModel);
         } else {
-            SecondModel.getInstance().setEditableModel(editableModel);
+            SecondModel.getInstance(null).setEditableModel(editableModel);
         }
     }
 
@@ -60,15 +59,18 @@ public class ListReports extends JTable {
         if (this.getModel() instanceof MainModel) {
             MainModel.getInstance().deleteRow();
         } else {
-            SecondModel.getInstance().deleteRow();
+            SecondModel.getInstance(null).deleteRow();
         }
     }
 
     public void addRow(Entity entity) {
         if (this.getModel() instanceof MainModel) {
             MainModel.getInstance().addRow(entity);
+            MainModel.getInstance().update();
         } else {
-            SecondModel.getInstance().addRow(entity);
+            SecondModel.getInstance(null).addRow(entity);
+            SecondModel.getInstance(null).update();
         }
+
     }
 }

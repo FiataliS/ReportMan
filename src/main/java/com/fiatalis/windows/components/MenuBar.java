@@ -15,6 +15,6 @@ public class MenuBar extends JMenuBar {
         this.add(Box.createHorizontalGlue());
         this.add(Box.createHorizontalGlue());
         this.add(Box.createHorizontalGlue());
-        this.add(new EditableChekBox());
+        this.add(new EditableCheckBox());
     }
 }

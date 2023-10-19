@@ -3,8 +3,8 @@ package com.fiatalis.windows.components;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class EditableChekBox extends JCheckBoxMenuItem {
-    public EditableChekBox() {
+public class EditableCheckBox extends JCheckBoxMenuItem {
+    public EditableCheckBox() {
         super("Разрешить редактирование");
         listeners();
     }
@@ -13,10 +13,12 @@ public class EditableChekBox extends JCheckBoxMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (EditableChekBox.this.getState()) {
+                if (EditableCheckBox.this.getState()) {
                     ListReports.getInstance().setEditableModel(true);
+                    ButtonBack.getInstance().setEnabled(false);
                 } else {
                     ListReports.getInstance().setEditableModel(false);
+                    ButtonBack.getInstance().setEnabled(true);
                 }
             }
         });

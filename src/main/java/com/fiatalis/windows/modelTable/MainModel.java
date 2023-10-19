@@ -47,7 +47,7 @@ public class MainModel extends Model {
     public void update() {
         this.setRowCount(0);
         DAO rp = new ReportsDAO();
-        for (Entity e : rp.findAll()) {
+        for (Entity e : rp.findAll(null)) {
             Reports r = (Reports) e;
             this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency(), r.getSubmitted()});
         }
@@ -72,7 +72,6 @@ public class MainModel extends Model {
     public void addRow(Entity entity) {
         DAO reportsDAO = new ReportsDAO();
         reportsDAO.saveOrUpdate(entity);
-        update();
     }
 
     @Override
@@ -82,6 +81,5 @@ public class MainModel extends Model {
             reportsDAO.deleteById((Long) this.getValueAt(ListReports.getInstance().getSelectedRow(), 0));
         } catch (ArrayIndexOutOfBoundsException e) {
         }
-        update();
     }
 }

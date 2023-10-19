@@ -3,6 +3,7 @@ package com.fiatalis.CRUD.DAO;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
+import com.fiatalis.windows.modelTable.SecondModel;
 import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ExecutorDAO implements DAO {
     private Statement statement;
@@ -53,8 +55,8 @@ public class ExecutorDAO implements DAO {
 
     @SneakyThrows
     @Override
-    public List<Entity> findAll() {
-        ResultSet rs = statement.executeQuery("SELECT * FROM executor");
+    public List<Entity> findAll(Long entityId) {
+        ResultSet rs = statement.executeQuery("SELECT * FROM executor where id_report LIKE " + entityId + ";");
         List<Entity> list = new ArrayList<>();
         while (rs.next()) {
             Executor executor = new Executor();

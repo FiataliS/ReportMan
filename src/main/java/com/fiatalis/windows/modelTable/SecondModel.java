@@ -12,8 +12,9 @@ import javax.swing.event.TableModelListener;
 public class SecondModel extends Model {
     private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Сдан отчет?"};
     private static volatile SecondModel instance;
+    private long entityId;
 
-    public static SecondModel getInstance() {
+    public static SecondModel getInstance(Long entityId) {
         SecondModel localInstance = instance;
         if (localInstance == null) {
             synchronized (SecondModel.class) {
@@ -23,21 +24,22 @@ public class SecondModel extends Model {
                 }
             }
         }
+        if (entityId != null) instance.entityId = entityId;
+        instance.update();
         return localInstance;
     }
+
 
     public SecondModel() {
         super.employee = employee;
         listeners();
-        update();
     }
 
     public void listeners() {
         this.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                int row = e.getFirstRow();
-                System.out.println("Second");
+
             }
         });
     }
@@ -47,7 +49,7 @@ public class SecondModel extends Model {
     public void update() {
         this.setRowCount(0);
         DAO rp = new ExecutorDAO();
-        for (Entity e : rp.findAll()) {
+        for (Entity e : rp.findAll(entityId)) {
             Executor r = (Executor) e;
             this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone()});
         }
@@ -57,7 +59,6 @@ public class SecondModel extends Model {
     public void addRow(Entity entity) {
         DAO executorDAO = new ExecutorDAO();
         executorDAO.saveOrUpdate(entity);
-        update();
     }
 
     @Override
@@ -67,6 +68,5 @@ public class SecondModel extends Model {
             executorDAO.deleteById((Long) this.getValueAt(ListReports.getInstance().getSelectedRow(), 0));
         } catch (ArrayIndexOutOfBoundsException e) {
         }
-        update();
     }
 }

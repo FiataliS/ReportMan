@@ -7,7 +7,7 @@ import java.util.List;
 public interface DAO {
     Entity findById(Long id);
     Entity findByName(String name);
-    List<Entity> findAll();
+    List<Entity> findAll(Long id);
     boolean saveOrUpdate(Entity entity);
     boolean deleteById(Long id);
     boolean deleteByName(String name);
