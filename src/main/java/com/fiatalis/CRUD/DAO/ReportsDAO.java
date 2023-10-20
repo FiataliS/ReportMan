@@ -3,6 +3,7 @@ package com.fiatalis.CRUD.DAO;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Entity;
+import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
 import lombok.SneakyThrows;
 
@@ -104,6 +105,7 @@ public class ReportsDAO implements DAO {
 
     @Override
     public boolean deleteById(Long id) {
+        deleteExecutorByReport(id);
         try {
             int x = statement.executeUpdate("delete from reportMain WHERE id = " + id + ";");
             return x == 1 ? true : false;
@@ -114,11 +116,34 @@ public class ReportsDAO implements DAO {
 
     @Override
     public boolean deleteByName(String name) {
+        Reports reports = (Reports) findByName(name);
+        deleteExecutorByReport(reports.getId());
         try {
             int x = statement.executeUpdate("delete from reportMain WHERE name ='" + name + "';");
             return x == 1 ? true : false;
         } catch (SQLException e) {
             return false;
+        }
+    }
+
+    private void deleteExecutorByReport(Long reportID) {
+        ExecutorDAO executorDAO = new ExecutorDAO();
+        List<Entity> list = executorDAO.findAll(reportID);
+        for (Entity entity : list) {
+            Executor executor = (Executor) entity;
+            executorDAO.deleteById(executor.getId());
+        }
+    }
+
+
+    @Override
+    public void deleteNull() {
+        List<Entity> list = findAll(null);
+        for (Entity entity : list) {
+            Reports reports = (Reports) entity;
+            if (reports.getName() == null) {
+                deleteById(reports.getId());
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.fiatalis.windows;
 
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
-import com.fiatalis.windows.components.ButtonBack;
+import com.fiatalis.CRUD.DAO.ExecutorDAO;
+import com.fiatalis.CRUD.DAO.ReportsDAO;
+import com.fiatalis.windows.components.BackButton;
 import com.fiatalis.windows.components.MenuBar;
 
 import javax.swing.*;
@@ -17,10 +19,12 @@ public class MainWindows extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                //if (JOptionPane.showConfirmDialog(MainWindows.this, "пока пока") == JOptionPane.OK_OPTION) {
+                if (JOptionPane.showConfirmDialog(MainWindows.this, "Не сохраненные данные будут потеряны!") == JOptionPane.OK_OPTION) {
+                    new ExecutorDAO().deleteNull();
+                    new ReportsDAO().deleteNull();
                     ConnectDataBaseUtils.getInstance().disconnect();
                     System.exit(0);
-               //}
+                }
             }
         });
 
@@ -34,7 +38,7 @@ public class MainWindows extends JFrame {
     private void addComponent() {
         this.add(new MenuBar(), BorderLayout.NORTH);
         this.add(new JScrollPane(MainTable.getInstance()), BorderLayout.CENTER);
-        this.add(ButtonBack.getInstance(),BorderLayout.SOUTH);
+        this.add(BackButton.getInstance(), BorderLayout.SOUTH);
     }
 
 

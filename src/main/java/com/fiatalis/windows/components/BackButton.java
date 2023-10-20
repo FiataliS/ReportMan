@@ -5,23 +5,23 @@ import com.fiatalis.windows.MainTable;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class ButtonBack extends JButton {
-    private static volatile ButtonBack instance;
+public class BackButton extends JButton {
+    private static volatile BackButton instance;
 
-    public static ButtonBack getInstance() {
-        ButtonBack localInstance = instance;
+    public static BackButton getInstance() {
+        BackButton localInstance = instance;
         if (localInstance == null) {
-            synchronized (ButtonBack.class) {
+            synchronized (BackButton.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ButtonBack();
+                    instance = localInstance = new BackButton();
                 }
             }
         }
         return localInstance;
     }
 
-    public ButtonBack() {
+    public BackButton() {
         super("Закрыть исполнителей");
         listener();
         setVisible(false);

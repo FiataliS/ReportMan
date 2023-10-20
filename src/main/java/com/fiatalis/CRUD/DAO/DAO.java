@@ -11,4 +11,5 @@ public interface DAO {
     boolean saveOrUpdate(Entity entity);
     boolean deleteById(Long id);
     boolean deleteByName(String name);
+    void deleteNull();
 }

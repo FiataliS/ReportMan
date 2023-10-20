@@ -2,9 +2,9 @@ package com.fiatalis.windows;
 
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
-import com.fiatalis.windows.components.ButtonBack;
+import com.fiatalis.windows.components.BackButton;
 import com.fiatalis.windows.components.modelTable.ReportModel;
-import com.fiatalis.windows.components.modelTable.SecondModel;
+import com.fiatalis.windows.components.modelTable.ExecutorModel;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -49,7 +49,7 @@ public class MainTable extends JTable {
             ReportModel r = (ReportModel) this.getModel();
             r.setEditableModel(editableModel);
         } else {
-            SecondModel s = (SecondModel) this.getModel();
+            ExecutorModel s = (ExecutorModel) this.getModel();
             s.setEditableModel(editableModel);
         }
     }
@@ -60,7 +60,7 @@ public class MainTable extends JTable {
             r.deleteRowEntity(this.getSelectedRow());
             r.update();
         } else {
-            SecondModel s = (SecondModel) this.getModel();
+            ExecutorModel s = (ExecutorModel) this.getModel();
             s.deleteRowEntity(this.getSelectedRow());
             s.update();
         }
@@ -72,7 +72,7 @@ public class MainTable extends JTable {
             r.addRowEntity(new Reports());
             r.update();
         } else {
-            SecondModel s = (SecondModel) this.getModel();
+            ExecutorModel s = (ExecutorModel) this.getModel();
             s.addRowEntity(new Executor());
             s.update();
         }
@@ -80,13 +80,13 @@ public class MainTable extends JTable {
 
     public void switchModel() {
         if (MainTable.getInstance().getModel() instanceof ReportModel) {
-            this.setModel(SecondModel.getInstance((Long) ReportModel.getInstance().getValueAt(MainTable.getInstance().getSelectedRow(), 0)));
+            this.setModel(ExecutorModel.getInstance((Long) ReportModel.getInstance().getValueAt(MainTable.getInstance().getSelectedRow(), 0)));
             this.removeColumn(this.getColumnModel().getColumn(0));
-            ButtonBack.getInstance().setVisible(true);
-        } else if (MainTable.getInstance().getModel() instanceof SecondModel) {
+            BackButton.getInstance().setVisible(true);
+        } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
             this.removeColumn(this.getColumnModel().getColumn(0));
-            ButtonBack.getInstance().setVisible(false);
+            BackButton.getInstance().setVisible(false);
         }
     }
 }

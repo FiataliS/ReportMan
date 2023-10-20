@@ -16,6 +16,8 @@ public abstract class Model extends DefaultTableModel {
 
     public abstract void deleteRowEntity(int selectedRow);
 
+    public abstract int getIndexColumn(Integer searchColumn);
+
     public void setEditableModel(boolean editableModel) {
         this.isEditable = editableModel;
     }
@@ -35,6 +37,5 @@ public abstract class Model extends DefaultTableModel {
         return isEditable;
     }
 
-    public abstract int getIndexColumn(Integer searchColumn);
 
 }

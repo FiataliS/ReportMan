@@ -4,23 +4,22 @@ import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
-import com.fiatalis.windows.MainTable;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-public class SecondModel extends Model {
+public class ExecutorModel extends Model {
     private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Сдан отчет?"};
-    private static volatile SecondModel instance;
+    private static volatile ExecutorModel instance;
     private long reportId;
 
-    public static SecondModel getInstance(Long reportId) {
-        SecondModel localInstance = instance;
+    public static ExecutorModel getInstance(Long reportId) {
+        ExecutorModel localInstance = instance;
         if (localInstance == null) {
-            synchronized (SecondModel.class) {
+            synchronized (ExecutorModel.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new SecondModel();
+                    instance = localInstance = new ExecutorModel();
                 }
             }
         }
@@ -29,7 +28,7 @@ public class SecondModel extends Model {
         return localInstance;
     }
 
-    public SecondModel() {
+    public ExecutorModel() {
         super.employee = employee;
         listeners();
     }
@@ -42,16 +41,16 @@ public class SecondModel extends Model {
                 Executor executor = null;
                 int row = e.getFirstRow();
                 if (e.getColumn() > 0 & e.getColumn() < 4)
-                    executor = (Executor) executorDAO.findById((Long) SecondModel.this.getValueAt(row, getIndexColumn(0)));
+                    executor = (Executor) executorDAO.findById((Long) ExecutorModel.this.getValueAt(row, getIndexColumn(0)));
                 switch (e.getColumn()) {
                     case 1:
-                        executor.setName((String) SecondModel.this.getValueAt(row, getIndexColumn(1)));
+                        executor.setName((String) ExecutorModel.this.getValueAt(row, getIndexColumn(1)));
                         break;
                     case 2:
-                        executor.setResponsible((String) SecondModel.this.getValueAt(row, getIndexColumn(2)));
+                        executor.setResponsible((String) ExecutorModel.this.getValueAt(row, getIndexColumn(2)));
                         break;
                     case 3:
-                        executor.setPhone((String) SecondModel.this.getValueAt(row, getIndexColumn(3)));
+                        executor.setPhone((String) ExecutorModel.this.getValueAt(row, getIndexColumn(3)));
                         break;
                 }
                 if (e.getColumn() > 0 & e.getColumn() < 4) executorDAO.saveOrUpdate(executor);

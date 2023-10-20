@@ -6,6 +6,22 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class EditableCheckBox extends JCheckBoxMenuItem {
+
+    private static volatile EditableCheckBox instance;
+
+    public static EditableCheckBox getInstance() {
+        EditableCheckBox localInstance = instance;
+        if (localInstance == null) {
+            synchronized (EditableCheckBox.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new EditableCheckBox();
+                }
+            }
+        }
+        return localInstance;
+    }
+
     public EditableCheckBox() {
         super("Разрешить редактирование");
         listeners();
@@ -17,10 +33,10 @@ public class EditableCheckBox extends JCheckBoxMenuItem {
             public void actionPerformed(ActionEvent e) {
                 if (EditableCheckBox.this.getState()) {
                     MainTable.getInstance().setEditableModel(true);
-                    ButtonBack.getInstance().setEnabled(false);
+                    BackButton.getInstance().setEnabled(false);
                 } else {
                     MainTable.getInstance().setEditableModel(false);
-                    ButtonBack.getInstance().setEnabled(true);
+                    BackButton.getInstance().setEnabled(true);
                 }
             }
         });
