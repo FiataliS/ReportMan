@@ -6,7 +6,6 @@ public class MenuView extends JMenu {
     JMenuItem createdView = new JMenuItem("Извенить вид");
     JMenuItem createdFront = new JMenuItem("Изменить шрифт");
 
-
     public MenuView() {
         super("Вид");
         this.add(createdView);

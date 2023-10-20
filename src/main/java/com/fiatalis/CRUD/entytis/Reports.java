@@ -25,6 +25,7 @@ public class Reports implements Entity {
     }
 
     public String getDateString() {
+        if (date == null) return "";
         StringBuilder sb = new StringBuilder();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

@@ -3,7 +3,7 @@ package com.fiatalis.CRUD.DAO;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
-import com.fiatalis.windows.modelTable.SecondModel;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class ExecutorDAO implements DAO {
     private Statement statement;
@@ -27,9 +26,10 @@ public class ExecutorDAO implements DAO {
             ResultSet rs = statement.executeQuery("SELECT * FROM executor WHERE ID LIKE " + id + ";");
             Executor executor = new Executor();
             executor.setId((long) rs.getInt(1));
-            executor.setName(rs.getString(2));
-            executor.setResponsible(rs.getString(3));
-            executor.setPhone(rs.getString(4));
+            executor.setIdReport((long) rs.getInt(2));
+            executor.setName(rs.getString(3));
+            executor.setResponsible(rs.getString(4));
+            executor.setPhone(rs.getString(5));
             return executor;
         } catch (NullPointerException e) {
             return null;
@@ -44,9 +44,10 @@ public class ExecutorDAO implements DAO {
             if (rs == null || rs.getString(1).equals("id")) return null;
             Executor executor = new Executor();
             executor.setId((long) rs.getInt(1));
-            executor.setName(rs.getString(2));
-            executor.setResponsible(rs.getString(3));
-            executor.setPhone(rs.getString(4));
+            executor.setIdReport((long) rs.getInt(2));
+            executor.setName(rs.getString(3));
+            executor.setResponsible(rs.getString(4));
+            executor.setPhone(rs.getString(5));
             return executor;
         } catch (NullPointerException e) {
             return null;
@@ -59,8 +60,10 @@ public class ExecutorDAO implements DAO {
         ResultSet rs = statement.executeQuery("SELECT * FROM executor where id_report LIKE " + entityId + ";");
         List<Entity> list = new ArrayList<>();
         while (rs.next()) {
+            if (rs.getString(2) == null) break;
             Executor executor = new Executor();
             executor.setId((long) rs.getInt(1));
+            executor.setIdReport((long) rs.getInt(2));
             executor.setName(rs.getString(3));
             executor.setResponsible(rs.getString(4));
             executor.setPhone(rs.getString(5));
@@ -74,14 +77,13 @@ public class ExecutorDAO implements DAO {
     public boolean saveOrUpdate(Entity entity) {
         Executor executor = (Executor) entity;
         Executor r = (Executor) findByName(executor.getName());
-        if (r != null) {
-            executor.setId(r.getId());
-        }
+        if (r != null) executor.setId(r.getId());
         try {
             if (executor.getId() == -1) {
                 int x = statement.executeUpdate("insert into executor\n" +
-                        " (name, date, frequency, submitted)\n" +
-                        "values ('"
+                        " (id_report, name, responsible, phone)\n" +
+                        "values ("
+                        + executor.getIdReport() + ", '"
                         + executor.getName() + "', '"
                         + executor.getResponsible() + "', '"
                         + executor.getPhone() + "');");
@@ -90,7 +92,7 @@ public class ExecutorDAO implements DAO {
                 int x = statement.executeUpdate("update executor set " +
                         "name= '" + executor.getName() + "', " +
                         "responsible= '" + executor.getResponsible() + "', " +
-                        "phone= '" + executor.getPhone() + "', " +
+                        "phone= '" + executor.getPhone() + "' " +
                         "WHERE id= " + executor.getId() + ";");
                 return x == 1 ? true : false;
             }
@@ -103,6 +105,7 @@ public class ExecutorDAO implements DAO {
     public boolean deleteById(Long id) {
         try {
             int x = statement.executeUpdate("delete from executor WHERE id = " + id + ";");
+            System.out.println(id + " "+x);
             return x == 1 ? true : false;
         } catch (SQLException e) {
             return false;

@@ -1,0 +1,92 @@
+package com.fiatalis.windows;
+
+import com.fiatalis.CRUD.entytis.Executor;
+import com.fiatalis.CRUD.entytis.Reports;
+import com.fiatalis.windows.components.ButtonBack;
+import com.fiatalis.windows.components.modelTable.ReportModel;
+import com.fiatalis.windows.components.modelTable.SecondModel;
+
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class MainTable extends JTable {
+    private static volatile MainTable instance;
+
+    public static MainTable getInstance() {
+        MainTable localInstance = instance;
+        if (localInstance == null) {
+            synchronized (MainTable.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new MainTable();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+    public MainTable() {
+        super();
+        this.setModel(ReportModel.getInstance());
+        this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.removeColumn(this.getColumnModel().getColumn(0));
+        listeners();
+    }
+
+    private void listeners() {
+        this.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && !ReportModel.getInstance().isEditable) {
+                    if (MainTable.this.getModel() instanceof ReportModel) switchModel();
+                }
+            }
+        });
+    }
+
+    public void setEditableModel(Boolean editableModel) {
+        if (this.getModel() instanceof ReportModel) {
+            ReportModel r = (ReportModel) this.getModel();
+            r.setEditableModel(editableModel);
+        } else {
+            SecondModel s = (SecondModel) this.getModel();
+            s.setEditableModel(editableModel);
+        }
+    }
+
+    public void deleteRowEntity() {
+        if (this.getModel() instanceof ReportModel) {
+            ReportModel r = (ReportModel) this.getModel();
+            r.deleteRowEntity(this.getSelectedRow());
+            r.update();
+        } else {
+            SecondModel s = (SecondModel) this.getModel();
+            s.deleteRowEntity(this.getSelectedRow());
+            s.update();
+        }
+    }
+
+    public void addRowEntity() {
+        if (this.getModel() instanceof ReportModel) {
+            ReportModel r = (ReportModel) this.getModel();
+            r.addRowEntity(new Reports());
+            r.update();
+        } else {
+            SecondModel s = (SecondModel) this.getModel();
+            s.addRowEntity(new Executor());
+            s.update();
+        }
+    }
+
+    public void switchModel() {
+        if (MainTable.getInstance().getModel() instanceof ReportModel) {
+            this.setModel(SecondModel.getInstance((Long) ReportModel.getInstance().getValueAt(MainTable.getInstance().getSelectedRow(), 0)));
+            this.removeColumn(this.getColumnModel().getColumn(0));
+            ButtonBack.getInstance().setVisible(true);
+        } else if (MainTable.getInstance().getModel() instanceof SecondModel) {
+            this.setModel(ReportModel.getInstance());
+            this.removeColumn(this.getColumnModel().getColumn(0));
+            ButtonBack.getInstance().setVisible(false);
+        }
+    }
+}

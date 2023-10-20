@@ -1,5 +1,7 @@
 package com.fiatalis.windows.components;
 
+import com.fiatalis.windows.MainTable;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -14,10 +16,10 @@ public class EditableCheckBox extends JCheckBoxMenuItem {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (EditableCheckBox.this.getState()) {
-                    ListReports.getInstance().setEditableModel(true);
+                    MainTable.getInstance().setEditableModel(true);
                     ButtonBack.getInstance().setEnabled(false);
                 } else {
-                    ListReports.getInstance().setEditableModel(false);
+                    MainTable.getInstance().setEditableModel(false);
                     ButtonBack.getInstance().setEnabled(true);
                 }
             }

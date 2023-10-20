@@ -27,9 +27,9 @@ public class ReportsDAO implements DAO {
             ResultSet rs = statement.executeQuery("SELECT * FROM reportMain WHERE ID LIKE " + id + ";");
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
-            reports.setName(rs.getString(2));
-            reports.setDate(Date.valueOf(rs.getString(3)));
-            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
+            if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
+            if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
+            if (!rs.getString(4).equals("null")) reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(rs.getBoolean(5));
             return reports;
         } catch (NullPointerException e) {
@@ -45,10 +45,10 @@ public class ReportsDAO implements DAO {
             if (rs == null || rs.getString(1).equals("id")) return null;
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
-            reports.setName(rs.getString(2));
-            reports.setDate(Date.valueOf(rs.getString(3)));
-            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(Boolean.valueOf(rs.getBoolean(4)));
+            if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
+            if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
+            if (!rs.getString(4).equals("null")) reports.setFrequency(Frequency.valueOf(rs.getString(4)));
+            reports.setSubmitted(Boolean.valueOf(rs.getBoolean(5)));
             return reports;
         } catch (NullPointerException e) {
             return null;
@@ -63,9 +63,9 @@ public class ReportsDAO implements DAO {
         while (rs.next()) {
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
-            reports.setName(rs.getString(2));
-            reports.setDate(Date.valueOf(rs.getString(3)));
-            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
+            if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
+            if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
+            if (!rs.getString(4).equals("null")) reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
             list.add(reports);
         }
@@ -78,7 +78,6 @@ public class ReportsDAO implements DAO {
         Reports reports = (Reports) entity;
         Reports r = (Reports) findByName(reports.getName());
         if (r != null) reports.setId(r.getId());
-
         try {
             if (reports.getId() == -1) {
                 int x = statement.executeUpdate("insert into reportMain\n" +

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class Executor implements Entity {
 
     private Long id = -1L;
+    private Long idReport;
     private String name;
     private String Responsible;
     private String phone;
@@ -16,7 +17,8 @@ public class Executor implements Entity {
     public String toString() {
         return "Executor{" +
                 "id=" + id +
-                ", organization='" + name + '\'' +
+                ", idReport=" + idReport +
+                ", name='" + name + '\'' +
                 ", Responsible='" + Responsible + '\'' +
                 ", phone='" + phone + '\'' +
                 '}';

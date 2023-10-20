@@ -1,4 +1,4 @@
-package com.fiatalis.windows.modelTable;
+package com.fiatalis.windows.components.modelTable;
 
 import com.fiatalis.CRUD.entytis.Entity;
 
@@ -12,9 +12,9 @@ public abstract class Model extends DefaultTableModel {
 
     public abstract void update();
 
-    public abstract void addRow(Entity entity);
+    public abstract void addRowEntity(Entity entity);
 
-    public abstract void deleteRow();
+    public abstract void deleteRowEntity(int selectedRow);
 
     public void setEditableModel(boolean editableModel) {
         this.isEditable = editableModel;
@@ -35,13 +35,6 @@ public abstract class Model extends DefaultTableModel {
         return isEditable;
     }
 
-    public int getIndexColumn(Integer searchColumn) {
-        for (int i = 0; i < 5; i++) {
-            if (this.getColumnName(i).equals(employee[searchColumn])) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    public abstract int getIndexColumn(Integer searchColumn);
 
 }

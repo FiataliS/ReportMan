@@ -6,5 +6,4 @@ public class Controller {
         windows = new MainWindows();
         windows.setVisible(true);
     }
-
 }

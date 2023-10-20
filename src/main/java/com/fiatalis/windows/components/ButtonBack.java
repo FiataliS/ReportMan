@@ -1,6 +1,6 @@
 package com.fiatalis.windows.components;
 
-import com.fiatalis.windows.modelTable.MainModel;
+import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,9 +31,7 @@ public class ButtonBack extends JButton {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ListReports.getInstance().setModel(MainModel.getInstance());
-                ListReports.getInstance().removeColumn(ListReports.getInstance().getColumnModel().getColumn(0));
-                ButtonBack.getInstance().setVisible(false);
+                MainTable.getInstance().switchModel();
             }
         });
     }
