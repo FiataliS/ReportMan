@@ -27,8 +27,6 @@ public class MainWindows extends JFrame {
                 }
             }
         });
-
-
         this.setMinimumSize(new Dimension(740, 480));
         this.setLocationRelativeTo(null);
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
@@ -40,6 +38,4 @@ public class MainWindows extends JFrame {
         this.add(new JScrollPane(MainTable.getInstance()), BorderLayout.CENTER);
         this.add(BackButton.getInstance(), BorderLayout.SOUTH);
     }
-
-
 }

@@ -3,10 +3,12 @@ package com.fiatalis.windows;
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
 import com.fiatalis.windows.components.BackButton;
+import com.fiatalis.windows.components.EditableCheckBox;
 import com.fiatalis.windows.components.modelTable.ReportModel;
 import com.fiatalis.windows.components.modelTable.ExecutorModel;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -67,6 +69,7 @@ public class MainTable extends JTable {
     }
 
     public void addRowEntity() {
+       // EditableCheckBox.getInstance().setEditable(true);
         if (this.getModel() instanceof ReportModel) {
             ReportModel r = (ReportModel) this.getModel();
             r.addRowEntity(new Reports());

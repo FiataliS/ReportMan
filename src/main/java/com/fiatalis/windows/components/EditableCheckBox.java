@@ -31,14 +31,14 @@ public class EditableCheckBox extends JCheckBoxMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (EditableCheckBox.this.getState()) {
-                    MainTable.getInstance().setEditableModel(true);
-                    BackButton.getInstance().setEnabled(false);
-                } else {
-                    MainTable.getInstance().setEditableModel(false);
-                    BackButton.getInstance().setEnabled(true);
-                }
+                setEditable(EditableCheckBox.this.getState());
             }
         });
+    }
+
+    public void setEditable(boolean b) {
+        System.out.println(this.getState());
+        MainTable.getInstance().setEditableModel(b);
+        BackButton.getInstance().setEnabled(!b);
     }
 }

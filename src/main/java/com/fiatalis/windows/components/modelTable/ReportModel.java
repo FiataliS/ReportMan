@@ -5,7 +5,6 @@ import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Reports;
-import com.fiatalis.windows.MainTable;
 import lombok.Data;
 
 import javax.swing.event.TableModelEvent;

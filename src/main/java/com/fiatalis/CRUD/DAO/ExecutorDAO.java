@@ -76,7 +76,7 @@ public class ExecutorDAO implements DAO {
     public boolean saveOrUpdate(Entity entity) {
         Executor executor = (Executor) entity;
         Executor r = (Executor) findByName(executor.getName());
-        if (r != null) executor.setId(r.getId());
+        if (r != null && r.getIdReport() == executor.getIdReport()) executor.setId(r.getId());
         if (executor.getId() == -1) {
             return save(executor);
         } else {

@@ -46,7 +46,7 @@ public class ConnectDataBaseUtils {
 
     @SneakyThrows
     public void createTable() {
-        stmt.execute("CREATE TABLE reportMain (\n" +
+        stmt.execute("CREATE TABLE report (\n" +
                 "    id        INTEGER     PRIMARY KEY AUTOINCREMENT\n" +
                 "                          NOT NULL,\n" +
                 "    name      TEXT        NOT NULL\n" +
@@ -60,8 +60,7 @@ public class ConnectDataBaseUtils {
                 "    id          INTEGER PRIMARY KEY\n" +
                 "                        UNIQUE\n" +
                 "                        NOT NULL,\n" +
-                "    id_report   INTEGER REFERENCES reportMain (id) \n" +
-                "                        NOT NULL,\n" +
+                "    id_report   INTEGER NOT NULL,\n" +
                 "    name        TEXT    NOT NULL,\n" +
                 "    responsible TEXT    NOT NULL,\n" +
                 "    phone       TEXT    NOT NULL\n" +

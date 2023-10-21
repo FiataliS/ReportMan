@@ -25,7 +25,7 @@ public class ReportsDAO implements DAO {
     @Override
     public Entity findById(Long id) {
         try {
-            ResultSet rs = statement.executeQuery("SELECT * FROM reportMain WHERE ID LIKE " + id + ";");
+            ResultSet rs = statement.executeQuery("SELECT * FROM report WHERE ID LIKE " + id + ";");
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
             if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
@@ -42,7 +42,7 @@ public class ReportsDAO implements DAO {
     @Override
     public Entity findByName(String name) {
         try {
-            ResultSet rs = statement.executeQuery("SELECT * FROM reportMain WHERE name LIKE '" + name + "';");
+            ResultSet rs = statement.executeQuery("SELECT * FROM report WHERE name LIKE '" + name + "';");
             if (rs == null || rs.getString(1).equals("id")) return null;
             Reports reports = new Reports();
             reports.setId((long) rs.getInt(1));
@@ -59,7 +59,7 @@ public class ReportsDAO implements DAO {
     @SneakyThrows
     @Override
     public List<Entity> findAll(Long entityId) {
-        ResultSet rs = statement.executeQuery("SELECT * FROM reportMain");
+        ResultSet rs = statement.executeQuery("SELECT * FROM report");
         List<Entity> list = new ArrayList<>();
         while (rs.next()) {
             Reports reports = new Reports();
@@ -81,7 +81,7 @@ public class ReportsDAO implements DAO {
         if (r != null) reports.setId(r.getId());
         try {
             if (reports.getId() == -1) {
-                int x = statement.executeUpdate("insert into reportMain\n" +
+                int x = statement.executeUpdate("insert into report\n" +
                         " (name, date, frequency, submitted)\n" +
                         "values ('"
                         + reports.getName() + "', '"
@@ -90,7 +90,7 @@ public class ReportsDAO implements DAO {
                         + reports.getSubmitted() + "');");
                 return x == 1 ? true : false;
             } else {
-                int x = statement.executeUpdate("update reportMain set " +
+                int x = statement.executeUpdate("update report set " +
                         "name= '" + reports.getName() + "', " +
                         "date= '" + reports.getDate() + "', " +
                         "frequency= '" + reports.getFrequency() + "', " +
@@ -105,9 +105,9 @@ public class ReportsDAO implements DAO {
 
     @Override
     public boolean deleteById(Long id) {
-        deleteExecutorByReport(id);
+        // deleteExecutorByReport(id);
         try {
-            int x = statement.executeUpdate("delete from reportMain WHERE id = " + id + ";");
+            int x = statement.executeUpdate("delete from report WHERE id = " + id + ";");
             return x == 1 ? true : false;
         } catch (SQLException e) {
             return false;
@@ -119,7 +119,7 @@ public class ReportsDAO implements DAO {
         Reports reports = (Reports) findByName(name);
         deleteExecutorByReport(reports.getId());
         try {
-            int x = statement.executeUpdate("delete from reportMain WHERE name ='" + name + "';");
+            int x = statement.executeUpdate("delete from report WHERE name ='" + name + "';");
             return x == 1 ? true : false;
         } catch (SQLException e) {
             return false;
