@@ -2,7 +2,6 @@ package com.fiatalis.windows.components.modelTable;
 
 import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
-import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Reports;
 import lombok.Data;
@@ -50,7 +49,7 @@ public class ReportModel extends Model {
         DAO rp = new ReportsDAO();
         for (Entity e : rp.findAll(null)) {
             Reports r = (Reports) e;
-            this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency(), r.getSubmitted()});
+            this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency().getName(), r.getSubmitted()});
         }
     }
 
@@ -71,7 +70,7 @@ public class ReportModel extends Model {
                         reports.setDate(Date.valueOf((String) ReportModel.this.getValueAt(row, getIndexColumn(2))));
                         break;
                     case 3:
-                        reports.setFrequency(Frequency.valueOf((String) ReportModel.this.getValueAt(row, getIndexColumn(3))));
+                        reports.setFrequencyInString((String) ReportModel.this.getValueAt(row, getIndexColumn(3)));
                         break;
                     case 4:
                         reports.setSubmitted((Boolean) ReportModel.this.getValueAt(row, getIndexColumn(4)));

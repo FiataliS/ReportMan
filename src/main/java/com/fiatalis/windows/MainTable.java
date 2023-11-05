@@ -1,8 +1,10 @@
 package com.fiatalis.windows;
 
+import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
 import com.fiatalis.windows.components.BackButton;
+import com.fiatalis.windows.components.FrequencyComboBox;
 import com.fiatalis.windows.components.modelTable.ReportModel;
 import com.fiatalis.windows.components.modelTable.ExecutorModel;
 
@@ -32,6 +34,7 @@ public class MainTable extends JTable {
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.removeColumn(this.getColumnModel().getColumn(0));
+        this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
     }
 
     private void listeners() {
@@ -69,7 +72,9 @@ public class MainTable extends JTable {
     public void addRowEntity() {
         if (this.getModel() instanceof ReportModel) {
             ReportModel r = (ReportModel) this.getModel();
-            r.addRowEntity(new Reports());
+            Reports reports = new Reports();
+            reports.setFrequency(Frequency.None);
+            r.addRowEntity(reports);
             r.update();
         } else {
             ExecutorModel s = (ExecutorModel) this.getModel();
@@ -86,6 +91,7 @@ public class MainTable extends JTable {
         } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
             this.removeColumn(this.getColumnModel().getColumn(0));
+            this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
             BackButton.getInstance().setVisible(false);
         }
     }

@@ -45,4 +45,14 @@ public class Reports implements Entity {
                 ", submitted=" + submitted +
                 '}';
     }
+
+    public void setFrequencyInString(String frequency) {
+        if (frequency.equals("null") || frequency.equals(Frequency.None.getName())) {
+            this.frequency = Frequency.None;
+        } else if (frequency.equals(Frequency.Monthly.getName())) {
+            this.frequency = Frequency.Monthly;
+        } else if (frequency.equals(Frequency.Quarterly.getName())) {
+            this.frequency = Frequency.Quarterly;
+        }
+    }
 }

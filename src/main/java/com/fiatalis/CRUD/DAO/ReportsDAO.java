@@ -30,7 +30,7 @@ public class ReportsDAO implements DAO {
             reports.setId((long) rs.getInt(1));
             if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
             if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
-            if (!rs.getString(4).equals("null")) reports.setFrequency(Frequency.valueOf(rs.getString(4)));
+            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(rs.getBoolean(5));
             return reports;
         } catch (NullPointerException e) {
@@ -48,7 +48,7 @@ public class ReportsDAO implements DAO {
             reports.setId((long) rs.getInt(1));
             if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
             if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
-            if (!rs.getString(4).equals("null")) reports.setFrequency(Frequency.valueOf(rs.getString(4)));
+            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(Boolean.valueOf(rs.getBoolean(5)));
             return reports;
         } catch (NullPointerException e) {
@@ -66,7 +66,7 @@ public class ReportsDAO implements DAO {
             reports.setId((long) rs.getInt(1));
             if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
             if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
-            if (!rs.getString(4).equals("null")) reports.setFrequency(Frequency.valueOf(rs.getString(4)));
+            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
             list.add(reports);
         }
