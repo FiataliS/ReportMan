@@ -1,5 +1,8 @@
 package com.fiatalis.windows.components;
 
+import com.fiatalis.CRUD.ConnectDataBaseUtils;
+import com.fiatalis.CRUD.DAO.ExecutorDAO;
+import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
@@ -37,7 +40,9 @@ public class DeleteButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainTable.getInstance().deleteRowEntity();
+                int choice = JOptionPane.showConfirmDialog(null, "Удаление не обратимо!", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
+                if (choice == JOptionPane.OK_OPTION) MainTable.getInstance().deleteRowEntity();
+
             }
         });
     }
