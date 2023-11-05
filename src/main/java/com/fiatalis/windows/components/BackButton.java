@@ -3,6 +3,7 @@ package com.fiatalis.windows.components;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class BackButton extends JButton {
@@ -22,7 +23,9 @@ public class BackButton extends JButton {
     }
 
     public BackButton() {
-        super("Закрыть исполнителей");
+        super();
+        Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonBack.png"));
+        this.setIcon(new ImageIcon(img));
         listener();
         setVisible(false);
     }

@@ -61,7 +61,8 @@ public class ReportModel extends Model {
                 DAO rp = new ReportsDAO();
                 Reports reports = null;
                 int row = e.getFirstRow();
-                if (e.getColumn() > 0 & e.getColumn() < 5) reports = (Reports) rp.findById((Long) ReportModel.this.getValueAt(row, getIndexColumn(0)));
+                if (e.getColumn() > 0 & e.getColumn() < 5)
+                    reports = (Reports) rp.findById((Long) ReportModel.this.getValueAt(row, getIndexColumn(0)));
                 switch (e.getColumn()) {
                     case 1:
                         reports.setName((String) ReportModel.this.getValueAt(row, getIndexColumn(1)));

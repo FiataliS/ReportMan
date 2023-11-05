@@ -15,15 +15,19 @@ public class MainWindows extends JFrame {
     public MainWindows() throws HeadlessException {
         addComponent();
         this.setTitle("ReportMan");
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/icon.png")));
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (JOptionPane.showConfirmDialog(MainWindows.this, "Не сохраненные данные будут потеряны!") == JOptionPane.OK_OPTION) {
+                int choice = JOptionPane.showConfirmDialog(null, "Несохраненные данные будут утеряны.", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
+                if (choice == JOptionPane.OK_OPTION) {
                     new ExecutorDAO().deleteNull();
                     new ReportsDAO().deleteNull();
                     ConnectDataBaseUtils.getInstance().disconnect();
                     System.exit(0);
+                } else if (choice == JOptionPane.CANCEL_OPTION) {
+
                 }
             }
         });

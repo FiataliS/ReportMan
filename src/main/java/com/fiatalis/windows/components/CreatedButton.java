@@ -3,6 +3,7 @@ package com.fiatalis.windows.components;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class CreatedButton extends JMenuItem {
@@ -23,7 +24,9 @@ public class CreatedButton extends JMenuItem {
     }
 
     public CreatedButton() {
-        super("Новый отчет");
+        super();
+        Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonCreate.png"));
+        this.setIcon(new ImageIcon(img));
         listeners();
     }
 

@@ -3,12 +3,12 @@ package com.fiatalis.windows;
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
 import com.fiatalis.windows.components.BackButton;
-import com.fiatalis.windows.components.EditableCheckBox;
 import com.fiatalis.windows.components.modelTable.ReportModel;
 import com.fiatalis.windows.components.modelTable.ExecutorModel;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import javax.swing.table.TableColumn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,10 +30,10 @@ public class MainTable extends JTable {
 
     public MainTable() {
         super();
+        listeners();
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.removeColumn(this.getColumnModel().getColumn(0));
-        listeners();
     }
 
     private void listeners() {

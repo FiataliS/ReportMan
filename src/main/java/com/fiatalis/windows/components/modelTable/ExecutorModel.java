@@ -66,6 +66,7 @@ public class ExecutorModel extends Model {
             Executor r = (Executor) e;
             this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone()});
         }
+
     }
 
     @Override

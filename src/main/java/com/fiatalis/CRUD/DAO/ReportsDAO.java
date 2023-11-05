@@ -105,7 +105,7 @@ public class ReportsDAO implements DAO {
 
     @Override
     public boolean deleteById(Long id) {
-        // deleteExecutorByReport(id);
+        deleteExecutorByReport(id);
         try {
             int x = statement.executeUpdate("delete from report WHERE id = " + id + ";");
             return x == 1 ? true : false;
