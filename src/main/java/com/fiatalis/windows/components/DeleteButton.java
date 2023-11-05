@@ -3,6 +3,7 @@ package com.fiatalis.windows.components;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -26,6 +27,7 @@ public class DeleteButton extends JMenuItem {
 
     public DeleteButton() {
         super();
+        this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonDelete.png"));
         this.setIcon(new ImageIcon(img));
         listeners();

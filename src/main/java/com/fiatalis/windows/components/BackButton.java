@@ -3,10 +3,12 @@ package com.fiatalis.windows.components;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class BackButton extends JButton {
+public class BackButton extends JMenuItem {
+
     private static volatile BackButton instance;
 
     public static BackButton getInstance() {
@@ -24,13 +26,15 @@ public class BackButton extends JButton {
 
     public BackButton() {
         super();
+        this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonBack.png"));
         this.setIcon(new ImageIcon(img));
-        listener();
-        setVisible(false);
+        this.setHorizontalTextPosition(this.getSize().width / 2);
+        this.setVisible(false);
+        listeners();
     }
 
-    private void listener() {
+    private void listeners() {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

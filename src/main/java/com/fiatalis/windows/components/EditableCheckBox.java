@@ -3,10 +3,13 @@ package com.fiatalis.windows.components;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class EditableCheckBox extends JCheckBoxMenuItem {
+public class EditableCheckBox extends JMenuItem {
 
+    private boolean isEditable = false;
     private static volatile EditableCheckBox instance;
 
     public static EditableCheckBox getInstance() {
@@ -23,7 +26,9 @@ public class EditableCheckBox extends JCheckBoxMenuItem {
     }
 
     public EditableCheckBox() {
-        super("Разрешить редактирование");
+        super();
+        this.setBorder(new BevelBorder(0));
+        setIcon();
         listeners();
     }
 
@@ -31,14 +36,26 @@ public class EditableCheckBox extends JCheckBoxMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setEditable(EditableCheckBox.this.getState());
+                setEditable(!isEditable);
             }
         });
     }
 
+    private void setIcon() {
+        Image img;
+        if (!isEditable) {
+            img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonEditableLock.png"));
+        } else {
+            img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonEditableUnlock.png"));
+        }
+        this.setIcon(new ImageIcon(img));
+        this.setHorizontalTextPosition(SwingConstants.RIGHT);
+    }
+
     public void setEditable(boolean b) {
-        System.out.println(this.getState());
+        isEditable = b;
         MainTable.getInstance().setEditableModel(b);
         BackButton.getInstance().setEnabled(!b);
+        setIcon();
     }
 }

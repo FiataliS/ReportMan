@@ -3,6 +3,7 @@ package com.fiatalis.windows.components;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -25,8 +26,10 @@ public class CreatedButton extends JMenuItem {
 
     public CreatedButton() {
         super();
+        this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonCreate.png"));
         this.setIcon(new ImageIcon(img));
+        this.setHorizontalTextPosition(this.getSize().width/2);
         listeners();
     }
 

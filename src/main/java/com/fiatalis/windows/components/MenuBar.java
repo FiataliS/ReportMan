@@ -4,17 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuBar extends JMenuBar {
+
+
     public MenuBar() {
-        JPanel p = new JPanel(new GridLayout(1,4));
-        p.add(new CreatedButton());
-        p.add(new DeleteButton());
+        JPanel p = new JPanel(new GridLayout(1, 17));
+        p.add(CreatedButton.getInstance());
         p.add(Box.createGlue());
-        p.add(new EditableCheckBox());
+        p.add(DeleteButton.getInstance());
+        p.add(Box.createGlue());
+        p.add(BackButton.getInstance());
+        for (int i = 0; i < 10; i++) {
+            p.add(Box.createGlue());
+        }
+        p.add(EditableCheckBox.getInstance());
         this.add(p);
-//        this.add(new CreatedButton());
-//        this.add(Box.createHorizontalGlue());
-//        this.add(new DeleteButton());
-//        this.add(Box.createHorizontalGlue());
-//        this.add(new EditableCheckBox());
     }
 }
