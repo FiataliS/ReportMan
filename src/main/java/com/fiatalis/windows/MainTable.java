@@ -7,10 +7,15 @@ import com.fiatalis.windows.components.BackButton;
 import com.fiatalis.windows.components.FrequencyComboBox;
 import com.fiatalis.windows.components.modelTable.ReportModel;
 import com.fiatalis.windows.components.modelTable.ExecutorModel;
+import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 public class MainTable extends JTable {
     private static volatile MainTable instance;
@@ -30,10 +35,14 @@ public class MainTable extends JTable {
 
     public MainTable() {
         super();
+        //this.setBackground(new Color(62, 171, 164));
         listeners();
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.removeColumn(this.getColumnModel().getColumn(0));
+        DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
+        datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
+        this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
         this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
     }
 
@@ -91,6 +100,9 @@ public class MainTable extends JTable {
         } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
             this.removeColumn(this.getColumnModel().getColumn(0));
+            DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
+            datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
+            this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
             this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
             BackButton.getInstance().setVisible(false);
         }

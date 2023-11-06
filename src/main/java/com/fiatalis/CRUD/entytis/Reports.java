@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 @Data
 @NoArgsConstructor
@@ -26,13 +26,7 @@ public class Reports implements Entity {
 
     public String getDateString() {
         if (date == null) return "";
-        StringBuilder sb = new StringBuilder();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        sb.append(calendar.get(Calendar.DAY_OF_MONTH) + ".");
-        sb.append(calendar.get(Calendar.MONTH) + ".");
-        sb.append(calendar.get(Calendar.YEAR));
-        return sb.toString();
+        return new SimpleDateFormat("dd.MM.yyг.").format(date);
     }
 
     @Override

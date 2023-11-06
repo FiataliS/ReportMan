@@ -8,7 +8,8 @@ import lombok.Data;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class ReportModel extends Model {
@@ -40,6 +41,9 @@ public class ReportModel extends Model {
         if (this.getValueAt(0, column) instanceof Boolean) {
             return Boolean.class;
         }
+        if (this.getColumnName(column).equals("Дата")) {
+            return LocalDateTime.class;
+        }
         return String.class;
     }
 
@@ -67,7 +71,9 @@ public class ReportModel extends Model {
                         reports.setName((String) ReportModel.this.getValueAt(row, getIndexColumn(1)));
                         break;
                     case 2:
-                        reports.setDate(Date.valueOf((String) ReportModel.this.getValueAt(row, getIndexColumn(2))));
+                        Date date =  (Date) ReportModel.this.getValueAt(row, getIndexColumn(2));
+                        reports.setDate(new java.sql.Date(date.getTime()));
+                        //ReportModel.this.setValueAt(reports.getDateString(), row, getIndexColumn(2));
                         break;
                     case 3:
                         reports.setFrequencyInString((String) ReportModel.this.getValueAt(row, getIndexColumn(3)));
