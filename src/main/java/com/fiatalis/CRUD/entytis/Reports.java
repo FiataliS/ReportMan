@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -29,6 +30,20 @@ public class Reports implements Entity {
         return new SimpleDateFormat("dd.MM.yyг.").format(date);
     }
 
+    public void setDateOnString(String string) {
+        if (string == null || string.equals("")) {
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("00");
+        sb.append(String.copyValueOf(string.toCharArray(), string.length() - 4, 2));
+        sb.append("-");
+        sb.append(String.copyValueOf(string.toCharArray(), string.length() - 7, 2));
+        sb.append("-");
+        sb.append(String.copyValueOf(string.toCharArray(), 0, 2));
+        this.date = Date.valueOf(sb.toString());
+    }
+
     @Override
     public String toString() {
         return "Reports{" +
@@ -48,5 +63,18 @@ public class Reports implements Entity {
         } else if (frequency.equals(Frequency.Quarterly.getName())) {
             this.frequency = Frequency.Quarterly;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reports reports = (Reports) o;
+        return Objects.equals(id, reports.id) && Objects.equals(name, reports.name) && Objects.equals(date, reports.date) && frequency == reports.frequency && Objects.equals(submitted, reports.submitted);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, date, frequency, submitted);
     }
 }

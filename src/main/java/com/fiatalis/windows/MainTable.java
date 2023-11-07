@@ -10,12 +10,9 @@ import com.fiatalis.windows.components.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 
 public class MainTable extends JTable {
     private static volatile MainTable instance;
@@ -34,8 +31,6 @@ public class MainTable extends JTable {
     }
 
     public MainTable() {
-        super();
-        //this.setBackground(new Color(62, 171, 164));
         listeners();
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -49,7 +44,7 @@ public class MainTable extends JTable {
     private void listeners() {
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && !ReportModel.getInstance().isEditable) {
+                if (e.getClickCount() == 2 && !ReportModel.getInstance().getIsEditable()) {
                     if (MainTable.this.getModel() instanceof ReportModel) switchModel();
                 }
             }
@@ -70,11 +65,9 @@ public class MainTable extends JTable {
         if (this.getModel() instanceof ReportModel) {
             ReportModel r = (ReportModel) this.getModel();
             r.deleteRowEntity(this.getSelectedRow());
-            r.update();
         } else {
             ExecutorModel s = (ExecutorModel) this.getModel();
             s.deleteRowEntity(this.getSelectedRow());
-            s.update();
         }
     }
 
@@ -84,17 +77,15 @@ public class MainTable extends JTable {
             Reports reports = new Reports();
             reports.setFrequency(Frequency.None);
             r.addRowEntity(reports);
-            r.update();
         } else {
             ExecutorModel s = (ExecutorModel) this.getModel();
             s.addRowEntity(new Executor());
-            s.update();
         }
     }
 
     public void switchModel() {
         if (MainTable.getInstance().getModel() instanceof ReportModel) {
-            this.setModel(ExecutorModel.getInstance((Long) ReportModel.getInstance().getValueAt(MainTable.getInstance().getSelectedRow(), 0)));
+            this.setModel(new ExecutorModel((Long) ReportModel.getInstance().getValueAt(MainTable.getInstance().getSelectedRow(), 0)));
             this.removeColumn(this.getColumnModel().getColumn(0));
             BackButton.getInstance().setVisible(true);
         } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {

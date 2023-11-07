@@ -40,9 +40,14 @@ public class DeleteButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int choice = JOptionPane.showConfirmDialog(null, "Удаление не обратимо!", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
-                if (choice == JOptionPane.OK_OPTION) MainTable.getInstance().deleteRowEntity();
-
+                Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));
+                final JOptionPane pane = new JOptionPane("Строка не выбрана!", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION, new ImageIcon(img), new String[]{"OK"});
+                JDialog dialog = pane.createDialog(null, "Ошибка!");
+                if (MainTable.getInstance().getSelectedRow() < 0) {
+                    dialog.setVisible(true);
+                } else {
+                    MainTable.getInstance().deleteRowEntity();
+                }
             }
         });
     }

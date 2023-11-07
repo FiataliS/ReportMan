@@ -1,12 +1,19 @@
 package com.fiatalis.windows.components.modelTable;
 
+import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.entytis.Entity;
+import lombok.Data;
 
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
+@Data
 public abstract class Model extends DefaultTableModel {
-    public String[] employee;
-    public Boolean isEditable = false;
+    protected String[] employee;
+    protected Boolean isEditable = false;
+    protected List<Entity> entityListFromDataBase = null;
+    protected DAO dao;
+
 
     public abstract void listeners();
 
@@ -21,6 +28,8 @@ public abstract class Model extends DefaultTableModel {
     public void setEditableModel(boolean editableModel) {
         this.isEditable = editableModel;
     }
+
+    public abstract List<Entity> getEntityListFromModel();
 
     @Override
     public int getColumnCount() {

@@ -4,6 +4,7 @@ import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.windows.components.MenuBar;
+import com.fiatalis.windows.components.SaveButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,9 @@ public class MainWindows extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int choice = JOptionPane.showConfirmDialog(null, "Несохраненные данные будут утеряны.", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
+                int choice = 0;
+                if (SaveButton.getInstance().isVisible())
+                    choice = JOptionPane.showConfirmDialog(null, "Несохраненные данные будут утеряны.", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
                 if (choice == JOptionPane.OK_OPTION) {
                     new ExecutorDAO().deleteNull();
                     new ReportsDAO().deleteNull();

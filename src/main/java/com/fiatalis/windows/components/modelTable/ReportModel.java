@@ -1,20 +1,18 @@
 package com.fiatalis.windows.components.modelTable;
 
-import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Reports;
-import lombok.Data;
+import com.fiatalis.windows.components.SaveButton;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Data
 public class ReportModel extends Model {
     private final String[] employee = new String[]{"id", "Наименование", "Дата", "Периодичность", "Напоминание"};
-
     private static volatile ReportModel instance;
 
     public static ReportModel getInstance() {
@@ -32,6 +30,7 @@ public class ReportModel extends Model {
 
     public ReportModel() {
         super.employee = employee;
+        dao = new ReportsDAO();
         listeners();
         update();
     }
@@ -41,17 +40,14 @@ public class ReportModel extends Model {
         if (this.getValueAt(0, column) instanceof Boolean) {
             return Boolean.class;
         }
-        if (this.getColumnName(column).equals("Дата")) {
-            return LocalDateTime.class;
-        }
         return String.class;
     }
 
     @Override
     public void update() {
         this.setRowCount(0);
-        DAO rp = new ReportsDAO();
-        for (Entity e : rp.findAll(null)) {
+        this.setEntityListFromDataBase(dao.findAll(null));
+        for (Entity e : entityListFromDataBase) {
             Reports r = (Reports) e;
             this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency().getName(), r.getSubmitted()});
         }
@@ -61,45 +57,23 @@ public class ReportModel extends Model {
         this.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                DAO rp = new ReportsDAO();
-                Reports reports = null;
-                int row = e.getFirstRow();
-                if (e.getColumn() > 0 & e.getColumn() < 5)
-                    reports = (Reports) rp.findById((Long) ReportModel.this.getValueAt(row, getIndexColumn(0)));
-                switch (e.getColumn()) {
-                    case 1:
-                        reports.setName((String) ReportModel.this.getValueAt(row, getIndexColumn(1)));
-                        break;
-                    case 2:
-                        Date date =  (Date) ReportModel.this.getValueAt(row, getIndexColumn(2));
-                        reports.setDate(new java.sql.Date(date.getTime()));
-                        //ReportModel.this.setValueAt(reports.getDateString(), row, getIndexColumn(2));
-                        break;
-                    case 3:
-                        reports.setFrequencyInString((String) ReportModel.this.getValueAt(row, getIndexColumn(3)));
-                        break;
-                    case 4:
-                        reports.setSubmitted((Boolean) ReportModel.this.getValueAt(row, getIndexColumn(4)));
-                        break;
+                if (!ReportModel.this.getEntityListFromModel().equals(entityListFromDataBase)) {
+                    SaveButton.getInstance().setVisible(true);
+                } else {
+                    SaveButton.getInstance().setVisible(false);
                 }
-                if (e.getColumn() > 0 & e.getColumn() < 5) rp.saveOrUpdate(reports);
             }
         });
     }
 
     @Override
     public void addRowEntity(Entity entity) {
-        DAO reportsDAO = new ReportsDAO();
-        reportsDAO.saveOrUpdate(entity);
+        this.addRow(new Object[]{entity.getId(), null, null, "Нет", false});
     }
 
     @Override
     public void deleteRowEntity(int selectedRow) {
-        DAO reportsDAO = new ReportsDAO();
-        try {
-            reportsDAO.deleteById((Long) this.getValueAt(selectedRow, 0));
-        } catch (ArrayIndexOutOfBoundsException e) {
-        }
+        this.removeRow(selectedRow);
     }
 
     @Override
@@ -110,5 +84,26 @@ public class ReportModel extends Model {
             }
         }
         return -1;
+    }
+
+    @Override
+    public List<Entity> getEntityListFromModel() {
+        int countRow = this.getRowCount();
+        List<Entity> list = new ArrayList<>();
+        for (int i = 0; i < countRow; i++) {
+            Reports reports = new Reports();
+            reports.setId((Long) this.getValueAt(i, getIndexColumn(0)));
+            reports.setName((String) this.getValueAt(i, getIndexColumn(1)));
+            Object newDate = this.getValueAt(i, getIndexColumn(2));
+            if (newDate instanceof Date) {
+                reports.setDate(new java.sql.Date(((Date) newDate).getTime()));
+            } else {
+                reports.setDateOnString((String) newDate);
+            }
+            reports.setFrequencyInString((String) this.getValueAt(i, getIndexColumn(3)));
+            reports.setSubmitted((Boolean) getValueAt(i, getIndexColumn(4)));
+            list.add(reports);
+        }
+        return list;
     }
 }
