@@ -1,5 +1,6 @@
 package com.fiatalis.windows.components;
 
+import com.fiatalis.Main;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
@@ -38,6 +39,7 @@ public class BackButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                NameLabel.getInstance().setVisible(false);
                 MainTable.getInstance().switchModel();
             }
         });

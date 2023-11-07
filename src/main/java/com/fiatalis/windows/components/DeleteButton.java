@@ -1,8 +1,5 @@
 package com.fiatalis.windows.components;
 
-import com.fiatalis.CRUD.ConnectDataBaseUtils;
-import com.fiatalis.CRUD.DAO.ExecutorDAO;
-import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;

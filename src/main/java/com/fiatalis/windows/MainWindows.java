@@ -4,6 +4,7 @@ import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.windows.components.MenuBar;
+import com.fiatalis.windows.components.NameLabel;
 import com.fiatalis.windows.components.SaveButton;
 
 import javax.swing.*;
@@ -42,5 +43,6 @@ public class MainWindows extends JFrame {
     private void addComponent() {
         this.add(new MenuBar(), BorderLayout.NORTH);
         this.add(new JScrollPane(MainTable.getInstance()), BorderLayout.CENTER);
+        this.add(NameLabel.getInstance(),BorderLayout.SOUTH);
     }
 }
