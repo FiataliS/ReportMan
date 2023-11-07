@@ -30,6 +30,8 @@ public class ExecutorDAO implements DAO {
             executor.setName(rs.getString(3));
             executor.setResponsible(rs.getString(4));
             executor.setPhone(rs.getString(5));
+            executor.setSubmit(Boolean.valueOf(rs.getString(6)));
+            executor.setHistory(Boolean.valueOf(rs.getString(7)));
             return executor;
         } catch (NullPointerException e) {
             return null;
@@ -48,6 +50,8 @@ public class ExecutorDAO implements DAO {
             executor.setName(rs.getString(3));
             executor.setResponsible(rs.getString(4));
             executor.setPhone(rs.getString(5));
+            executor.setSubmit(Boolean.valueOf(rs.getString(6)));
+            executor.setHistory(Boolean.valueOf(rs.getString(7)));
             return executor;
         } catch (NullPointerException e) {
             return null;
@@ -67,6 +71,8 @@ public class ExecutorDAO implements DAO {
             if (!rs.getString(3).equals("null")) executor.setName(rs.getString(3));
             if (!rs.getString(4).equals("null")) executor.setResponsible(rs.getString(4));
             if (!rs.getString(5).equals("null")) executor.setPhone(rs.getString(5));
+            executor.setSubmit(Boolean.valueOf(rs.getString(6)));
+            executor.setHistory(Boolean.valueOf(rs.getString(7)));
             list.add(executor);
         }
         return list;
@@ -92,7 +98,9 @@ public class ExecutorDAO implements DAO {
                 + executor.getIdReport() + ", '"
                 + executor.getName() + "', '"
                 + executor.getResponsible() + "', '"
-                + executor.getPhone() + "');");
+                + executor.getPhone() + "', '"
+                + executor.getSubmit() + "', '"
+                + executor.getHistory() + "');");
         return x == 1 ? true : false;
     }
 
@@ -101,7 +109,9 @@ public class ExecutorDAO implements DAO {
         int x = statement.executeUpdate("update executor set " +
                 "name= '" + executor.getName() + "', " +
                 "responsible= '" + executor.getResponsible() + "', " +
-                "phone= '" + executor.getPhone() + "' " +
+                "phone= '" + executor.getPhone() + "', " +
+                "submit= '" + executor.getSubmit() + "', " +
+                "history= '" + executor.getHistory() + "' " +
                 "WHERE id= " + executor.getId() + ";");
         return x == 1 ? true : false;
     }

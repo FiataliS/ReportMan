@@ -53,7 +53,9 @@ public class ConnectDataBaseUtils {
                 "                          UNIQUE,\n" +
                 "    date      DATE        NOT NULL,\n" +
                 "    frequency TEXT        NOT NULL,\n" +
-                "    submitted TEXT (5, 5) NOT NULL\n" +
+                "    submitted TEXT (5, 5) NOT NULL,\n" +
+                "    link      TEXT,\n" +
+                "    history   TEXT        NOT NULL\n" +
                 ");");
 
         stmt.execute("CREATE TABLE executor (\n" +
@@ -63,7 +65,13 @@ public class ConnectDataBaseUtils {
                 "    id_report   INTEGER NOT NULL,\n" +
                 "    name        TEXT    NOT NULL,\n" +
                 "    responsible TEXT    NOT NULL,\n" +
-                "    phone       TEXT    NOT NULL\n" +
+                "    phone       TEXT    NOT NULL,\n" +
+                "    submit      TEXT    NOT NULL,\n" +
+                "    history     TEXT    NOT NULL,\n" +
+                "    FOREIGN KEY (\n" +
+                "        id_report\n" +
+                "    )\n" +
+                "    REFERENCES report (id) ON DELETE CASCADE\n" +
                 ");");
 
         stmt.execute("CREATE TABLE deadline (\n" +

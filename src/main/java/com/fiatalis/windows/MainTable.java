@@ -95,6 +95,7 @@ public class MainTable extends JTable {
 
     private void optionTableExecutor(){
         this.removeColumn(this.getColumnModel().getColumn(0));
+        this.removeColumn(this.getColumnModel().getColumn(4));
         this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
         this.getColumnModel().getColumn(1).setCellRenderer(new LineWrapCellRenderer());
         this.getColumnModel().getColumn(1).setMaxWidth(300);
@@ -110,6 +111,8 @@ public class MainTable extends JTable {
 
     private void optionTableReport(){
         this.removeColumn(this.getColumnModel().getColumn(0));
+        this.removeColumn(this.getColumnModel().getColumn(4));
+        this.removeColumn(this.getColumnModel().getColumn(4));
         DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
         datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);

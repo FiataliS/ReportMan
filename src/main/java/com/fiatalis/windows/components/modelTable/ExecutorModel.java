@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExecutorModel extends Model {
-    private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Сдан отчет?"};
+    private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Готовность", "История"};
     private long reportId;
     private final Reports reports;
 
@@ -28,12 +28,20 @@ public class ExecutorModel extends Model {
     }
 
     @Override
+    public Class<?> getColumnClass(int column) {
+        if (this.getValueAt(0, column) instanceof Boolean) {
+            return Boolean.class;
+        }
+        return String.class;
+    }
+
+    @Override
     public void update() {
         this.setRowCount(0);
         this.setEntityListFromDataBase(dao.findAll(reportId));
         for (Entity e : entityListFromDataBase) {
             Executor r = (Executor) e;
-            this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone()});
+            this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone(), r.getSubmit(), r.getHistory()});
         }
     }
 
@@ -52,7 +60,7 @@ public class ExecutorModel extends Model {
 
     @Override
     public void addRowEntity(Entity entity) {
-        this.addRow(new Object[]{entity.getId(), null, null, null, null});
+        this.addRow(new Object[]{entity.getId(), null, null, null, false, false});
     }
 
     @Override
@@ -62,7 +70,7 @@ public class ExecutorModel extends Model {
 
     @Override
     public int getIndexColumn(Integer searchColumn) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < this.getColumnCount(); i++) {
             if (this.getColumnName(i).equals(employee[searchColumn])) {
                 return i;
             }
@@ -76,11 +84,13 @@ public class ExecutorModel extends Model {
         List<Entity> list = new ArrayList<>();
         for (int i = 0; i < countRow; i++) {
             Executor executor = new Executor();
-            executor.setId((Long) ExecutorModel.this.getValueAt(i, getIndexColumn(0)));
+            executor.setId((Long) this.getValueAt(i, getIndexColumn(0)));
             executor.setIdReport(reportId);
-            executor.setName((String) ExecutorModel.this.getValueAt(i, getIndexColumn(1)));
-            executor.setResponsible((String) ExecutorModel.this.getValueAt(i, getIndexColumn(2)));
-            executor.setPhone((String) ExecutorModel.this.getValueAt(i, getIndexColumn(3)));
+            executor.setName((String) this.getValueAt(i, getIndexColumn(1)));
+            executor.setResponsible((String) this.getValueAt(i, getIndexColumn(2)));
+            executor.setPhone((String) this.getValueAt(i, getIndexColumn(3)));
+            executor.setSubmit((Boolean) this.getValueAt(i, getIndexColumn(4)));
+            executor.setHistory((Boolean) this.getValueAt(i, getIndexColumn(5)));
             list.add(executor);
         }
         return list;

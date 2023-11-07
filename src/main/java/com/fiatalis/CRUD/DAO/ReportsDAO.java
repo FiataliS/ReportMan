@@ -31,7 +31,9 @@ public class ReportsDAO implements DAO {
             if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
             if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(rs.getBoolean(5));
+            reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
+            reports.setLink(rs.getString(6));
+            reports.setHistory(Boolean.valueOf(rs.getString(7)));
             return reports;
         } catch (NullPointerException e) {
             return null;
@@ -49,7 +51,9 @@ public class ReportsDAO implements DAO {
             if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
             if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(Boolean.valueOf(rs.getBoolean(5)));
+            reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
+            reports.setLink(rs.getString(6));
+            reports.setHistory(Boolean.valueOf(rs.getString(7)));
             return reports;
         } catch (NullPointerException e) {
             return null;
@@ -68,6 +72,8 @@ public class ReportsDAO implements DAO {
             if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
             reports.setFrequency(Frequency.valueOf(rs.getString(4)));
             reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
+            reports.setLink(rs.getString(6));
+            reports.setHistory(Boolean.valueOf(rs.getString(7)));
             list.add(reports);
         }
         return list;
@@ -87,14 +93,18 @@ public class ReportsDAO implements DAO {
                         + reports.getName() + "', '"
                         + reports.getDate() + "', '"
                         + reports.getFrequency() + "', '"
-                        + reports.getSubmitted() + "');");
+                        + reports.getSubmitted() + "', '"
+                        + reports.getLink() + "', '"
+                        + reports.getHistory() + "');");
                 return x == 1 ? true : false;
             } else {
                 int x = statement.executeUpdate("update report set " +
                         "name= '" + reports.getName() + "', " +
                         "date= '" + reports.getDate() + "', " +
                         "frequency= '" + reports.getFrequency() + "', " +
-                        "submitted= '" + reports.getSubmitted() + "' " +
+                        "submitted= '" + reports.getSubmitted() + "', " +
+                        "link= '" + reports.getLink() + "', " +
+                        "history= '" + reports.getHistory() + "' " +
                         "WHERE id= " + reports.getId() + ";");
                 return x == 1 ? true : false;
             }

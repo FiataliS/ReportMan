@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportModel extends Model {
-    private final String[] employee = new String[]{"id", "Наименование", "Дата", "Периодичность", "Напоминание"};
+    private final String[] employee = new String[]{"id", "Наименование", "Дата", "Периодичность", "Напоминание", "Ссылка", "История"};
     private static volatile ReportModel instance;
 
     public static ReportModel getInstance() {
@@ -48,7 +48,7 @@ public class ReportModel extends Model {
         this.setEntityListFromDataBase(dao.findAll(null));
         for (Entity e : entityListFromDataBase) {
             Reports r = (Reports) e;
-            this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency().getName(), r.getSubmitted()});
+            this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency().getName(), r.getSubmitted(), r.getLink(), r.getHistory()});
         }
     }
 
@@ -67,7 +67,7 @@ public class ReportModel extends Model {
 
     @Override
     public void addRowEntity(Entity entity) {
-        this.addRow(new Object[]{entity.getId(), null, null, "Нет", false});
+        this.addRow(new Object[]{entity.getId(), null, null, "Нет", false, null, false});
     }
 
     @Override
@@ -77,7 +77,7 @@ public class ReportModel extends Model {
 
     @Override
     public int getIndexColumn(Integer searchColumn) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < this.getColumnCount(); i++) {
             if (this.getColumnName(i).equals(employee[searchColumn])) {
                 return i;
             }
@@ -96,6 +96,8 @@ public class ReportModel extends Model {
             reports.setDate(this.getValueAt(i, getIndexColumn(2)));
             reports.setFrequencyInString((String) this.getValueAt(i, getIndexColumn(3)));
             reports.setSubmitted((Boolean) getValueAt(i, getIndexColumn(4)));
+            reports.setLink((String) getValueAt(i, getIndexColumn(5)));
+            reports.setHistory((Boolean) getValueAt(i, getIndexColumn(6)));
             list.add(reports);
         }
         return list;

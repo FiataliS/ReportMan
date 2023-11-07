@@ -17,6 +17,8 @@ public class Reports implements Entity {
     private Date date;
     private Frequency frequency;
     private Boolean submitted;
+    private String link;
+    private Boolean history;
 
     public Reports(String name, Date date, Frequency frequency, Boolean submitted) {
         this.name = name;
@@ -51,13 +53,28 @@ public class Reports implements Entity {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reports reports = (Reports) o;
+        return Objects.equals(id, reports.id) && Objects.equals(name, reports.name) && Objects.equals(date, reports.date) && frequency == reports.frequency && Objects.equals(submitted, reports.submitted) && Objects.equals(link, reports.link) && Objects.equals(history, reports.history);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, date, frequency, submitted, link, history);
+    }
+
+    @Override
     public String toString() {
         return "Reports{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", date=" + date +
-                ", frequency='" + frequency + '\'' +
+                ", frequency=" + frequency +
                 ", submitted=" + submitted +
+                ", link='" + link + '\'' +
+                ", history=" + history +
                 '}';
     }
 
@@ -71,16 +88,4 @@ public class Reports implements Entity {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Reports reports = (Reports) o;
-        return Objects.equals(id, reports.id) && Objects.equals(name, reports.name) && Objects.equals(date, reports.date) && frequency == reports.frequency && Objects.equals(submitted, reports.submitted);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, date, frequency, submitted);
-    }
 }
