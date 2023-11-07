@@ -85,7 +85,7 @@ public class MainTable extends JTable {
 
     public void switchModel() {
         if (MainTable.getInstance().getModel() instanceof ReportModel) {
-            this.setModel(new ExecutorModel((Long) ReportModel.getInstance().getValueAt(MainTable.getInstance().getSelectedRow(), 0)));
+            this.setModel(new ExecutorModel((Reports) ReportModel.getInstance().getEntityListFromModel().get(MainTable.getInstance().getSelectedRow())));
             this.removeColumn(this.getColumnModel().getColumn(0));
             BackButton.getInstance().setVisible(true);
         } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {

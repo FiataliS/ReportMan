@@ -3,6 +3,7 @@ package com.fiatalis.windows.components.modelTable;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
+import com.fiatalis.CRUD.entytis.Reports;
 import com.fiatalis.windows.components.SaveButton;
 
 import javax.swing.event.TableModelEvent;
@@ -13,11 +14,13 @@ import java.util.List;
 public class ExecutorModel extends Model {
     private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Сдан отчет?"};
     private long reportId;
+    private final Reports reports;
 
-    public ExecutorModel(Long reportId) {
+    public ExecutorModel(Reports reports) {
         super.employee = employee;
+        this.reports = reports;
         dao = new ExecutorDAO();
-        if (reportId != null) this.reportId = reportId;
+        if (reports.getId() != null) this.reportId = reports.getId();
         listeners();
         update();
     }
