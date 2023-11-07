@@ -1,6 +1,5 @@
 package com.fiatalis.windows.components;
 
-import com.fiatalis.Main;
 import com.fiatalis.windows.MainTable;
 
 import javax.swing.*;
@@ -29,8 +28,9 @@ public class BackButton extends JMenuItem {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonBack.png"));
-        this.setIcon(new ImageIcon(img));
-        this.setHorizontalTextPosition(this.getSize().width / 2);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
+        this.add(panel);
         this.setVisible(false);
         listeners();
     }

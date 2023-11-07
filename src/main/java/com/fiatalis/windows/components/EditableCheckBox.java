@@ -50,6 +50,9 @@ public class EditableCheckBox extends JMenuItem {
         }
         this.setIcon(new ImageIcon(img));
         this.setHorizontalTextPosition(SwingConstants.RIGHT);
+//        JPanel panel = new JPanel(new BorderLayout());
+//        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
+//        this.add(panel);
     }
 
     public void setEditable(boolean b) {

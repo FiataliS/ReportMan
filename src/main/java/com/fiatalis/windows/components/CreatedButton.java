@@ -28,8 +28,9 @@ public class CreatedButton extends JMenuItem {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonCreate.png"));
-        this.setIcon(new ImageIcon(img));
-        this.setHorizontalTextPosition(this.getSize().width/2);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
+        this.add(panel);
         listeners();
     }
 

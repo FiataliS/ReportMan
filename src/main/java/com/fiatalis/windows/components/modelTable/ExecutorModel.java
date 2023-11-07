@@ -87,7 +87,7 @@ public class ExecutorModel extends Model {
     }
 
     private void updateLabel() {
-        NameLabel.getInstance().setText("Отчет: " + reports.getName() + ", до " + reports.getDateString());
+        NameLabel.getInstance().setText("<html>Отчет: " + reports.getName() + "<br>Дата: " + reports.getDateString() + "</html>");
         NameLabel.getInstance().setVisible(true);
     }
 }

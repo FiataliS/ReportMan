@@ -10,6 +10,8 @@ import com.fiatalis.windows.components.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -34,11 +36,7 @@ public class MainTable extends JTable {
         listeners();
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.removeColumn(this.getColumnModel().getColumn(0));
-        DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
-        datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
-        this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
-        this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
+        optionTableReport();
     }
 
     private void listeners() {
@@ -86,16 +84,70 @@ public class MainTable extends JTable {
     public void switchModel() {
         if (MainTable.getInstance().getModel() instanceof ReportModel) {
             this.setModel(new ExecutorModel((Reports) ReportModel.getInstance().getEntityListFromModel().get(MainTable.getInstance().getSelectedRow())));
-            this.removeColumn(this.getColumnModel().getColumn(0));
+            optionTableExecutor();
             BackButton.getInstance().setVisible(true);
         } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
-            this.removeColumn(this.getColumnModel().getColumn(0));
-            DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
-            datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
-            this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
-            this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
+            optionTableReport();
             BackButton.getInstance().setVisible(false);
         }
     }
+
+    private void optionTableExecutor(){
+        this.removeColumn(this.getColumnModel().getColumn(0));
+        this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
+        this.getColumnModel().getColumn(1).setCellRenderer(new LineWrapCellRenderer());
+        this.getColumnModel().getColumn(1).setMaxWidth(300);
+        this.getColumnModel().getColumn(1).setMinWidth(100);
+        this.getColumnModel().getColumn(1).setResizable(false);
+        this.getColumnModel().getColumn(2).setMaxWidth(150);
+        this.getColumnModel().getColumn(2).setMinWidth(150);
+        this.getColumnModel().getColumn(2).setResizable(false);
+        this.getColumnModel().getColumn(3).setMaxWidth(100);
+        this.getColumnModel().getColumn(3).setMinWidth(100);
+        this.getColumnModel().getColumn(3).setResizable(false);
+    }
+
+    private void optionTableReport(){
+        this.removeColumn(this.getColumnModel().getColumn(0));
+        DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
+        datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
+        this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
+        this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
+        this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
+        this.getColumnModel().getColumn(1).setMaxWidth(70);
+        this.getColumnModel().getColumn(1).setMinWidth(70);
+        this.getColumnModel().getColumn(1).setResizable(false);
+        this.getColumnModel().getColumn(2).setMaxWidth(100);
+        this.getColumnModel().getColumn(2).setMinWidth(100);
+        this.getColumnModel().getColumn(2).setResizable(false);
+        this.getColumnModel().getColumn(3).setMaxWidth(100);
+        this.getColumnModel().getColumn(3).setMinWidth(100);
+        this.getColumnModel().getColumn(3).setResizable(false);
+    }
+
+    private static class LineWrapCellRenderer extends JTextArea implements TableCellRenderer {
+        LineWrapCellRenderer() {
+            setLineWrap(true);
+            setWrapStyleWord(true);
+            setOpaque(true);
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText((value == null) ? "" : value.toString());
+            setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
+            if (table.getRowHeight(row) != getPreferredSize().height) {
+                table.setRowHeight(row, getPreferredSize().height);
+            }
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(table.getBackground());
+            }
+            return this;
+        }
+    }
 }
+

@@ -29,7 +29,9 @@ public class DeleteButton extends JMenuItem {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonDelete.png"));
-        this.setIcon(new ImageIcon(img));
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
+        this.add(panel);
         listeners();
     }
 
