@@ -8,7 +8,6 @@ import com.fiatalis.windows.components.SaveButton;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ReportModel extends Model {
@@ -94,12 +93,7 @@ public class ReportModel extends Model {
             Reports reports = new Reports();
             reports.setId((Long) this.getValueAt(i, getIndexColumn(0)));
             reports.setName((String) this.getValueAt(i, getIndexColumn(1)));
-            Object newDate = this.getValueAt(i, getIndexColumn(2));
-            if (newDate instanceof Date) {
-                reports.setDate(new java.sql.Date(((Date) newDate).getTime()));
-            } else {
-                reports.setDateOnString((String) newDate);
-            }
+            reports.setDate(this.getValueAt(i, getIndexColumn(2)));
             reports.setFrequencyInString((String) this.getValueAt(i, getIndexColumn(3)));
             reports.setSubmitted((Boolean) getValueAt(i, getIndexColumn(4)));
             list.add(reports);

@@ -30,18 +30,24 @@ public class Reports implements Entity {
         return new SimpleDateFormat("dd.MM.yyг.").format(date);
     }
 
-    public void setDateOnString(String string) {
-        if (string == null || string.equals("")) {
-            return;
+    public void setDate(Object date) {
+        if (date instanceof java.util.Date) {
+            java.util.Date dateUtils = (java.util.Date) date;
+            this.date = new Date(dateUtils.getTime());
+        } else if (date instanceof Date) {
+            this.date = (Date) date;
+        } else if (date instanceof String) {
+            String string = (String) date;
+            if (string == null || string.equals("") || string.equals("null")) return;
+            StringBuilder sb = new StringBuilder();
+            sb.append("00");
+            sb.append(String.copyValueOf(string.toCharArray(), string.length() - 4, 2));
+            sb.append("-");
+            sb.append(String.copyValueOf(string.toCharArray(), string.length() - 7, 2));
+            sb.append("-");
+            sb.append(String.copyValueOf(string.toCharArray(), 0, 2));
+            this.date = Date.valueOf(sb.toString());
         }
-        StringBuilder sb = new StringBuilder();
-        sb.append("00");
-        sb.append(String.copyValueOf(string.toCharArray(), string.length() - 4, 2));
-        sb.append("-");
-        sb.append(String.copyValueOf(string.toCharArray(), string.length() - 7, 2));
-        sb.append("-");
-        sb.append(String.copyValueOf(string.toCharArray(), 0, 2));
-        this.date = Date.valueOf(sb.toString());
     }
 
     @Override

@@ -9,10 +9,10 @@ import java.util.List;
 
 @Data
 public abstract class Model extends DefaultTableModel {
-    protected String[] employee;
-    protected Boolean isEditable = false;
-    protected List<Entity> entityListFromDataBase = null;
-    protected DAO dao;
+    String[] employee;
+    Boolean isEditable = false;
+    List<Entity> entityListFromDataBase = null;
+    DAO dao;
 
 
     public abstract void listeners();
