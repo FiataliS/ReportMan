@@ -1,11 +1,11 @@
-package com.fiatalis.windows.components.modelTable;
+package com.fiatalis.windows.components.center.modelTable;
 
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
-import com.fiatalis.windows.components.NameLabel;
-import com.fiatalis.windows.components.SaveButton;
+import com.fiatalis.windows.components.down.LabelInfo;
+import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -54,9 +54,9 @@ public class ExecutorModel extends Model {
             @Override
             public void tableChanged(TableModelEvent e) {
                 if (!ExecutorModel.this.getEntityListFromModel().equals(entityListFromDataBase)) {
-                    SaveButton.getInstance().setVisible(true);
+                    ButtonSave.getInstance().setVisible(true);
                 } else {
-                    SaveButton.getInstance().setVisible(false);
+                    ButtonSave.getInstance().setVisible(false);
                 }
             }
         });
@@ -101,7 +101,7 @@ public class ExecutorModel extends Model {
     }
 
     private void updateLabel() {
-        NameLabel.getInstance().setText("<html>Отчет: " + reports.getName() + "<br>\nДата: " + reports.getDateString() + "</html>");
-        NameLabel.getInstance().setVisible(true);
+        LabelInfo.getInstance().setText("<html>Отчет: " + reports.getName() + "<br>\nДата: " + reports.getDateString() + "</html>");
+        LabelInfo.getInstance().setVisible(true);
     }
 }

@@ -1,4 +1,4 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.up;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -9,17 +9,17 @@ public class MenuBar extends JMenuBar {
 
     public MenuBar() {
         JPanel p = new JPanel(new GridLayout(1, 17));
-        p.add(CreatedButton.getInstance());
+        p.add(ButtonCreated.getInstance());
         p.add(Box.createGlue());
-        p.add(DeleteButton.getInstance());
+        p.add(ButtonDelete.getInstance());
         p.add(Box.createGlue());
-        p.add(BackButton.getInstance());
+        p.add(ButtonBack.getInstance());
         for (int i = 0; i < 8; i++) {
             p.add(Box.createGlue());
         }
-        p.add(SaveButton.getInstance());
+        p.add(ButtonSave.getInstance());
         p.add(Box.createGlue());
-        p.add(EditableCheckBox.getInstance());
+        p.add(CheckBoxEditing.getInstance());
         this.add(p);
         this.setBorder(new BevelBorder(1));
     }

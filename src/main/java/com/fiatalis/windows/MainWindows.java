@@ -3,8 +3,10 @@ package com.fiatalis.windows;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
-import com.fiatalis.windows.components.*;
-import com.fiatalis.windows.components.MenuBar;
+import com.fiatalis.windows.components.center.Table;
+import com.fiatalis.windows.components.down.Panel;
+import com.fiatalis.windows.components.up.MenuBar;
+import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,7 @@ public class MainWindows extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 int choice = 0;
-                if (SaveButton.getInstance().isVisible())
+                if (ButtonSave.getInstance().isVisible())
                     choice = JOptionPane.showConfirmDialog(null, "Несохраненные данные будут утеряны.", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
                 if (choice == JOptionPane.OK_OPTION) {
                     new ExecutorDAO().deleteNull();
@@ -42,7 +44,7 @@ public class MainWindows extends JFrame {
 
     private void addComponent() {
         this.getContentPane().add(new MenuBar(), BorderLayout.NORTH);
-        this.getContentPane().add(new JScrollPane(MainTable.getInstance()), BorderLayout.CENTER);
-        this.getContentPane().add(new DownPanel(), BorderLayout.SOUTH);
+        this.getContentPane().add(new JScrollPane(Table.getInstance()), BorderLayout.CENTER);
+        this.getContentPane().add(new Panel(), BorderLayout.SOUTH);
     }
 }

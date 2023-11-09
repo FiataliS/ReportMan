@@ -1,27 +1,27 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.down;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 
-public class NameLabel extends JLabel {
+public class LabelInfo extends JLabel {
 
-    private static volatile NameLabel instance;
+    private static volatile LabelInfo instance;
 
-    public static NameLabel getInstance() {
-        NameLabel localInstance = instance;
+    public static LabelInfo getInstance() {
+        LabelInfo localInstance = instance;
         if (localInstance == null) {
-            synchronized (NameLabel.class) {
+            synchronized (LabelInfo.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new NameLabel();
+                    instance = localInstance = new LabelInfo();
                 }
             }
         }
         return localInstance;
     }
 
-    public NameLabel() {
+    public LabelInfo() {
         this.setVisible(true);
         this.setBorder(new BevelBorder(1));
         Dimension newDim = new Dimension(625, 45);

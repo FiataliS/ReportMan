@@ -1,9 +1,9 @@
-package com.fiatalis.windows.components.modelTable;
+package com.fiatalis.windows.components.center.modelTable;
 
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Reports;
-import com.fiatalis.windows.components.SaveButton;
+import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -57,9 +57,9 @@ public class ReportModel extends Model {
             @Override
             public void tableChanged(TableModelEvent e) {
                 if (!ReportModel.this.getEntityListFromModel().equals(entityListFromDataBase)) {
-                    SaveButton.getInstance().setVisible(true);
+                    ButtonSave.getInstance().setVisible(true);
                 } else {
-                    SaveButton.getInstance().setVisible(false);
+                    ButtonSave.getInstance().setVisible(false);
                 }
             }
         });

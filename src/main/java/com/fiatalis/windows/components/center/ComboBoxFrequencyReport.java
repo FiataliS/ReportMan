@@ -1,11 +1,11 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.center;
 
 import com.fiatalis.CRUD.Frequency;
 
 import javax.swing.*;
 
-public class FrequencyComboBox extends JComboBox {
-    public FrequencyComboBox() {
+public class ComboBoxFrequencyReport extends JComboBox {
+    public ComboBoxFrequencyReport() {
         super();
         this.addItem(Frequency.Monthly.getName());
         this.addItem(Frequency.Quarterly.getName());

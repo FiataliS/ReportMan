@@ -1,19 +1,17 @@
-package com.fiatalis.windows;
+package com.fiatalis.windows.components.center;
 
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
-import com.fiatalis.windows.components.BackButton;
-import com.fiatalis.windows.components.FrequencyComboBox;
-import com.fiatalis.windows.components.NameLabel;
-import com.fiatalis.windows.components.modelTable.ReportModel;
-import com.fiatalis.windows.components.modelTable.ExecutorModel;
+import com.fiatalis.windows.components.up.ButtonBack;
+import com.fiatalis.windows.components.down.LabelInfo;
+import com.fiatalis.windows.components.center.modelTable.ReportModel;
+import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -21,23 +19,23 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class MainTable extends JTable {
-    private static volatile MainTable instance;
+public class Table extends JTable {
+    private static volatile Table instance;
 
-    public static MainTable getInstance() {
-        MainTable localInstance = instance;
+    public static Table getInstance() {
+        Table localInstance = instance;
         if (localInstance == null) {
-            synchronized (MainTable.class) {
+            synchronized (Table.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new MainTable();
+                    instance = localInstance = new Table();
                 }
             }
         }
         return localInstance;
     }
 
-    public MainTable() {
+    public Table() {
         listeners();
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -48,12 +46,12 @@ public class MainTable extends JTable {
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !ReportModel.getInstance().getIsEditable()) {
-                    if (MainTable.this.getModel() instanceof ReportModel) switchModel();
+                    if (Table.this.getModel() instanceof ReportModel) switchModel();
                 }
-                if (e.getClickCount() == 1 && (MainTable.getInstance().getModel() instanceof ReportModel)) {
-                    Reports reports = (Reports) ReportModel.getInstance().getEntityListFromModel().get(MainTable.getInstance().getSelectedRow());
+                if (e.getClickCount() == 1 && (Table.getInstance().getModel() instanceof ReportModel)) {
+                    Reports reports = (Reports) ReportModel.getInstance().getEntityListFromModel().get(Table.getInstance().getSelectedRow());
                     List<Entity> list = new ExecutorDAO().findAll(reports.getId());
-                    NameLabel.getInstance().setText("<html>Колличество организаций: " + list.size() + "<br>До конца срока осталось: " + "Пока не умею считать! " + "</html>");
+                    LabelInfo.getInstance().setText("<html>Колличество организаций: " + list.size() + "<br>До конца срока осталось: " + "Пока не умею считать! " + "</html>");
                 }
             }
         });
@@ -92,14 +90,14 @@ public class MainTable extends JTable {
     }
 
     public void switchModel() {
-        if (MainTable.getInstance().getModel() instanceof ReportModel) {
-            this.setModel(new ExecutorModel((Reports) ReportModel.getInstance().getEntityListFromModel().get(MainTable.getInstance().getSelectedRow())));
+        if (Table.getInstance().getModel() instanceof ReportModel) {
+            this.setModel(new ExecutorModel((Reports) ReportModel.getInstance().getEntityListFromModel().get(Table.getInstance().getSelectedRow())));
             optionTableExecutor();
-            BackButton.getInstance().setVisible(true);
-        } else if (MainTable.getInstance().getModel() instanceof ExecutorModel) {
+            ButtonBack.getInstance().setVisible(true);
+        } else if (Table.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
             optionTableReport();
-            BackButton.getInstance().setVisible(false);
+            ButtonBack.getInstance().setVisible(false);
         }
     }
 
@@ -126,7 +124,7 @@ public class MainTable extends JTable {
         DatePickerCellEditor datePickerCellEditor = new DatePickerCellEditor();
         datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
-        this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new FrequencyComboBox()));
+        this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new ComboBoxFrequencyReport()));
         this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
         this.getColumnModel().getColumn(1).setMaxWidth(70);
         this.getColumnModel().getColumn(1).setMinWidth(70);

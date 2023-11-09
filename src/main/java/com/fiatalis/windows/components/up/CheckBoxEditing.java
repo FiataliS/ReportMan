@@ -1,32 +1,32 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.up;
 
-import com.fiatalis.windows.MainTable;
-import com.fiatalis.windows.components.modelTable.ExecutorModel;
+import com.fiatalis.windows.components.center.Table;
+import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class EditableCheckBox extends JMenuItem {
+public class CheckBoxEditing extends JMenuItem {
 
     private boolean isEditable = false;
-    private static volatile EditableCheckBox instance;
+    private static volatile CheckBoxEditing instance;
 
-    public static EditableCheckBox getInstance() {
-        EditableCheckBox localInstance = instance;
+    public static CheckBoxEditing getInstance() {
+        CheckBoxEditing localInstance = instance;
         if (localInstance == null) {
-            synchronized (EditableCheckBox.class) {
+            synchronized (CheckBoxEditing.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new EditableCheckBox();
+                    instance = localInstance = new CheckBoxEditing();
                 }
             }
         }
         return localInstance;
     }
 
-    public EditableCheckBox() {
+    public CheckBoxEditing() {
         super();
         this.setBorder(new BevelBorder(0));
         setIcon();
@@ -58,8 +58,8 @@ public class EditableCheckBox extends JMenuItem {
 
     public void setEditable(boolean b) {
         isEditable = b;
-        MainTable.getInstance().setEditableModel(b);
-        if (MainTable.getInstance().getModel() instanceof ExecutorModel) BackButton.getInstance().setVisible(!b);
+        Table.getInstance().setEditableModel(b);
+        if (Table.getInstance().getModel() instanceof ExecutorModel) ButtonBack.getInstance().setVisible(!b);
         setIcon();
     }
 }

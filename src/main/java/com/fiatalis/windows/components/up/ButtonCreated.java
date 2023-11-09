@@ -1,30 +1,30 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.up;
 
-import com.fiatalis.windows.MainTable;
+import com.fiatalis.windows.components.center.Table;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class CreatedButton extends JMenuItem {
+public class ButtonCreated extends JMenuItem {
 
-    private static volatile CreatedButton instance;
+    private static volatile ButtonCreated instance;
 
-    public static CreatedButton getInstance() {
-        CreatedButton localInstance = instance;
+    public static ButtonCreated getInstance() {
+        ButtonCreated localInstance = instance;
         if (localInstance == null) {
-            synchronized (CreatedButton.class) {
+            synchronized (ButtonCreated.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new CreatedButton();
+                    instance = localInstance = new ButtonCreated();
                 }
             }
         }
         return localInstance;
     }
 
-    public CreatedButton() {
+    public ButtonCreated() {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonCreate.png"));
@@ -38,7 +38,7 @@ public class CreatedButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainTable.getInstance().addRowEntity();
+                Table.getInstance().addRowEntity();
             }
         });
     }

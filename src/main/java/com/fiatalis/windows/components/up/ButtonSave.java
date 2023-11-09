@@ -1,12 +1,12 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.up;
 
 import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.entytis.Entity;
-import com.fiatalis.windows.MainTable;
-import com.fiatalis.windows.components.modelTable.Model;
-import com.fiatalis.windows.components.modelTable.ReportModel;
+import com.fiatalis.windows.components.center.Table;
+import com.fiatalis.windows.components.center.modelTable.Model;
+import com.fiatalis.windows.components.center.modelTable.ReportModel;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -16,23 +16,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class SaveButton extends JMenuItem {
-    private static volatile SaveButton instance;
+public class ButtonSave extends JMenuItem {
+    private static volatile ButtonSave instance;
 
-    public static SaveButton getInstance() {
-        SaveButton localInstance = instance;
+    public static ButtonSave getInstance() {
+        ButtonSave localInstance = instance;
         if (localInstance == null) {
-            synchronized (SaveButton.class) {
+            synchronized (ButtonSave.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new SaveButton();
+                    instance = localInstance = new ButtonSave();
                 }
             }
         }
         return localInstance;
     }
 
-    public SaveButton() {
+    public ButtonSave() {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonSave.png"));
@@ -46,14 +46,14 @@ public class SaveButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Model model = (Model) MainTable.getInstance().getModel();
+                Model model = (Model) Table.getInstance().getModel();
                 if (model instanceof ReportModel) {
                     saveModel(model, new ReportsDAO());
                 } else {
                     saveModel(model, new ExecutorDAO());
                 }
                 model.update();
-                SaveButton.this.setVisible(false);
+                ButtonSave.this.setVisible(false);
             }
         });
     }

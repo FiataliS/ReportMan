@@ -1,6 +1,6 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.up;
 
-import com.fiatalis.windows.MainTable;
+import com.fiatalis.windows.components.center.Table;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -8,24 +8,24 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
-public class DeleteButton extends JMenuItem {
+public class ButtonDelete extends JMenuItem {
 
-    private static volatile DeleteButton instance;
+    private static volatile ButtonDelete instance;
 
-    public static DeleteButton getInstance() {
-        DeleteButton localInstance = instance;
+    public static ButtonDelete getInstance() {
+        ButtonDelete localInstance = instance;
         if (localInstance == null) {
-            synchronized (DeleteButton.class) {
+            synchronized (ButtonDelete.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new DeleteButton();
+                    instance = localInstance = new ButtonDelete();
                 }
             }
         }
         return localInstance;
     }
 
-    public DeleteButton() {
+    public ButtonDelete() {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonDelete.png"));
@@ -42,11 +42,11 @@ public class DeleteButton extends JMenuItem {
                 Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));
                 final JOptionPane pane = new JOptionPane("Строка не выбрана!", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION, new ImageIcon(img), new String[]{"OK"});
                 JDialog dialog = pane.createDialog(null, "Ошибка!");
-                if (MainTable.getInstance().getSelectedRow() < 0) {
+                if (Table.getInstance().getSelectedRow() < 0) {
                     dialog.setVisible(true);
                     return;
                 }
-                MainTable.getInstance().deleteRowEntity();
+                Table.getInstance().deleteRowEntity();
             }
         });
     }

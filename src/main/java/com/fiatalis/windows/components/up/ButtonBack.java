@@ -1,30 +1,30 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.up;
 
-import com.fiatalis.windows.MainTable;
+import com.fiatalis.windows.components.center.Table;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class BackButton extends JMenuItem {
+public class ButtonBack extends JMenuItem {
 
-    private static volatile BackButton instance;
+    private static volatile ButtonBack instance;
 
-    public static BackButton getInstance() {
-        BackButton localInstance = instance;
+    public static ButtonBack getInstance() {
+        ButtonBack localInstance = instance;
         if (localInstance == null) {
-            synchronized (BackButton.class) {
+            synchronized (ButtonBack.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new BackButton();
+                    instance = localInstance = new ButtonBack();
                 }
             }
         }
         return localInstance;
     }
 
-    public BackButton() {
+    public ButtonBack() {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonBack.png"));
@@ -40,7 +40,7 @@ public class BackButton extends JMenuItem {
             @Override
             public void actionPerformed(ActionEvent e) {
                // NameLabel.getInstance().setVisible(false);
-                MainTable.getInstance().switchModel();
+                Table.getInstance().switchModel();
             }
         });
     }

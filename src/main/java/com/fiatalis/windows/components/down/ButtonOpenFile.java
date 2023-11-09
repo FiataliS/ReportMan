@@ -1,9 +1,9 @@
-package com.fiatalis.windows.components;
+package com.fiatalis.windows.components.down;
 
 import com.fiatalis.CRUD.entytis.Entity;
-import com.fiatalis.windows.MainTable;
-import com.fiatalis.windows.components.modelTable.ExecutorModel;
-import com.fiatalis.windows.components.modelTable.ReportModel;
+import com.fiatalis.windows.components.center.Table;
+import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
+import com.fiatalis.windows.components.center.modelTable.ReportModel;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -13,24 +13,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class OpenFileButton extends JMenuItem {
+public class ButtonOpenFile extends JMenuItem {
 
-    private static volatile OpenFileButton instance;
+    private static volatile ButtonOpenFile instance;
 
-    public static OpenFileButton getInstance() {
-        OpenFileButton localInstance = instance;
+    public static ButtonOpenFile getInstance() {
+        ButtonOpenFile localInstance = instance;
         if (localInstance == null) {
-            synchronized (OpenFileButton.class) {
+            synchronized (ButtonOpenFile.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new OpenFileButton();
+                    instance = localInstance = new ButtonOpenFile();
                 }
             }
         }
         return localInstance;
     }
 
-    public OpenFileButton() {
+    public ButtonOpenFile() {
         super();
         this.setBorder(new BevelBorder(0));
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonOpenFile.png"));
@@ -45,17 +45,17 @@ public class OpenFileButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MainTable.getInstance().getModel() instanceof ReportModel) {
+                if (Table.getInstance().getModel() instanceof ReportModel) {
                     Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));
                     final JOptionPane pane = new JOptionPane("Строка не выбрана!", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION, new ImageIcon(img), new String[]{"OK"});
                     JDialog dialog = pane.createDialog(null, "Ошибка!");
-                    if (MainTable.getInstance().getSelectedRow() < 0) {
+                    if (Table.getInstance().getSelectedRow() < 0) {
                         dialog.setVisible(true);
                         return;
                     }
-                    openFile(MainTable.getInstance().getSelectedRow());
+                    openFile(Table.getInstance().getSelectedRow());
                 } else {
-                    int reportId = (int) ((ExecutorModel) MainTable.getInstance().getModel()).getReportId();
+                    int reportId = (int) ((ExecutorModel) Table.getInstance().getModel()).getReportId();
                     List<Entity> entityList = ReportModel.getInstance().getEntityListFromModel();
                     for (int i = 0; i < entityList.size(); i++) {
                         if (reportId == entityList.get(i).getId()) {
