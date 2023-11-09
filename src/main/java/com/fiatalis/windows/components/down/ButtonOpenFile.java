@@ -70,7 +70,13 @@ public class ButtonOpenFile extends JMenuItem {
 
     private void openFile(int selectedRow) {
         String s = (String) ReportModel.getInstance().getValueAt(selectedRow, 5);
-        if (s.equals("null")) return;
+        if (s.equals("null")) {
+            Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));
+            final JOptionPane pane = new JOptionPane("Документ отсутствует!", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION, new ImageIcon(img), new String[]{"OK"});
+            JDialog dialog = pane.createDialog(null, "Ошибка!");
+            dialog.setVisible(true);
+            return;
+        }
         File file = new File(s);
         Desktop desktop = Desktop.getDesktop();
         if (file.exists()) {
