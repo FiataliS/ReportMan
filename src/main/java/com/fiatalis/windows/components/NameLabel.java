@@ -1,6 +1,8 @@
 package com.fiatalis.windows.components;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 
 public class NameLabel extends JLabel {
 
@@ -20,6 +22,13 @@ public class NameLabel extends JLabel {
     }
 
     public NameLabel() {
-        this.setVisible(false);
+        this.setVisible(true);
+        this.setBorder(new BevelBorder(1));
+        Dimension newDim = new Dimension(625, 45);
+        this.setMinimumSize(newDim);
+        this.setPreferredSize(newDim);
+        this.setMaximumSize(newDim);
+        this.setSize(newDim);
+        this.revalidate();
     }
 }

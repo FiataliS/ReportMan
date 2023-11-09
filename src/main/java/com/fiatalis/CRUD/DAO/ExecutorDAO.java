@@ -93,7 +93,7 @@ public class ExecutorDAO implements DAO {
     @SneakyThrows
     private boolean save(Executor executor) {
         int x = statement.executeUpdate("insert into executor\n" +
-                " (id_report, name, responsible, phone)\n" +
+                " (id_report, name, responsible, phone, submit, history)\n" +
                 "values ("
                 + executor.getIdReport() + ", '"
                 + executor.getName() + "', '"

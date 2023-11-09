@@ -1,6 +1,7 @@
 package com.fiatalis.windows.components;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class MenuBar extends JMenuBar {
@@ -20,5 +21,6 @@ public class MenuBar extends JMenuBar {
         p.add(Box.createGlue());
         p.add(EditableCheckBox.getInstance());
         this.add(p);
+        this.setBorder(new BevelBorder(1));
     }
 }

@@ -44,9 +44,9 @@ public class DeleteButton extends JMenuItem {
                 JDialog dialog = pane.createDialog(null, "Ошибка!");
                 if (MainTable.getInstance().getSelectedRow() < 0) {
                     dialog.setVisible(true);
-                } else {
-                    MainTable.getInstance().deleteRowEntity();
+                    return;
                 }
+                MainTable.getInstance().deleteRowEntity();
             }
         });
     }

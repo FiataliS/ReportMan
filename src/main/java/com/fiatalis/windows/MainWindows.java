@@ -3,9 +3,8 @@ package com.fiatalis.windows;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
+import com.fiatalis.windows.components.*;
 import com.fiatalis.windows.components.MenuBar;
-import com.fiatalis.windows.components.NameLabel;
-import com.fiatalis.windows.components.SaveButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainWindows extends JFrame {
-    public MainWindows() throws HeadlessException {
+    public MainWindows() {
+        this.setUndecorated(false);
         addComponent();
         this.setTitle("ReportMan");
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/icon.png")));
@@ -41,8 +41,8 @@ public class MainWindows extends JFrame {
     }
 
     private void addComponent() {
-        this.add(new MenuBar(), BorderLayout.NORTH);
-        this.add(new JScrollPane(MainTable.getInstance()), BorderLayout.CENTER);
-        this.add(NameLabel.getInstance(),BorderLayout.SOUTH);
+        this.getContentPane().add(new MenuBar(), BorderLayout.NORTH);
+        this.getContentPane().add(new JScrollPane(MainTable.getInstance()), BorderLayout.CENTER);
+        this.getContentPane().add(new DownPanel(), BorderLayout.SOUTH);
     }
 }

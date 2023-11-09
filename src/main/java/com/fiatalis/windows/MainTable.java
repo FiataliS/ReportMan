@@ -1,20 +1,25 @@
 package com.fiatalis.windows;
 
+import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.Frequency;
+import com.fiatalis.CRUD.entytis.Entity;
 import com.fiatalis.CRUD.entytis.Executor;
 import com.fiatalis.CRUD.entytis.Reports;
 import com.fiatalis.windows.components.BackButton;
 import com.fiatalis.windows.components.FrequencyComboBox;
+import com.fiatalis.windows.components.NameLabel;
 import com.fiatalis.windows.components.modelTable.ReportModel;
 import com.fiatalis.windows.components.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class MainTable extends JTable {
     private static volatile MainTable instance;
@@ -44,6 +49,11 @@ public class MainTable extends JTable {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !ReportModel.getInstance().getIsEditable()) {
                     if (MainTable.this.getModel() instanceof ReportModel) switchModel();
+                }
+                if (e.getClickCount() == 1 && (MainTable.getInstance().getModel() instanceof ReportModel)) {
+                    Reports reports = (Reports) ReportModel.getInstance().getEntityListFromModel().get(MainTable.getInstance().getSelectedRow());
+                    List<Entity> list = new ExecutorDAO().findAll(reports.getId());
+                    NameLabel.getInstance().setText("<html>Колличество организаций: " + list.size() + "<br>До конца срока осталось: " + "Пока не умею считать! " + "</html>");
                 }
             }
         });
@@ -93,7 +103,7 @@ public class MainTable extends JTable {
         }
     }
 
-    private void optionTableExecutor(){
+    private void optionTableExecutor() {
         this.removeColumn(this.getColumnModel().getColumn(0));
         this.removeColumn(this.getColumnModel().getColumn(4));
         this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
@@ -109,7 +119,7 @@ public class MainTable extends JTable {
         this.getColumnModel().getColumn(3).setResizable(false);
     }
 
-    private void optionTableReport(){
+    private void optionTableReport() {
         this.removeColumn(this.getColumnModel().getColumn(0));
         this.removeColumn(this.getColumnModel().getColumn(4));
         this.removeColumn(this.getColumnModel().getColumn(4));

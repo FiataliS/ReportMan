@@ -1,6 +1,7 @@
 package com.fiatalis.windows.components;
 
 import com.fiatalis.windows.MainTable;
+import com.fiatalis.windows.components.modelTable.ExecutorModel;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -58,7 +59,7 @@ public class EditableCheckBox extends JMenuItem {
     public void setEditable(boolean b) {
         isEditable = b;
         MainTable.getInstance().setEditableModel(b);
-        BackButton.getInstance().setEnabled(!b);
+        if (MainTable.getInstance().getModel() instanceof ExecutorModel) BackButton.getInstance().setVisible(!b);
         setIcon();
     }
 }

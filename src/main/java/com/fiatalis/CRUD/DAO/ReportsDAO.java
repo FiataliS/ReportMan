@@ -88,7 +88,7 @@ public class ReportsDAO implements DAO {
         try {
             if (reports.getId() == -1) {
                 int x = statement.executeUpdate("insert into report\n" +
-                        " (name, date, frequency, submitted)\n" +
+                        " (name, date, frequency, submitted, link, history)\n" +
                         "values ('"
                         + reports.getName() + "', '"
                         + reports.getDate() + "', '"
@@ -144,7 +144,6 @@ public class ReportsDAO implements DAO {
             executorDAO.deleteById(executor.getId());
         }
     }
-
 
     @Override
     public void deleteNull() {

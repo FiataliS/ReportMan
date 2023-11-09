@@ -17,6 +17,10 @@ public class ExecutorModel extends Model {
     private long reportId;
     private final Reports reports;
 
+    public long getReportId() {
+        return reportId;
+    }
+
     public ExecutorModel(Reports reports) {
         super.employee = employee;
         this.reports = reports;
@@ -97,7 +101,7 @@ public class ExecutorModel extends Model {
     }
 
     private void updateLabel() {
-        NameLabel.getInstance().setText("<html>Отчет: " + reports.getName() + "<br>Дата: " + reports.getDateString() + "</html>");
+        NameLabel.getInstance().setText("<html>Отчет: " + reports.getName() + "<br>\nДата: " + reports.getDateString() + "</html>");
         NameLabel.getInstance().setVisible(true);
     }
 }

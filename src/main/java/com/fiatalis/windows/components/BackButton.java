@@ -39,7 +39,7 @@ public class BackButton extends JMenuItem {
         this.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                NameLabel.getInstance().setVisible(false);
+               // NameLabel.getInstance().setVisible(false);
                 MainTable.getInstance().switchModel();
             }
         });
