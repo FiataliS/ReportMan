@@ -1,8 +1,8 @@
 package com.fiatalis.windows.components.center.modelTable;
 
 import com.fiatalis.CRUD.DAO.ReportsDAO;
-import com.fiatalis.CRUD.entytis.Entity;
-import com.fiatalis.CRUD.entytis.Reports;
+import com.fiatalis.entytis.Entity;
+import com.fiatalis.entytis.Reports;
 import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.event.TableModelEvent;

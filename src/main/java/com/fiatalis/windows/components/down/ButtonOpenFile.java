@@ -1,6 +1,6 @@
 package com.fiatalis.windows.components.down;
 
-import com.fiatalis.CRUD.entytis.Entity;
+import com.fiatalis.entytis.Entity;
 import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class ButtonOpenFile extends JMenuItem {
 
@@ -57,18 +58,13 @@ public class ButtonOpenFile extends JMenuItem {
                 } else {
                     int reportId = (int) ((ExecutorModel) Table.getInstance().getModel()).getReportId();
                     List<Entity> entityList = ReportModel.getInstance().getEntityListFromModel();
-                    for (int i = 0; i < entityList.size(); i++) {
-                        if (reportId == entityList.get(i).getId()) {
-                            openFile(i);
-                            return;
-                        }
-                    }
+                    IntStream.range(0, entityList.size()).filter(i -> reportId == entityList.get(i).getId()).findFirst().ifPresent(i -> openFile(i));
                 }
             }
         });
     }
 
-    private void openFile(int selectedRow) {
+    private void openFile(int selectedRow) throws NullPointerException {
         String s = (String) ReportModel.getInstance().getValueAt(selectedRow, 5);
         if (s.equals("null")) {
             Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));

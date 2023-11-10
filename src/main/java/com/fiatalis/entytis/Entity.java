@@ -1,4 +1,4 @@
-package com.fiatalis.CRUD.entytis;
+package com.fiatalis.entytis;
 
 
 public interface Entity {

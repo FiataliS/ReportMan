@@ -3,7 +3,7 @@ package com.fiatalis.windows.components.up;
 import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
-import com.fiatalis.CRUD.entytis.Entity;
+import com.fiatalis.entytis.Entity;
 import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.center.modelTable.Model;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;

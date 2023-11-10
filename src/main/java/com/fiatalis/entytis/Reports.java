@@ -1,4 +1,4 @@
-package com.fiatalis.CRUD.entytis;
+package com.fiatalis.entytis;
 
 import com.fiatalis.CRUD.Frequency;
 import lombok.Data;

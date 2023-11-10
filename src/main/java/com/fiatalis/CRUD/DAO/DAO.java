@@ -1,6 +1,6 @@
 package com.fiatalis.CRUD.DAO;
 
-import com.fiatalis.CRUD.entytis.Entity;
+import com.fiatalis.entytis.Entity;
 
 import java.util.List;
 

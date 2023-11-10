@@ -1,6 +1,6 @@
 package com.fiatalis.windows.components.down;
 
-import com.fiatalis.CRUD.entytis.Entity;
+import com.fiatalis.entytis.Entity;
 import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.IntStream;
 
 public class ButtonNewFile extends JMenuItem {
 
@@ -57,12 +58,7 @@ public class ButtonNewFile extends JMenuItem {
                 } else {
                     int reportId = (int) ((ExecutorModel) Table.getInstance().getModel()).getReportId();
                     List<Entity> entityList = ReportModel.getInstance().getEntityListFromModel();
-                    for (int i = 0; i < entityList.size(); i++) {
-                        if (reportId == entityList.get(i).getId()) {
-                            addFile(i);
-                            return;
-                        }
-                    }
+                    IntStream.range(0, entityList.size()).filter(i -> reportId == entityList.get(i).getId()).findFirst().ifPresent(i -> addFile(i));
                 }
             }
         });
@@ -73,6 +69,6 @@ public class ButtonNewFile extends JMenuItem {
         JFileChooser.setDefaultLocale(new Locale("Russian", "Russia"));
         fileChooser.showOpenDialog(new JFileChooser());
         File file = fileChooser.getSelectedFile();
-        ReportModel.getInstance().setValueAt(file.toString(), selectedRow, 5);
+        if (file != null) ReportModel.getInstance().setValueAt(file.toString(), selectedRow, 5);
     }
 }

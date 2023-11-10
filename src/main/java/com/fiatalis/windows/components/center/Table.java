@@ -2,9 +2,9 @@ package com.fiatalis.windows.components.center;
 
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.Frequency;
-import com.fiatalis.CRUD.entytis.Entity;
-import com.fiatalis.CRUD.entytis.Executor;
-import com.fiatalis.CRUD.entytis.Reports;
+import com.fiatalis.entytis.Entity;
+import com.fiatalis.entytis.Executor;
+import com.fiatalis.entytis.Reports;
 import com.fiatalis.windows.components.up.ButtonBack;
 import com.fiatalis.windows.components.down.LabelInfo;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;

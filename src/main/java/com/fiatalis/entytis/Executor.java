@@ -1,4 +1,4 @@
-package com.fiatalis.CRUD.entytis;
+package com.fiatalis.entytis;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

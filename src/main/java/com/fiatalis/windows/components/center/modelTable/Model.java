@@ -1,7 +1,7 @@
 package com.fiatalis.windows.components.center.modelTable;
 
 import com.fiatalis.CRUD.DAO.DAO;
-import com.fiatalis.CRUD.entytis.Entity;
+import com.fiatalis.entytis.Entity;
 import lombok.Data;
 
 import javax.swing.table.DefaultTableModel;

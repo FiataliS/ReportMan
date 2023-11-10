@@ -1,9 +1,9 @@
 package com.fiatalis.CRUD.DAO;
 
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
-import com.fiatalis.CRUD.entytis.Entity;
-import com.fiatalis.CRUD.entytis.Executor;
-import com.fiatalis.CRUD.entytis.Reports;
+import com.fiatalis.entytis.Entity;
+import com.fiatalis.entytis.Executor;
+import com.fiatalis.entytis.Reports;
 import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
