@@ -7,28 +7,30 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class CheckBoxEditing extends JMenuItem {
+public class ButtonEditing extends JMenuItem {
 
     private boolean isEditable = false;
-    private static volatile CheckBoxEditing instance;
+    private static volatile ButtonEditing instance;
 
-    public static CheckBoxEditing getInstance() {
-        CheckBoxEditing localInstance = instance;
+    public static ButtonEditing getInstance() {
+        ButtonEditing localInstance = instance;
         if (localInstance == null) {
-            synchronized (CheckBoxEditing.class) {
+            synchronized (ButtonEditing.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new CheckBoxEditing();
+                    instance = localInstance = new ButtonEditing();
                 }
             }
         }
         return localInstance;
     }
 
-    public CheckBoxEditing() {
+    public ButtonEditing() {
         super();
         this.setBorder(new BevelBorder(0));
+        this.setToolTipText("Разрешить/запретить редактирование");
         setIcon();
         listeners();
     }
@@ -51,9 +53,11 @@ public class CheckBoxEditing extends JMenuItem {
         }
         this.setIcon(new ImageIcon(img));
         this.setHorizontalTextPosition(SwingConstants.RIGHT);
-//        JPanel panel = new JPanel(new BorderLayout());
-//        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
-//        this.add(panel);
+    }
+
+    @Override
+    public JToolTip createToolTip() {
+        return new CustomJToolTip(this);
     }
 
     public void setEditable(boolean b) {

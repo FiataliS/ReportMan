@@ -9,17 +9,19 @@ public class MenuBar extends JMenuBar {
 
     public MenuBar() {
         JPanel p = new JPanel(new GridLayout(1, 17));
+
+        GridBagConstraints c = new GridBagConstraints();
+
+        p.add(ButtonEditing.getInstance());
         p.add(ButtonCreated.getInstance());
-        p.add(Box.createGlue());
         p.add(ButtonDelete.getInstance());
-        p.add(Box.createGlue());
-        p.add(ButtonBack.getInstance());
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             p.add(Box.createGlue());
         }
         p.add(ButtonSave.getInstance());
-        p.add(Box.createGlue());
-        p.add(CheckBoxEditing.getInstance());
+        p.add(ButtonNewFile.getInstance());
+        p.add(ButtonOpenFile.getInstance());
+        p.add(ButtonBack.getInstance());
         this.add(p);
         this.setBorder(new BevelBorder(1));
     }

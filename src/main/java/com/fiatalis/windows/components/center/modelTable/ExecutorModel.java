@@ -4,7 +4,6 @@ import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Reports;
-import com.fiatalis.windows.components.down.LabelInfo;
 import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.event.TableModelEvent;
@@ -27,7 +26,6 @@ public class ExecutorModel extends Model {
         dao = new ExecutorDAO();
         if (reports.getId() != null) this.reportId = reports.getId();
         listeners();
-        updateLabel();
         update();
     }
 
@@ -98,10 +96,5 @@ public class ExecutorModel extends Model {
             list.add(executor);
         }
         return list;
-    }
-
-    private void updateLabel() {
-        LabelInfo.getInstance().setText("<html>Отчет: " + reports.getName() + "<br>\nДата: " + reports.getDateString() + "</html>");
-        LabelInfo.getInstance().setVisible(true);
     }
 }

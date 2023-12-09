@@ -1,4 +1,4 @@
-package com.fiatalis.windows.components.down;
+package com.fiatalis.windows.components.up;
 
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.windows.components.center.Table;
@@ -34,12 +34,18 @@ public class ButtonOpenFile extends JMenuItem {
     public ButtonOpenFile() {
         super();
         this.setBorder(new BevelBorder(0));
+        this.setToolTipText("Открыть документ");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonOpenFile.png"));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
         this.add(panel);
         this.setVisible(true);
         listeners();
+    }
+
+    @Override
+    public JToolTip createToolTip() {
+        return new CustomJToolTip(this);
     }
 
     private void listeners() {

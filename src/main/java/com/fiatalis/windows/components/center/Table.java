@@ -6,7 +6,6 @@ import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Reports;
 import com.fiatalis.windows.components.up.ButtonBack;
-import com.fiatalis.windows.components.down.LabelInfo;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
@@ -51,7 +50,6 @@ public class Table extends JTable {
                 if (e.getClickCount() == 1 && (Table.getInstance().getModel() instanceof ReportModel)) {
                     Reports reports = (Reports) ReportModel.getInstance().getEntityListFromModel().get(Table.getInstance().getSelectedRow());
                     List<Entity> list = new ExecutorDAO().findAll(reports.getId());
-                    LabelInfo.getInstance().setText("<html>Колличество организаций: " + list.size() + "<br>До конца срока осталось: " + "Пока не умею считать! " + "</html>");
                 }
             }
         });

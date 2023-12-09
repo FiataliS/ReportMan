@@ -4,7 +4,6 @@ import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.windows.components.center.Table;
-import com.fiatalis.windows.components.down.Panel;
 import com.fiatalis.windows.components.up.MenuBar;
 import com.fiatalis.windows.components.up.ButtonSave;
 
@@ -45,6 +44,6 @@ public class MainWindows extends JFrame {
     private void addComponent() {
         this.getContentPane().add(new MenuBar(), BorderLayout.NORTH);
         this.getContentPane().add(new JScrollPane(Table.getInstance()), BorderLayout.CENTER);
-        this.getContentPane().add(new Panel(), BorderLayout.SOUTH);
+      //this.getContentPane().add(new Panel(), BorderLayout.SOUTH);
     }
 }

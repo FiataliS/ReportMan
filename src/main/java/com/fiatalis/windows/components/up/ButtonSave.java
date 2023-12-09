@@ -35,11 +35,17 @@ public class ButtonSave extends JMenuItem {
     public ButtonSave() {
         super();
         this.setBorder(new BevelBorder(0));
+        this.setToolTipText("Сохранить");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonSave.png"));
         this.setIcon(new ImageIcon(img));
         this.setHorizontalTextPosition(this.getSize().width / 2);
         this.setVisible(false);
         listeners();
+    }
+
+    @Override
+    public JToolTip createToolTip() {
+        return new CustomJToolTip(this);
     }
 
     private void listeners() {

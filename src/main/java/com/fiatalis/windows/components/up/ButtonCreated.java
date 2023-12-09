@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ButtonCreated extends JMenuItem {
 
@@ -27,11 +28,17 @@ public class ButtonCreated extends JMenuItem {
     public ButtonCreated() {
         super();
         this.setBorder(new BevelBorder(0));
+        this.setToolTipText("Создать запись");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonCreate.png"));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
         this.add(panel);
         listeners();
+    }
+
+    @Override
+    public JToolTip createToolTip() {
+        return new CustomJToolTip(this);
     }
 
     private void listeners() {

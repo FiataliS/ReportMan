@@ -27,12 +27,18 @@ public class ButtonBack extends JMenuItem {
     public ButtonBack() {
         super();
         this.setBorder(new BevelBorder(0));
+        this.setToolTipText("Назад");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonBack.png"));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
         this.add(panel);
         this.setVisible(false);
         listeners();
+    }
+
+    @Override
+    public JToolTip createToolTip() {
+        return new CustomJToolTip(this);
     }
 
     private void listeners() {
