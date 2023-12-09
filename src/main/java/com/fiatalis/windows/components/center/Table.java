@@ -5,17 +5,20 @@ import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Reports;
+import com.fiatalis.windows.components.center.modelTable.TableRowRender;
 import com.fiatalis.windows.components.up.ButtonBack;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Table extends JTable {
@@ -39,6 +42,12 @@ public class Table extends JTable {
         this.setModel(ReportModel.getInstance());
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         optionTableReport();
+    }
+
+    public void setColorRow(ArrayList<Color> colors) {
+        DefaultTableCellRenderer defaultTableCellRenderer = new TableRowRender(colors);
+        this.setDefaultRenderer(Object.class, defaultTableCellRenderer);
+        this.repaint();
     }
 
     private void listeners() {

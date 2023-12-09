@@ -1,18 +1,18 @@
 package com.fiatalis;
 
-import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
-import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Reports;
+import com.fiatalis.windows.components.center.Table;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonitoringUtils {
     private List<Entity> reportsList;
-    private List<Entity> executorList;
-
+    private ArrayList<Color> colors;
 
     static void start() {
         new MonitoringUtils();
@@ -21,7 +21,7 @@ public class MonitoringUtils {
     public MonitoringUtils() {
         new Thread(() -> {
             while (true) {
-                alertConstructor();
+                managerFrequency();
                 try {
                     Thread.sleep(6000); // 3600000 проверка раз в час. 60000 минута
                 } catch (InterruptedException e) {
@@ -31,57 +31,33 @@ public class MonitoringUtils {
         }).start();
     }
 
-    private void alertConstructor() {
+    private void managerFrequency() {
         ReportsDAO reportsDAO = new ReportsDAO();
+        colors = new ArrayList<>();
         reportsList = reportsDAO.findAll(null);
+        for (int i = 0; i < reportsList.size(); i++) colors.add(Color.WHITE);
         if (reportsList.size() == 0) return;
-        StringBuilder sb = new StringBuilder();
-        for (Entity entity : reportsList) {
-            sb.append(handlerReport((Reports) entity));
+        for (int i = 0; i < reportsList.size(); i++) {
+            Reports report = (Reports) reportsList.get(i);
+            if (report.getSubmitted()) managerFrequency(report, i);
         }
-        alert("", sb.toString());
+        Table.getInstance().setColorRow(colors);
     }
 
-    private String handlerReport(Reports reports) {
-        if (!reports.getSubmitted()) return "";
-        return reports.getName() + "\n" + handlerExecutor(reports);
-    }
-
-    private String handlerExecutor(Reports reports) {
-        ExecutorDAO executorDAO = new ExecutorDAO();
-        List<Entity> listExecutor = executorDAO.findAll(reports.getId());
-        if (listExecutor.size() == 0) return "Нет организаций.";
-        StringBuilder sb = new StringBuilder();
-        for (Entity entity : listExecutor) {
-            Executor executor = (Executor) entity;
-            if (!executor.getSubmit()) {
-                sb.append(executor.getName() + "\n");
-            }
-        }
-        return sb.toString();
-    }
-
-    private void inspector(Reports reports) {
+    private void managerFrequency(Reports reports, int indexRow) {
         if (reports.getFrequency().equals(Frequency.Monthly)) {
-            monthly(reports);
+            monthly(indexRow);
         } else if (reports.getFrequency().equals(Frequency.Quarterly)) {
-            quarterly(reports);
+            quarterly(indexRow);
         }
     }
 
 
-    private void monthly(Reports reports) {
-        alert(reports.getName(), executorList.toString());
-
+    private void monthly(int indexRow) {
+        colors.set(indexRow, Color.green);
     }
 
-    private void quarterly(Reports reports) {
-        alert(reports.getName(), executorList.toString());
+    private void quarterly(int indexRow) {
+        colors.set(indexRow, Color.RED);
     }
-
-    private static void alert(String title, String text) {
-        //System.out.println(title);
-        System.out.println(text);
-    }
-
 }
