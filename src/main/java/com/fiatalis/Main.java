@@ -10,6 +10,6 @@ public class Main {
         ConnectDataBaseUtils.getInstance().connect();
         JFrame.setDefaultLookAndFeelDecorated(false);
         javax.swing.SwingUtilities.invokeLater(() -> Controller.startWindows());
-        MonitoringUtils.start();
+       // MonitoringUtils.start();
     }
 }

@@ -5,15 +5,13 @@ import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Reports;
-import com.fiatalis.windows.components.center.modelTable.TableRowRender;
+import com.fiatalis.windows.components.center.modelTable.LineWrapCellRenderer;
 import com.fiatalis.windows.components.up.ButtonBack;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -44,10 +42,9 @@ public class Table extends JTable {
         optionTableReport();
     }
 
-    public void setColorRow(ArrayList<Color> colors) {
-        DefaultTableCellRenderer defaultTableCellRenderer = new TableRowRender(colors);
-        this.setDefaultRenderer(Object.class, defaultTableCellRenderer);
-        this.repaint();
+    public void setColorRow() {
+        this.setDefaultRenderer(Object.class, new LineWrapCellRenderer());
+        this.getInstance().repaint();
     }
 
     private void listeners() {
@@ -106,6 +103,7 @@ public class Table extends JTable {
             optionTableReport();
             ButtonBack.getInstance().setVisible(false);
         }
+        this.repaint();
     }
 
     private void optionTableExecutor() {
@@ -122,6 +120,7 @@ public class Table extends JTable {
         this.getColumnModel().getColumn(3).setMaxWidth(100);
         this.getColumnModel().getColumn(3).setMinWidth(100);
         this.getColumnModel().getColumn(3).setResizable(false);
+
     }
 
     private void optionTableReport() {
@@ -142,30 +141,9 @@ public class Table extends JTable {
         this.getColumnModel().getColumn(3).setMaxWidth(100);
         this.getColumnModel().getColumn(3).setMinWidth(100);
         this.getColumnModel().getColumn(3).setResizable(false);
+        this.setDefaultRenderer(Object.class, new LineWrapCellRenderer());
     }
 
-    private static class LineWrapCellRenderer extends JTextArea implements TableCellRenderer {
-        LineWrapCellRenderer() {
-            setLineWrap(true);
-            setWrapStyleWord(true);
-            setOpaque(true);
-        }
 
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText((value == null) ? "" : value.toString());
-            setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
-            if (table.getRowHeight(row) != getPreferredSize().height) {
-                table.setRowHeight(row, getPreferredSize().height);
-            }
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(table.getBackground());
-            }
-            return this;
-        }
-    }
 }
 

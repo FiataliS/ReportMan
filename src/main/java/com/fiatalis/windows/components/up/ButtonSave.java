@@ -60,6 +60,7 @@ public class ButtonSave extends JMenuItem {
                 }
                 model.update();
                 ButtonSave.this.setVisible(false);
+                Table.getInstance().setColorRow();
             }
         });
     }
