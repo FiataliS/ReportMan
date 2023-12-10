@@ -3,37 +3,15 @@ package com.fiatalis;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Reports;
-import com.fiatalis.windows.components.center.modelTable.ReportModel;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MonitoringUtils {
-    private List<Entity> reportsList;
     private ArrayList<Color> colors;
 
-//    static void start() {
-//        new MonitoringUtils();
-//    }
-
-//    public MonitoringUtils() {
-
-//        new Thread(() -> {
-//            while (true) {
-//                Table.getInstance().setColorRow();
-//                try {
-//                    Thread.sleep(6000); // 3600000 проверка раз в час. 60000 минута
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }).start();
-//    }
-
-    public ArrayList<Color> managerFrequency() {
+    public ArrayList<Color> managerColors(ArrayList<Entity> reportsList) {
         colors = new ArrayList<>();
-        reportsList = ReportModel.getInstance().getEntityListFromModel();
         for (int i = 0; i < reportsList.size(); i++) colors.add(Color.WHITE);
         if (reportsList.size() == 0) return colors;
         for (int i = 0; i < reportsList.size(); i++) {

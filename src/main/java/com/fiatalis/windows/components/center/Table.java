@@ -12,11 +12,9 @@ import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Table extends JTable {
@@ -131,7 +129,7 @@ public class Table extends JTable {
         datePickerCellEditor.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
         this.getColumnModel().getColumn(1).setCellEditor(datePickerCellEditor);
         this.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(new ComboBoxFrequencyReport()));
-        this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
+        //this.getColumnModel().getColumn(0).setCellRenderer(new LineWrapCellRenderer());
         this.getColumnModel().getColumn(1).setMaxWidth(70);
         this.getColumnModel().getColumn(1).setMinWidth(70);
         this.getColumnModel().getColumn(1).setResizable(false);

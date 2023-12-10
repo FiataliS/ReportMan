@@ -8,7 +8,6 @@ import com.fiatalis.windows.components.up.ButtonSave;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReportModel extends Model {
     private final String[] employee = new String[]{"id", "Наименование", "Дата", "Периодичность", "Напоминание", "Ссылка", "История"};
@@ -86,9 +85,9 @@ public class ReportModel extends Model {
     }
 
     @Override
-    public List<Entity> getEntityListFromModel() {
+    public ArrayList<Entity> getEntityListFromModel() {
         int countRow = this.getRowCount();
-        List<Entity> list = new ArrayList<>();
+        ArrayList<Entity> list = new ArrayList<>();
         for (int i = 0; i < countRow; i++) {
             Reports reports = new Reports();
             reports.setId((Long) this.getValueAt(i, getIndexColumn(0)));

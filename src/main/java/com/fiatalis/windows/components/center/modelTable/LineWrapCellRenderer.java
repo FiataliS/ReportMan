@@ -1,6 +1,7 @@
 package com.fiatalis.windows.components.center.modelTable;
 
 import com.fiatalis.MonitoringUtils;
+import com.fiatalis.windows.components.center.Table;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
@@ -11,7 +12,6 @@ public class LineWrapCellRenderer extends JTextArea implements TableCellRenderer
     private ArrayList<Color> colors;
 
     public LineWrapCellRenderer() {
-        this.colors = new MonitoringUtils().managerFrequency();
         setLineWrap(true);
         setWrapStyleWord(true);
         setOpaque(true);
@@ -19,6 +19,7 @@ public class LineWrapCellRenderer extends JTextArea implements TableCellRenderer
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        colorsInit(table);
         setText((value == null) ? "" : value.toString());
         setSize(table.getColumnModel().getColumn(column).getWidth(), getPreferredSize().height);
         if (table.getRowHeight(row) != getPreferredSize().height) {
@@ -41,6 +42,14 @@ public class LineWrapCellRenderer extends JTextArea implements TableCellRenderer
             }
         }
         return this;
+    }
+
+    private void colorsInit(JTable table){
+        if (table.getModel() instanceof ReportModel) {
+            this.colors = new MonitoringUtils().managerColors(((ReportModel) table.getModel()).getEntityListFromModel());
+        } else {
+
+        }
     }
 }
 

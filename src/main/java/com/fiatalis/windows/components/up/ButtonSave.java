@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,7 @@ public class ButtonSave extends JMenuItem {
     }
 
     private void saveModel(Model model, DAO dao) {
-        for (Entity entity : model.getEntityListFromModel()) dao.saveOrUpdate(entity);
+        for (Entity entity : model.getEntityListFromModel()) if (entity.getName() != null) dao.saveOrUpdate(entity);
         List<Long> dataBaseId = model.getEntityListFromDataBase().stream().map(Entity::getId).collect(Collectors.toList());
         List<Long> modelId = model.getEntityListFromModel().stream().map(Entity::getId).collect(Collectors.toList());
         dataBaseId.removeAll(modelId);
