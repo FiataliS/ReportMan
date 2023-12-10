@@ -30,7 +30,6 @@ public class ButtonEditing extends JMenuItem {
     public ButtonEditing() {
         super();
         this.setBorder(new BevelBorder(0));
-        this.setToolTipText("Разрешить/запретить редактирование");
         setIcon();
         listeners();
     }
@@ -48,8 +47,10 @@ public class ButtonEditing extends JMenuItem {
         Image img;
         if (!isEditable) {
             img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonEditableLock.png"));
+            this.setToolTipText("Разрешить редактирование");
         } else {
             img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonEditableUnlock.png"));
+            this.setToolTipText("Запретить редактирование");
         }
         this.setIcon(new ImageIcon(img));
         this.setHorizontalTextPosition(SwingConstants.RIGHT);

@@ -34,7 +34,7 @@ public class ButtonNewFile extends JMenuItem {
     public ButtonNewFile() {
         super();
         this.setBorder(new BevelBorder(0));
-        this.setToolTipText("Добавить файл");
+        this.setToolTipText("Добавить документ");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonAddFile.png"));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);

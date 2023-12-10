@@ -28,7 +28,7 @@ public class ButtonCreated extends JMenuItem {
     public ButtonCreated() {
         super();
         this.setBorder(new BevelBorder(0));
-        this.setToolTipText("Создать запись");
+        this.setToolTipText("Добавить строку");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonCreate.png"));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
