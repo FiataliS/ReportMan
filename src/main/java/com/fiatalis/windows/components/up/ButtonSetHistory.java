@@ -5,27 +5,26 @@ import com.fiatalis.windows.components.center.Table;
 import javax.swing.*;
 import java.awt.*;
 
+public class ButtonSetHistory extends ButtonMenuItem {
+    private static volatile ButtonSetHistory instance;
 
-public class ButtonDelete extends ButtonMenuItem {
-
-    private static volatile ButtonDelete instance;
-
-    public static ButtonDelete getInstance() {
-        ButtonDelete localInstance = instance;
+    public static ButtonSetHistory getInstance() {
+        ButtonSetHistory localInstance = instance;
         if (localInstance == null) {
-            synchronized (ButtonDelete.class) {
+            synchronized (ButtonSetHistory.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ButtonDelete();
+                    instance = localInstance = new ButtonSetHistory();
                 }
             }
         }
         return localInstance;
     }
 
-    public ButtonDelete() {
-        super("buttonDelete.png", "Удалить");
+    public ButtonSetHistory() {
+        super("buttonComplete.png","Завершить" );
     }
+
 
     @Override
     protected void action() {
@@ -36,6 +35,7 @@ public class ButtonDelete extends ButtonMenuItem {
             dialog.setVisible(true);
             return;
         }
-        Table.getInstance().deleteRowEntity();
+
+        //Table.getInstance().deleteRowEntity();
     }
 }

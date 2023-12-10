@@ -3,14 +3,7 @@ package com.fiatalis.windows.components.up;
 import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class ButtonEditing extends JMenuItem {
-
+public class ButtonEditing extends ButtonMenuItem {
     private boolean isEditable = false;
     private static volatile ButtonEditing instance;
 
@@ -28,43 +21,26 @@ public class ButtonEditing extends JMenuItem {
     }
 
     public ButtonEditing() {
-        super();
-        this.setBorder(new BevelBorder(0));
-        setIcon();
-        listeners();
-    }
-
-    private void listeners() {
-        this.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setEditable(!isEditable);
-            }
-        });
-    }
-
-    private void setIcon() {
-        Image img;
-        if (!isEditable) {
-            img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonEditableLock.png"));
-            this.setToolTipText("Разрешить редактирование");
-        } else {
-            img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonEditableUnlock.png"));
-            this.setToolTipText("Запретить редактирование");
-        }
-        this.setIcon(new ImageIcon(img));
-        this.setHorizontalTextPosition(SwingConstants.RIGHT);
+        super("buttonEditableLock.png", "Разрешить редактирование");
     }
 
     @Override
-    public JToolTip createToolTip() {
-        return new CustomJToolTip(this);
-    }
-
-    public void setEditable(boolean b) {
-        isEditable = b;
-        Table.getInstance().setEditableModel(b);
-        if (Table.getInstance().getModel() instanceof ExecutorModel) ButtonBack.getInstance().setVisible(!b);
-        setIcon();
+    protected void action() {
+        isEditable = !isEditable;
+        Table.getInstance().setEditableModel(isEditable);
+        /////////////////////////////////////////////
+        ButtonBack.getInstance().setVisible(false);
+        ButtonBack.getInstance().setVisible(true);
+        ButtonBack.getInstance().setVisible(false);
+        ////Непонятно почему, но без изменения видимости кнопки не работает.
+        if (Table.getInstance().getModel() instanceof ExecutorModel) ButtonBack.getInstance().setVisible(!isEditable);
+        if (!isEditable) {
+            super.icon = "buttonEditableLock.png";
+            super.info = "Разрешить редактирование";
+        } else {
+            super.icon = "buttonEditableUnlock.png";
+            super.info = "Запретить редактирование";
+        }
+        super.setting();
     }
 }

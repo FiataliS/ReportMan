@@ -50,10 +50,6 @@ public class Table extends JTable {
                 if (e.getClickCount() == 2 && !ReportModel.getInstance().getIsEditable()) {
                     if (Table.this.getModel() instanceof ReportModel) switchModel();
                 }
-                if (e.getClickCount() == 1 && (Table.getInstance().getModel() instanceof ReportModel)) {
-                    Reports reports = (Reports) ReportModel.getInstance().getEntityListFromModel().get(Table.getInstance().getSelectedRow());
-                    List<Entity> list = new ExecutorDAO().findAll(reports.getId());
-                }
             }
         });
     }

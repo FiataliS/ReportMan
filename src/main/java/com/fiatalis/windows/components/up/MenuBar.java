@@ -5,16 +5,14 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 
 public class MenuBar extends JMenuBar {
-
-
     public MenuBar() {
         JPanel p = new JPanel(new GridLayout(1, 17));
-        GridBagConstraints c = new GridBagConstraints();
-
         p.add(ButtonEditing.getInstance());
         p.add(ButtonCreated.getInstance());
-        p.add(ButtonDelete.getInstance());
-        for (int i = 0; i < 9; i++) {
+        p.add(ButtonSetHistory.getInstance());
+        //p.add(ButtonDelete.getInstance());
+        p.add(ButtonHistory.getInstance());
+        for (int i = 0; i < 8; i++) {
             p.add(Box.createGlue());
         }
         p.add(ButtonSave.getInstance());

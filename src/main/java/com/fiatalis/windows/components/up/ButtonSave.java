@@ -8,15 +8,11 @@ import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.center.modelTable.Model;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
 
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class ButtonSave extends JMenuItem {
+public class ButtonSave extends ButtonMenuItem {
     private static volatile ButtonSave instance;
 
     public static ButtonSave getInstance() {
@@ -33,37 +29,22 @@ public class ButtonSave extends JMenuItem {
     }
 
     public ButtonSave() {
-        super();
-        this.setBorder(new BevelBorder(0));
-        this.setToolTipText("Сохранить");
-        Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonSave.png"));
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
-        this.add(panel);
+        super("buttonSave.png", "Сохранить");
         this.setVisible(false);
-        listeners();
     }
+
 
     @Override
-    public JToolTip createToolTip() {
-        return new CustomJToolTip(this);
-    }
-
-    private void listeners() {
-        this.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Model model = (Model) Table.getInstance().getModel();
-                if (model instanceof ReportModel) {
-                    saveModel(model, new ReportsDAO());
-                } else {
-                    saveModel(model, new ExecutorDAO());
-                }
-                model.update();
-                ButtonSave.this.setVisible(false);
-                Table.getInstance().setColorRow();
-            }
-        });
+    protected void action() {
+        Model model = (Model) Table.getInstance().getModel();
+        if (model instanceof ReportModel) {
+            saveModel(model, new ReportsDAO());
+        } else {
+            saveModel(model, new ExecutorDAO());
+        }
+        model.update();
+        ButtonSave.this.setVisible(false);
+        Table.getInstance().setColorRow();
     }
 
     private void saveModel(Model model, DAO dao) {

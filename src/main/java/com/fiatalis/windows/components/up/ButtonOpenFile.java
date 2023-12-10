@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class ButtonOpenFile extends JMenuItem {
+public class ButtonOpenFile extends ButtonMenuItem {
 
     private static volatile ButtonOpenFile instance;
 
@@ -32,42 +32,25 @@ public class ButtonOpenFile extends JMenuItem {
     }
 
     public ButtonOpenFile() {
-        super();
-        this.setBorder(new BevelBorder(0));
-        this.setToolTipText("Открыть документ");
-        Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonOpenFile.png"));
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
-        this.add(panel);
-        this.setVisible(true);
-        listeners();
+        super("buttonOpenFile.png","Открыть документ");
     }
 
     @Override
-    public JToolTip createToolTip() {
-        return new CustomJToolTip(this);
-    }
-
-    private void listeners() {
-        this.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Table.getInstance().getModel() instanceof ReportModel) {
-                    Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));
-                    final JOptionPane pane = new JOptionPane("Строка не выбрана!", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION, new ImageIcon(img), new String[]{"OK"});
-                    JDialog dialog = pane.createDialog(null, "Ошибка!");
-                    if (Table.getInstance().getSelectedRow() < 0) {
-                        dialog.setVisible(true);
-                        return;
-                    }
-                    openFile(Table.getInstance().getSelectedRow());
-                } else {
-                    int reportId = (int) ((ExecutorModel) Table.getInstance().getModel()).getReportId();
-                    List<Entity> entityList = ReportModel.getInstance().getEntityListFromModel();
-                    IntStream.range(0, entityList.size()).filter(i -> reportId == entityList.get(i).getId()).findFirst().ifPresent(i -> openFile(i));
-                }
+    protected void action() {
+        if (Table.getInstance().getModel() instanceof ReportModel) {
+            Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/deleteRowFiled.png"));
+            final JOptionPane pane = new JOptionPane("Строка не выбрана!", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION, new ImageIcon(img), new String[]{"OK"});
+            JDialog dialog = pane.createDialog(null, "Ошибка!");
+            if (Table.getInstance().getSelectedRow() < 0) {
+                dialog.setVisible(true);
+                return;
             }
-        });
+            openFile(Table.getInstance().getSelectedRow());
+        } else {
+            int reportId = (int) ((ExecutorModel) Table.getInstance().getModel()).getReportId();
+            List<Entity> entityList = ReportModel.getInstance().getEntityListFromModel();
+            IntStream.range(0, entityList.size()).filter(i -> reportId == entityList.get(i).getId()).findFirst().ifPresent(i -> openFile(i));
+        }
     }
 
     private void openFile(int selectedRow) throws NullPointerException {
