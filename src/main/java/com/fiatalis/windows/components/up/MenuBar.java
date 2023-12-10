@@ -9,7 +9,6 @@ public class MenuBar extends JMenuBar {
 
     public MenuBar() {
         JPanel p = new JPanel(new GridLayout(1, 17));
-
         GridBagConstraints c = new GridBagConstraints();
 
         p.add(ButtonEditing.getInstance());

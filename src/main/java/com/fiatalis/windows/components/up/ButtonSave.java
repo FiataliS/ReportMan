@@ -37,8 +37,9 @@ public class ButtonSave extends JMenuItem {
         this.setBorder(new BevelBorder(0));
         this.setToolTipText("Сохранить");
         Image img = Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("com.fiatalis/image/buttonSave.png"));
-        this.setIcon(new ImageIcon(img));
-        this.setHorizontalTextPosition(this.getSize().width / 2);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(new JLabel(new ImageIcon(img)), BorderLayout.CENTER);
+        this.add(panel);
         this.setVisible(false);
         listeners();
     }

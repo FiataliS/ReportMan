@@ -93,7 +93,7 @@ public class ReportModel extends Model {
             reports.setId((Long) this.getValueAt(i, getIndexColumn(0)));
             reports.setName((String) this.getValueAt(i, getIndexColumn(1)));
             reports.setDate(this.getValueAt(i, getIndexColumn(2)));
-            reports.setFrequencyInString((String) this.getValueAt(i, getIndexColumn(3)));
+            reports.setFrequencyFromString((String) this.getValueAt(i, getIndexColumn(3)));
             reports.setSubmitted((Boolean) getValueAt(i, getIndexColumn(4)));
             reports.setLink((String) getValueAt(i, getIndexColumn(5)));
             reports.setHistory((Boolean) getValueAt(i, getIndexColumn(6)));

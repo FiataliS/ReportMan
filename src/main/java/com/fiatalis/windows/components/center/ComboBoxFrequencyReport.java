@@ -7,8 +7,6 @@ import javax.swing.*;
 public class ComboBoxFrequencyReport extends JComboBox {
     public ComboBoxFrequencyReport() {
         super();
-        this.addItem(Frequency.Monthly.getName());
-        this.addItem(Frequency.Quarterly.getName());
-        this.addItem(Frequency.None.getName());
+        for (Frequency frequency : Frequency.values()) this.addItem(frequency.getName());
     }
 }

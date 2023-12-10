@@ -30,6 +30,8 @@ public class MonitoringUtils {
             monthly(indexRow);
         } else if (reports.getFrequency().equals(Frequency.Quarterly)) {
             quarterly(indexRow);
+        } else if (reports.getFrequency().equals(Frequency.Weekly)) {
+            weekly(indexRow);
         }
     }
 
@@ -38,6 +40,10 @@ public class MonitoringUtils {
     }
 
     private void quarterly(int indexRow) {
+        colors.set(indexRow, gradient());
+    }
+
+    private void weekly(int indexRow) {
         colors.set(indexRow, gradient());
     }
 

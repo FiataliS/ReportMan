@@ -1,7 +1,6 @@
 package com.fiatalis.windows.components.center;
 
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
-import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Reports;
@@ -83,7 +82,7 @@ public class Table extends JTable {
         if (this.getModel() instanceof ReportModel) {
             ReportModel r = (ReportModel) this.getModel();
             Reports reports = new Reports();
-            reports.setFrequency(Frequency.None);
+            reports.setFrequency(null);
             r.addRowEntity(reports);
         } else {
             ExecutorModel s = (ExecutorModel) this.getModel();
