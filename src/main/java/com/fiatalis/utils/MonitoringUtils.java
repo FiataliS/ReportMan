@@ -1,8 +1,8 @@
-package com.fiatalis;
+package com.fiatalis.utils;
 
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
-import com.fiatalis.entytis.Reports;
+import com.fiatalis.entytis.Report;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -12,25 +12,25 @@ import java.util.Calendar;
 
 public class MonitoringUtils {
     private ArrayList<Color> colors;
-    private Reports report;
+    private Report report;
 
     public ArrayList<Color> managerColors(ArrayList<Entity> reportsList) {
         colors = new ArrayList<>();
         for (int i = 0; i < reportsList.size(); i++) colors.add(Color.WHITE);
         if (reportsList.size() == 0) return colors;
         for (int i = 0; i < reportsList.size(); i++) {
-            report = (Reports) reportsList.get(i);
+            report = (Report) reportsList.get(i);
             if (report.getSubmitted()) managerFrequency(report, i);
         }
         return colors;
     }
 
-    private void managerFrequency(Reports reports, int indexRow) {
-        if (reports.getFrequency().equals(Frequency.Monthly)) {
+    private void managerFrequency(Report report, int indexRow) {
+        if (report.getFrequency().equals(Frequency.Monthly)) {
             monthly(indexRow);
-        } else if (reports.getFrequency().equals(Frequency.Quarterly)) {
+        } else if (report.getFrequency().equals(Frequency.Quarterly)) {
             quarterly(indexRow);
-        } else if (reports.getFrequency().equals(Frequency.Weekly)) {
+        } else if (report.getFrequency().equals(Frequency.Weekly)) {
             weekly(indexRow);
         }
     }
@@ -48,6 +48,7 @@ public class MonitoringUtils {
     }
 
     private Color gradient() {
+        if (report.getDate() == null) return Color.WHITE;
         LocalDate startDate = LocalDate.now();
         Calendar cal = Calendar.getInstance();
         cal.setTime(report.getDate());
@@ -56,7 +57,6 @@ public class MonitoringUtils {
         int year = cal.get(Calendar.YEAR) + 2000;
         LocalDate endDate = LocalDate.of(year, month, day);
         long days = ChronoUnit.DAYS.between(startDate, endDate);
-        //System.out.println("Разница между датами: \nСегодня: " + startDate + "\nЦелевая: " + endDate + "\n" + days);
         Color color = Color.white;
         if (5 >= days && days >= 2) {
             color = Color.YELLOW;

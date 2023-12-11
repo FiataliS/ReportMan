@@ -4,7 +4,7 @@ import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.Frequency;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
-import com.fiatalis.entytis.Reports;
+import com.fiatalis.entytis.Report;
 import lombok.SneakyThrows;
 
 import java.sql.Date;
@@ -26,15 +26,15 @@ public class ReportsDAO implements DAO {
     public Entity findById(Long id) {
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM report WHERE ID LIKE " + id + ";");
-            Reports reports = new Reports();
-            reports.setId((long) rs.getInt(1));
-            if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
-            if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
-            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
-            reports.setLink(rs.getString(6));
-            reports.setHistory(Boolean.valueOf(rs.getString(7)));
-            return reports;
+            Report report = new Report();
+            report.setId((long) rs.getInt(1));
+            if (!rs.getString(2).equals("null")) report.setName(rs.getString(2));
+            if (!rs.getString(3).equals("null")) report.setDate(Date.valueOf(rs.getString(3)));
+            report.setFrequency(Frequency.valueOf(rs.getString(4)));
+            report.setSubmitted(Boolean.valueOf(rs.getString(5)));
+            report.setLink(rs.getString(6));
+            report.setHistory(Boolean.valueOf(rs.getString(7)));
+            return report;
         } catch (NullPointerException e) {
             return null;
         }
@@ -46,15 +46,15 @@ public class ReportsDAO implements DAO {
         try {
             ResultSet rs = statement.executeQuery("SELECT * FROM report WHERE name LIKE '" + name + "';");
             if (rs == null || rs.getString(1).equals("id")) return null;
-            Reports reports = new Reports();
-            reports.setId((long) rs.getInt(1));
-            if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
-            if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
-            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
-            reports.setLink(rs.getString(6));
-            reports.setHistory(Boolean.valueOf(rs.getString(7)));
-            return reports;
+            Report report = new Report();
+            report.setId((long) rs.getInt(1));
+            if (!rs.getString(2).equals("null")) report.setName(rs.getString(2));
+            if (!rs.getString(3).equals("null")) report.setDate(Date.valueOf(rs.getString(3)));
+            report.setFrequency(Frequency.valueOf(rs.getString(4)));
+            report.setSubmitted(Boolean.valueOf(rs.getString(5)));
+            report.setLink(rs.getString(6));
+            report.setHistory(Boolean.valueOf(rs.getString(7)));
+            return report;
         } catch (NullPointerException e) {
             return null;
         }
@@ -66,15 +66,15 @@ public class ReportsDAO implements DAO {
         ResultSet rs = statement.executeQuery("SELECT * FROM report");
         List<Entity> list = new ArrayList<>();
         while (rs.next()) {
-            Reports reports = new Reports();
-            reports.setId((long) rs.getInt(1));
-            if (!rs.getString(2).equals("null")) reports.setName(rs.getString(2));
-            if (!rs.getString(3).equals("null")) reports.setDate(Date.valueOf(rs.getString(3)));
-            reports.setFrequency(Frequency.valueOf(rs.getString(4)));
-            reports.setSubmitted(Boolean.valueOf(rs.getString(5)));
-            reports.setLink(rs.getString(6));
-            reports.setHistory(Boolean.valueOf(rs.getString(7)));
-            list.add(reports);
+            Report report = new Report();
+            report.setId((long) rs.getInt(1));
+            if (!rs.getString(2).equals("null")) report.setName(rs.getString(2));
+            if (!rs.getString(3).equals("null")) report.setDate(Date.valueOf(rs.getString(3)));
+            report.setFrequency(Frequency.valueOf(rs.getString(4)));
+            report.setSubmitted(Boolean.valueOf(rs.getString(5)));
+            report.setLink(rs.getString(6));
+            report.setHistory(Boolean.valueOf(rs.getString(7)));
+            list.add(report);
         }
         return list;
     }
@@ -82,30 +82,30 @@ public class ReportsDAO implements DAO {
     @SneakyThrows
     @Override
     public boolean saveOrUpdate(Entity entity) {
-        Reports reports = (Reports) entity;
-        Reports r = (Reports) findByName(reports.getName());
-        if (r != null) reports.setId(r.getId());
+        Report report = (Report) entity;
+        Report r = (Report) findByName(report.getName());
+        if (r != null) report.setId(r.getId());
         try {
-            if (reports.getId() == -1) {
+            if (report.getId() == -1) {
                 int x = statement.executeUpdate("insert into report\n" +
                         " (name, date, frequency, submitted, link, history)\n" +
                         "values ('"
-                        + reports.getName() + "', '"
-                        + reports.getDate() + "', '"
-                        + reports.getFrequency() + "', '"
-                        + reports.getSubmitted() + "', '"
-                        + reports.getLink() + "', '"
-                        + reports.getHistory() + "');");
+                        + report.getName() + "', '"
+                        + report.getDate() + "', '"
+                        + report.getFrequency() + "', '"
+                        + report.getSubmitted() + "', '"
+                        + report.getLink() + "', '"
+                        + report.getHistory() + "');");
                 return x == 1 ? true : false;
             } else {
                 int x = statement.executeUpdate("update report set " +
-                        "name= '" + reports.getName() + "', " +
-                        "date= '" + reports.getDate() + "', " +
-                        "frequency= '" + reports.getFrequency() + "', " +
-                        "submitted= '" + reports.getSubmitted() + "', " +
-                        "link= '" + reports.getLink() + "', " +
-                        "history= '" + reports.getHistory() + "' " +
-                        "WHERE id= " + reports.getId() + ";");
+                        "name= '" + report.getName() + "', " +
+                        "date= '" + report.getDate() + "', " +
+                        "frequency= '" + report.getFrequency() + "', " +
+                        "submitted= '" + report.getSubmitted() + "', " +
+                        "link= '" + report.getLink() + "', " +
+                        "history= '" + report.getHistory() + "' " +
+                        "WHERE id= " + report.getId() + ";");
                 return x == 1 ? true : false;
             }
         } catch (Exception e) {
@@ -126,8 +126,8 @@ public class ReportsDAO implements DAO {
 
     @Override
     public boolean deleteByName(String name) {
-        Reports reports = (Reports) findByName(name);
-        deleteExecutorByReport(reports.getId());
+        Report report = (Report) findByName(name);
+        deleteExecutorByReport(report.getId());
         try {
             int x = statement.executeUpdate("delete from report WHERE name ='" + name + "';");
             return x == 1 ? true : false;
@@ -149,9 +149,9 @@ public class ReportsDAO implements DAO {
     public void deleteNull() {
         List<Entity> list = findAll(null);
         for (Entity entity : list) {
-            Reports reports = (Reports) entity;
-            if (reports.getName() == null) {
-                deleteById(reports.getId());
+            Report report = (Report) entity;
+            if (report.getName() == null) {
+                deleteById(report.getId());
             }
         }
     }

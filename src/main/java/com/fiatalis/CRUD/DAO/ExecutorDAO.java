@@ -3,7 +3,7 @@ package com.fiatalis.CRUD.DAO;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
-import com.fiatalis.entytis.Reports;
+import com.fiatalis.entytis.Report;
 import lombok.SneakyThrows;
 
 import java.sql.ResultSet;
@@ -142,8 +142,8 @@ public class ExecutorDAO implements DAO {
         List<Entity> listReport = reportsDAO.findAll(null);
         List<Entity> list = new ArrayList<>();
         for (Entity entity : listReport) {
-            Reports reports = (Reports) entity;
-            list.addAll(findAll(reports.getId()));
+            Report report = (Report) entity;
+            list.addAll(findAll(report.getId()));
         }
         for (Entity entity : list) {
             Executor executor = (Executor) entity;

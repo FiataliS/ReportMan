@@ -3,7 +3,8 @@ package com.fiatalis.windows.components.center.modelTable;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
-import com.fiatalis.entytis.Reports;
+import com.fiatalis.entytis.Report;
+import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.event.TableModelEvent;
@@ -14,19 +15,19 @@ import java.util.List;
 public class ExecutorModel extends Model {
     private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Готовность", "История"};
     private long reportId;
-    private final Reports reports;
+    private final Report report;
+    private boolean isHistory = false;
 
     public long getReportId() {
         return reportId;
     }
 
-    public ExecutorModel(Reports reports) {
+    public ExecutorModel(Report report) {
         super.employee = employee;
-        this.reports = reports;
+        this.report = report;
         dao = new ExecutorDAO();
-        if (reports.getId() != null) this.reportId = reports.getId();
+        if (report.getId() != null) this.reportId = report.getId();
         listeners();
-        update();
     }
 
     @Override
@@ -38,12 +39,21 @@ public class ExecutorModel extends Model {
     }
 
     @Override
-    public void update() {
+    public void update(boolean isHistory) {
+        this.isHistory = isHistory;
         this.setRowCount(0);
-        this.setEntityListFromDataBase(dao.findAll(reportId));
+        List<Entity> list = dao.findAll(reportId);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getHistory() != isHistory) {
+                list.remove(i);
+            }
+        }
+        this.setEntityListFromDataBase(list);
         for (Entity e : entityListFromDataBase) {
             Executor r = (Executor) e;
-            this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone(), r.getSubmit(), r.getHistory()});
+            if (r.getHistory() == Table.getInstance().isHistory) {
+                this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone(), r.getSubmit(), r.getHistory()});
+            }
         }
     }
 
@@ -51,7 +61,7 @@ public class ExecutorModel extends Model {
         this.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if (!ExecutorModel.this.getEntityListFromModel().equals(entityListFromDataBase)) {
+                if (!ExecutorModel.this.getEntityListFromModel(isHistory).equals(entityListFromDataBase)) {
                     ButtonSave.getInstance().setVisible(true);
                 } else {
                     ButtonSave.getInstance().setVisible(false);
@@ -71,6 +81,11 @@ public class ExecutorModel extends Model {
     }
 
     @Override
+    public void toHistory(int selectedRow) {
+        this.setValueAt(true, selectedRow, 5);
+    }
+
+    @Override
     public int getIndexColumn(Integer searchColumn) {
         for (int i = 0; i < this.getColumnCount(); i++) {
             if (this.getColumnName(i).equals(employee[searchColumn])) {
@@ -81,7 +96,7 @@ public class ExecutorModel extends Model {
     }
 
     @Override
-    public List<Entity> getEntityListFromModel() {
+    public List<Entity> getEntityListFromModel(boolean isHistory) {
         int countRow = this.getRowCount();
         List<Entity> list = new ArrayList<>();
         for (int i = 0; i < countRow; i++) {
@@ -93,7 +108,7 @@ public class ExecutorModel extends Model {
             executor.setPhone((String) this.getValueAt(i, getIndexColumn(3)));
             executor.setSubmit((Boolean) this.getValueAt(i, getIndexColumn(4)));
             executor.setHistory((Boolean) this.getValueAt(i, getIndexColumn(5)));
-            list.add(executor);
+            if (report.getHistory() == isHistory) list.add(executor);
         }
         return list;
     }

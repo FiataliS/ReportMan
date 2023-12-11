@@ -22,13 +22,20 @@ public class ButtonEditing extends ButtonMenuItem {
 
     public ButtonEditing() {
         super("buttonEditableLock.png", "Разрешить редактирование");
+        setVisible(true);
     }
 
     @Override
     protected void action() {
         isEditable = !isEditable;
         Table.getInstance().setEditableModel(isEditable);
-        if (Table.getInstance().getModel() instanceof ExecutorModel) ButtonBack.getInstance().setVisible(!isEditable);
+        ButtonCreated.getInstance().setVisible(isEditable);
+        ButtonDelete.getInstance().setVisible(isEditable);
+        ButtonNewFile.getInstance().setVisible(isEditable);
+        if (Table.getInstance().getModel() instanceof ExecutorModel) {
+            ButtonBack.getInstance().setVisible(!isEditable);
+            ButtonNewFile.getInstance().setVisible(false);
+        }
         if (!isEditable) {
             super.icon = "buttonEditableLock.png";
             super.info = "Разрешить редактирование";
@@ -36,7 +43,8 @@ public class ButtonEditing extends ButtonMenuItem {
             super.icon = "buttonEditableUnlock.png";
             super.info = "Запретить редактирование";
         }
+
+
         super.setting();
-        this.revalidate();
     }
 }

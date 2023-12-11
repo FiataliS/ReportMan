@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Data
 @NoArgsConstructor
-public class Reports implements Entity {
+public class Report implements Entity {
 
     private Long id = -1L;
     private String name;
@@ -20,7 +20,7 @@ public class Reports implements Entity {
     private String link;
     private Boolean history;
 
-    public Reports(String name, Date date, Frequency frequency, Boolean submitted) {
+    public Report(String name, Date date, Frequency frequency, Boolean submitted) {
         this.name = name;
         this.date = date;
         this.frequency = frequency;
@@ -56,8 +56,8 @@ public class Reports implements Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Reports reports = (Reports) o;
-        return Objects.equals(id, reports.id) && Objects.equals(name, reports.name) && Objects.equals(date, reports.date) && frequency == reports.frequency && Objects.equals(submitted, reports.submitted) && Objects.equals(link, reports.link) && Objects.equals(history, reports.history);
+        Report report = (Report) o;
+        return Objects.equals(id, report.id) && Objects.equals(name, report.name) && Objects.equals(date, report.date) && frequency == report.frequency && Objects.equals(submitted, report.submitted) && Objects.equals(link, report.link) && Objects.equals(history, report.history);
     }
 
     @Override

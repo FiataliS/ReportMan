@@ -1,7 +1,10 @@
 package com.fiatalis.windows.components.up;
 
+import com.fiatalis.windows.components.center.Table;
+import lombok.Getter;
+
+@Getter
 public class ButtonHistory extends ButtonMenuItem {
-    private boolean isHistory = false;
     private static volatile ButtonHistory instance;
 
     public static ButtonHistory getInstance() {
@@ -18,11 +21,19 @@ public class ButtonHistory extends ButtonMenuItem {
     }
 
     public ButtonHistory() {
-        super("buttonHistory.png", "История");
+        super("buttonHistory.png", "Открыть историю");
     }
 
     @Override
     protected void action() {
-
+        Table.getInstance().openCloseHistory();
+        if (Table.getInstance().isHistory) {
+            super.icon = "buttonHistory.png";
+            super.info = "Открыть историю";
+        } else {
+            super.icon = "buttonHistoryClose.png";
+            super.info = "Закрыть историю";
+        }
+        super.setting();
     }
 }

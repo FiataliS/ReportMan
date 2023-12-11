@@ -3,6 +3,7 @@ package com.fiatalis.windows;
 import com.fiatalis.CRUD.ConnectDataBaseUtils;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
+import com.fiatalis.utils.MessageUtils;
 import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.up.MenuBar;
 import com.fiatalis.windows.components.up.ButtonSave;
@@ -22,16 +23,14 @@ public class MainWindows extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int choice = 0;
+                boolean choice = true;
                 if (ButtonSave.getInstance().isVisible())
-                    choice = JOptionPane.showConfirmDialog(null, "Несохраненные данные будут утеряны.", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
-                if (choice == JOptionPane.OK_OPTION) {
+                    choice = MessageUtils.alertChoice("Внимание!", "Несохраненные данные будут утеряны.");
+                if (choice) {
                     new ExecutorDAO().deleteNull();
                     new ReportsDAO().deleteNull();
                     ConnectDataBaseUtils.getInstance().disconnect();
                     System.exit(0);
-                } else if (choice == JOptionPane.CANCEL_OPTION) {
-
                 }
             }
         });

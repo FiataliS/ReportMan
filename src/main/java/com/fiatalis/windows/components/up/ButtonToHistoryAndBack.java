@@ -22,7 +22,7 @@ public class ButtonToHistoryAndBack extends ButtonMenuItem {
     }
 
     public ButtonToHistoryAndBack() {
-        super("buttonComplete.png","Завершить" );
+        super("buttonComplete.png", "Завершить");
     }
 
 
@@ -35,7 +35,6 @@ public class ButtonToHistoryAndBack extends ButtonMenuItem {
             dialog.setVisible(true);
             return;
         }
-
-        //Table.getInstance().deleteRowEntity();
+        Table.getInstance().toHistory();
     }
 }

@@ -17,11 +17,13 @@ public abstract class Model extends DefaultTableModel {
 
     public abstract void listeners();
 
-    public abstract void update();
+    public abstract void update(boolean isHistory);
 
     public abstract void addRowEntity(Entity entity);
 
     public abstract void deleteRowEntity(int selectedRow);
+
+    public abstract void toHistory(int selectedRow);
 
     public abstract int getIndexColumn(Integer searchColumn);
 
@@ -29,7 +31,7 @@ public abstract class Model extends DefaultTableModel {
         this.isEditable = editableModel;
     }
 
-    public abstract List<Entity> getEntityListFromModel();
+    public abstract List<Entity> getEntityListFromModel(boolean isHistory);
 
     @Override
     public int getColumnCount() {

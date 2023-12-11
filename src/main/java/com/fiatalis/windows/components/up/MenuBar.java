@@ -9,10 +9,10 @@ public class MenuBar extends JMenuBar {
         JPanel p = new JPanel(new GridLayout(1, 17));
         p.add(ButtonEditing.getInstance());
         p.add(ButtonCreated.getInstance());
-        p.add(ButtonToHistoryAndBack.getInstance());
+        //p.add(ButtonToHistoryAndBack.getInstance());
         p.add(ButtonDelete.getInstance());
-        p.add(ButtonHistory.getInstance());
-        for (int i = 0; i < 8; i++) {
+        //p.add(ButtonHistory.getInstance());
+        for (int i = 0; i < 11; i++) {
             p.add(Box.createGlue());
         }
         p.add(ButtonSave.getInstance());
@@ -20,6 +20,7 @@ public class MenuBar extends JMenuBar {
         p.add(ButtonOpenFile.getInstance());
         p.add(ButtonBack.getInstance());
         this.add(p);
+        this.revalidate();
         this.setBorder(new BevelBorder(1));
     }
 
