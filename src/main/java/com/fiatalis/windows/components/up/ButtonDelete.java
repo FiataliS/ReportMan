@@ -5,7 +5,6 @@ import com.fiatalis.windows.components.center.Table;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class ButtonDelete extends ButtonMenuItem {
 
     private static volatile ButtonDelete instance;
@@ -36,6 +35,9 @@ public class ButtonDelete extends ButtonMenuItem {
             dialog.setVisible(true);
             return;
         }
-        Table.getInstance().deleteRowEntity();
+        int choice = JOptionPane.showConfirmDialog(null, "Удаление будет не обратимо после сохранения!", "Внимание!", JOptionPane.OK_CANCEL_OPTION);
+        if (choice == JOptionPane.OK_OPTION) {
+            Table.getInstance().deleteRowEntity();
+        }
     }
 }

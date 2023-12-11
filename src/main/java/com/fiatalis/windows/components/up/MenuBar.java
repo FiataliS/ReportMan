@@ -9,8 +9,8 @@ public class MenuBar extends JMenuBar {
         JPanel p = new JPanel(new GridLayout(1, 17));
         p.add(ButtonEditing.getInstance());
         p.add(ButtonCreated.getInstance());
-        p.add(ButtonSetHistory.getInstance());
-        //p.add(ButtonDelete.getInstance());
+        p.add(ButtonToHistoryAndBack.getInstance());
+        p.add(ButtonDelete.getInstance());
         p.add(ButtonHistory.getInstance());
         for (int i = 0; i < 8; i++) {
             p.add(Box.createGlue());
@@ -21,5 +21,12 @@ public class MenuBar extends JMenuBar {
         p.add(ButtonBack.getInstance());
         this.add(p);
         this.setBorder(new BevelBorder(1));
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        Dimension d = super.getPreferredSize();
+        d.height = 45;
+        return d;
     }
 }

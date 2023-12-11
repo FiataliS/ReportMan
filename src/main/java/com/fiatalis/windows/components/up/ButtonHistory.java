@@ -19,7 +19,6 @@ public class ButtonHistory extends ButtonMenuItem {
 
     public ButtonHistory() {
         super("buttonHistory.png", "История");
-
     }
 
     @Override

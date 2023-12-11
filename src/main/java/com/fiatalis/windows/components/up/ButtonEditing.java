@@ -28,11 +28,6 @@ public class ButtonEditing extends ButtonMenuItem {
     protected void action() {
         isEditable = !isEditable;
         Table.getInstance().setEditableModel(isEditable);
-        /////////////////////////////////////////////
-        ButtonBack.getInstance().setVisible(false);
-        ButtonBack.getInstance().setVisible(true);
-        ButtonBack.getInstance().setVisible(false);
-        ////Непонятно почему, но без изменения видимости кнопки не работает.
         if (Table.getInstance().getModel() instanceof ExecutorModel) ButtonBack.getInstance().setVisible(!isEditable);
         if (!isEditable) {
             super.icon = "buttonEditableLock.png";
@@ -42,5 +37,6 @@ public class ButtonEditing extends ButtonMenuItem {
             super.info = "Запретить редактирование";
         }
         super.setting();
+        this.revalidate();
     }
 }

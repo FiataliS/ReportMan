@@ -44,6 +44,5 @@ public class MainWindows extends JFrame {
     private void addComponent() {
         this.getContentPane().add(new MenuBar(), BorderLayout.NORTH);
         this.getContentPane().add(new JScrollPane(Table.getInstance()), BorderLayout.CENTER);
-      //this.getContentPane().add(new Panel(), BorderLayout.SOUTH);
     }
 }

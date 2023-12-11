@@ -6,9 +6,7 @@ import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;

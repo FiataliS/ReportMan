@@ -5,23 +5,23 @@ import com.fiatalis.windows.components.center.Table;
 import javax.swing.*;
 import java.awt.*;
 
-public class ButtonSetHistory extends ButtonMenuItem {
-    private static volatile ButtonSetHistory instance;
+public class ButtonToHistoryAndBack extends ButtonMenuItem {
+    private static volatile ButtonToHistoryAndBack instance;
 
-    public static ButtonSetHistory getInstance() {
-        ButtonSetHistory localInstance = instance;
+    public static ButtonToHistoryAndBack getInstance() {
+        ButtonToHistoryAndBack localInstance = instance;
         if (localInstance == null) {
-            synchronized (ButtonSetHistory.class) {
+            synchronized (ButtonToHistoryAndBack.class) {
                 localInstance = instance;
                 if (localInstance == null) {
-                    instance = localInstance = new ButtonSetHistory();
+                    instance = localInstance = new ButtonToHistoryAndBack();
                 }
             }
         }
         return localInstance;
     }
 
-    public ButtonSetHistory() {
+    public ButtonToHistoryAndBack() {
         super("buttonComplete.png","Завершить" );
     }
 
