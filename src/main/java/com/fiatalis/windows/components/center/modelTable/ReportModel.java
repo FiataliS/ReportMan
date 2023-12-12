@@ -48,7 +48,8 @@ public class ReportModel extends Model {
         this.setRowCount(0);
         List<Entity> list = dao.findAll(null);
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getHistory() != isHistory) {
+            Report report = (Report) list.get(i);
+            if (report.getHistory() != isHistory) {
                 list.remove(i);
             }
         }
@@ -106,7 +107,6 @@ public class ReportModel extends Model {
         return -1;
     }
 
-    @Override
     public ArrayList<Entity> getEntityListFromModel(boolean isHistory) {
         int countRow = this.getRowCount();
         ArrayList<Entity> list = new ArrayList<>();

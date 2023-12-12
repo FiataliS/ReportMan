@@ -67,18 +67,10 @@ public class ConnectDataBaseUtils {
                 "    responsible TEXT    NOT NULL,\n" +
                 "    phone       TEXT    NOT NULL,\n" +
                 "    submit      TEXT    NOT NULL,\n" +
-                "    history     TEXT    NOT NULL,\n" +
                 "    FOREIGN KEY (\n" +
                 "        id_report\n" +
                 "    )\n" +
                 "    REFERENCES report (id) ON DELETE CASCADE\n" +
-                ");");
-
-        stmt.execute("CREATE TABLE deadline (\n" +
-                "    id          INTEGER PRIMARY KEY AUTOINCREMENT\n" +
-                "                        NOT NULL,\n" +
-                "    id_executor INTEGER NOT NULL,\n" +
-                "    deadline    DATE\n" +
                 ");");
     }
 

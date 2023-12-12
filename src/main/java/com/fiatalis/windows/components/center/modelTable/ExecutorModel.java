@@ -4,7 +4,6 @@ import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.entytis.Entity;
 import com.fiatalis.entytis.Executor;
 import com.fiatalis.entytis.Report;
-import com.fiatalis.windows.components.center.Table;
 import com.fiatalis.windows.components.up.ButtonSave;
 
 import javax.swing.event.TableModelEvent;
@@ -16,7 +15,6 @@ public class ExecutorModel extends Model {
     private final String[] employee = new String[]{"id", "Организация", "Ответственный", "Телефон", "Готовность", "История"};
     private long reportId;
     private final Report report;
-    private boolean isHistory = false;
 
     public long getReportId() {
         return reportId;
@@ -40,20 +38,11 @@ public class ExecutorModel extends Model {
 
     @Override
     public void update(boolean isHistory) {
-        this.isHistory = isHistory;
         this.setRowCount(0);
-        List<Entity> list = dao.findAll(reportId);
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getHistory() != isHistory) {
-                list.remove(i);
-            }
-        }
-        this.setEntityListFromDataBase(list);
+        this.setEntityListFromDataBase(dao.findAll(reportId));
         for (Entity e : entityListFromDataBase) {
             Executor r = (Executor) e;
-            if (r.getHistory() == Table.getInstance().isHistory) {
-                this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone(), r.getSubmit(), r.getHistory()});
-            }
+            this.addRow(new Object[]{r.getId(), r.getName(), r.getResponsible(), r.getPhone(), r.getSubmit()});
         }
     }
 
@@ -61,7 +50,7 @@ public class ExecutorModel extends Model {
         this.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
-                if (!ExecutorModel.this.getEntityListFromModel(isHistory).equals(entityListFromDataBase)) {
+                if (!ExecutorModel.this.getEntityListFromModel().equals(entityListFromDataBase)) {
                     ButtonSave.getInstance().setVisible(true);
                 } else {
                     ButtonSave.getInstance().setVisible(false);
@@ -90,8 +79,7 @@ public class ExecutorModel extends Model {
         return -1;
     }
 
-    @Override
-    public List<Entity> getEntityListFromModel(boolean isHistory) {
+    public List<Entity> getEntityListFromModel() {
         int countRow = this.getRowCount();
         List<Entity> list = new ArrayList<>();
         for (int i = 0; i < countRow; i++) {
@@ -102,8 +90,7 @@ public class ExecutorModel extends Model {
             executor.setResponsible((String) this.getValueAt(i, getIndexColumn(2)));
             executor.setPhone((String) this.getValueAt(i, getIndexColumn(3)));
             executor.setSubmit((Boolean) this.getValueAt(i, getIndexColumn(4)));
-            executor.setHistory((Boolean) this.getValueAt(i, getIndexColumn(5)));
-            if (report.getHistory() == isHistory) list.add(executor);
+            list.add(executor);
         }
         return list;
     }

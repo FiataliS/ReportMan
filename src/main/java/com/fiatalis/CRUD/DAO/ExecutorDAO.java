@@ -31,7 +31,6 @@ public class ExecutorDAO implements DAO {
             executor.setResponsible(rs.getString(4));
             executor.setPhone(rs.getString(5));
             executor.setSubmit(Boolean.valueOf(rs.getString(6)));
-            executor.setHistory(Boolean.valueOf(rs.getString(7)));
             return executor;
         } catch (NullPointerException e) {
             return null;
@@ -51,7 +50,6 @@ public class ExecutorDAO implements DAO {
             executor.setResponsible(rs.getString(4));
             executor.setPhone(rs.getString(5));
             executor.setSubmit(Boolean.valueOf(rs.getString(6)));
-            executor.setHistory(Boolean.valueOf(rs.getString(7)));
             return executor;
         } catch (NullPointerException e) {
             return null;
@@ -72,7 +70,6 @@ public class ExecutorDAO implements DAO {
             if (!rs.getString(4).equals("null")) executor.setResponsible(rs.getString(4));
             if (!rs.getString(5).equals("null")) executor.setPhone(rs.getString(5));
             executor.setSubmit(Boolean.valueOf(rs.getString(6)));
-            executor.setHistory(Boolean.valueOf(rs.getString(7)));
             list.add(executor);
         }
         return list;
@@ -93,14 +90,13 @@ public class ExecutorDAO implements DAO {
     @SneakyThrows
     private boolean save(Executor executor) {
         int x = statement.executeUpdate("insert into executor\n" +
-                " (id_report, name, responsible, phone, submit, history)\n" +
+                " (id_report, name, responsible, phone, submit)\n" +
                 "values ("
                 + executor.getIdReport() + ", '"
                 + executor.getName() + "', '"
                 + executor.getResponsible() + "', '"
                 + executor.getPhone() + "', '"
-                + executor.getSubmit() + "', '"
-                + executor.getHistory() + "');");
+                + executor.getSubmit() + "');");
         return x == 1 ? true : false;
     }
 
@@ -110,8 +106,7 @@ public class ExecutorDAO implements DAO {
                 "name= '" + executor.getName() + "', " +
                 "responsible= '" + executor.getResponsible() + "', " +
                 "phone= '" + executor.getPhone() + "', " +
-                "submit= '" + executor.getSubmit() + "', " +
-                "history= '" + executor.getHistory() + "' " +
+                "submit= '" + executor.getSubmit() + "' " +
                 "WHERE id= " + executor.getId() + ";");
         return x == 1 ? true : false;
     }

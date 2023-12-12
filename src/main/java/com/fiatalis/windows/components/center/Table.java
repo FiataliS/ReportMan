@@ -74,15 +74,8 @@ public class Table extends JTable {
     }
 
     public void toHistory() {
-        int selectedRow = this.getSelectedRow();
-        Long id = (Long) this.getMyModel().getValueAt(selectedRow, 0);
-        ((ReportModel) this.getMyModel()).toHistory(selectedRow);
-        ExecutorDAO executorDAO = new ExecutorDAO();
-        List<Entity> entities = executorDAO.findAll(id);
-        for (Entity e : entities) {
-            ((Executor) e).setHistory(!isHistory);
-            executorDAO.saveOrUpdate(e);
-        }
+        if (this.getMyModel() instanceof ReportModel)
+            ((ReportModel) this.getMyModel()).toHistory(this.getSelectedRow());
     }
 
     public void openCloseHistory() {
@@ -92,28 +85,44 @@ public class Table extends JTable {
 
     public void save() {
         if (this.getMyModel() instanceof ReportModel) {
-            saveModel(this.getMyModel(), new ReportsDAO());
+            saveReportModel((ReportModel) this.getMyModel(), new ReportsDAO());
         } else {
-            saveModel(this.getMyModel(), new ExecutorDAO());
+            saveExecutorModel((ExecutorModel) this.getMyModel(), new ExecutorDAO());
         }
         this.getMyModel().update(isHistory);
         Table.getInstance().setColorRow();
     }
 
-    private void saveModel(Model model, DAO dao) {
+    private void saveReportModel(ReportModel model, ReportsDAO dao) {
         for (Entity entity : model.getEntityListFromModel(isHistory))
             if (entity.getName() != null) dao.saveOrUpdate(entity);
         List<Long> dataBaseId = new ArrayList<>();
-
         for (Entity entity : model.getEntityListFromDataBase()) {
-            if (entity.getHistory() == isHistory) {
+            Report report = (Report) entity;
+            if (report.getHistory() == isHistory) {
                 Long entity1Id = entity.getId();
                 dataBaseId.add(entity1Id);
             }
         }
-
         List<Long> modelId = new ArrayList<>();
         for (Entity entity : model.getEntityListFromModel(isHistory)) {
+            Long entityId = entity.getId();
+            modelId.add(entityId);
+        }
+        dataBaseId.removeAll(modelId);
+        for (Long id : dataBaseId) dao.deleteById(id);
+    }
+
+    private void saveExecutorModel(ExecutorModel model, ExecutorDAO dao) {
+        for (Entity entity : model.getEntityListFromModel())
+            if (entity.getName() != null) dao.saveOrUpdate(entity);
+        List<Long> dataBaseId = new ArrayList<>();
+        for (Entity entity : model.getEntityListFromDataBase()) {
+            Long entity1Id = entity.getId();
+            dataBaseId.add(entity1Id);
+        }
+        List<Long> modelId = new ArrayList<>();
+        for (Entity entity : model.getEntityListFromModel()) {
             Long entityId = entity.getId();
             modelId.add(entityId);
         }
@@ -159,6 +168,7 @@ public class Table extends JTable {
             ButtonToHistoryAndBack.getInstance().setVisible(true);
             ButtonHistory.getInstance().setVisible(true);
         }
+
         this.getMyModel().update(isHistory);
         this.repaint();
     }

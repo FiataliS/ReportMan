@@ -29,8 +29,6 @@ public abstract class Model extends DefaultTableModel {
         this.isEditable = editableModel;
     }
 
-    public abstract List<Entity> getEntityListFromModel(boolean isHistory);
-
     @Override
     public int getColumnCount() {
         return employee.length;

@@ -15,7 +15,6 @@ public class Executor implements Entity {
     private String Responsible;
     private String phone;
     private Boolean submit;
-    private Boolean history;
 
     @Override
     public String toString() {
@@ -26,7 +25,6 @@ public class Executor implements Entity {
                 ", Responsible='" + Responsible + '\'' +
                 ", phone='" + phone + '\'' +
                 ", submit=" + submit +
-                ", history=" + history +
                 '}';
     }
 
@@ -35,11 +33,11 @@ public class Executor implements Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Executor executor = (Executor) o;
-        return Objects.equals(id, executor.id) && Objects.equals(idReport, executor.idReport) && Objects.equals(name, executor.name) && Objects.equals(Responsible, executor.Responsible) && Objects.equals(phone, executor.phone) && Objects.equals(submit, executor.submit) && Objects.equals(history, executor.history);
+        return Objects.equals(id, executor.id) && Objects.equals(idReport, executor.idReport) && Objects.equals(name, executor.name) && Objects.equals(Responsible, executor.Responsible) && Objects.equals(phone, executor.phone) && Objects.equals(submit, executor.submit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idReport, name, Responsible, phone, submit, history);
+        return Objects.hash(id, idReport, name, Responsible, phone, submit);
     }
 }
