@@ -85,32 +85,38 @@ public class ReportsDAO implements DAO {
         Report report = (Report) entity;
         Report r = (Report) findByName(report.getName());
         if (r != null) report.setId(r.getId());
-        try {
-            if (report.getId() == -1) {
-                int x = statement.executeUpdate("insert into report\n" +
-                        " (name, date, frequency, submitted, link, history)\n" +
-                        "values ('"
-                        + report.getName() + "', '"
-                        + report.getDate() + "', '"
-                        + report.getFrequency() + "', '"
-                        + report.getSubmitted() + "', '"
-                        + report.getLink() + "', '"
-                        + report.getHistory() + "');");
-                return x == 1 ? true : false;
-            } else {
-                int x = statement.executeUpdate("update report set " +
-                        "name= '" + report.getName() + "', " +
-                        "date= '" + report.getDate() + "', " +
-                        "frequency= '" + report.getFrequency() + "', " +
-                        "submitted= '" + report.getSubmitted() + "', " +
-                        "link= '" + report.getLink() + "', " +
-                        "history= '" + report.getHistory() + "' " +
-                        "WHERE id= " + report.getId() + ";");
-                return x == 1 ? true : false;
-            }
-        } catch (Exception e) {
-            return false;
+        if (report.getId() == -1) {
+            return save(report);
+        } else {
+            return update(report);
         }
+    }
+
+    @SneakyThrows
+    private boolean save(Report report) {
+        int x = statement.executeUpdate("insert into report\n" +
+                " (name, date, frequency, submitted, link, history)\n" +
+                "values ('"
+                + report.getName() + "', '"
+                + report.getDate() + "', '"
+                + report.getFrequency() + "', '"
+                + report.getSubmitted() + "', '"
+                + report.getLink() + "', '"
+                + report.getHistory() + "');");
+        return x == 1 ? true : false;
+    }
+
+    @SneakyThrows
+    private boolean update(Report report) {
+        int x = statement.executeUpdate("update report set " +
+                "name= '" + report.getName() + "', " +
+                "date= '" + report.getDate() + "', " +
+                "frequency= '" + report.getFrequency() + "', " +
+                "submitted= '" + report.getSubmitted() + "', " +
+                "link= '" + report.getLink() + "', " +
+                "history= '" + report.getHistory() + "' " +
+                "WHERE id= " + report.getId() + ";");
+        return x == 1 ? true : false;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.fiatalis.windows.components.up;
 
 import com.fiatalis.windows.components.center.Table;
 
-
 public class ButtonToHistoryAndBack extends ButtonMenuItem {
     private static volatile ButtonToHistoryAndBack instance;
 
@@ -24,24 +23,29 @@ public class ButtonToHistoryAndBack extends ButtonMenuItem {
         setVisible(true);
     }
 
-
     @Override
     protected void action() {
-        if (Table.getInstance().getSelectedRow() < 0) {
-            super.alert("Ошибка!", "Строка не выбрана!");
+        if (ButtonSave.getInstance().isVisible()) {
+            alert("Запрещено", "Есть не сохраненные данные!");
             return;
         }
-        Table.getInstance().toHistory();
+        if (Table.getInstance().getSelectedRow() < 0) {
+            alert("Ошибка!", "Строка не выбрана!");
+            return;
+        }
+        Table.getInstance().toHistoryAndBack();
+        updateName();
+        ButtonSave.getInstance().setVisible(false);
     }
 
-    public void updateName(){
+    public void updateName() {
         if (Table.getInstance().isHistory) {
-            super.icon = "buttonComplete.png";
-            super.info = "Завершить";
+            icon = "buttonHistoryRestore.png";
+            info = "Восстановить";
         } else {
-            super.icon = "buttonHistoryClose.png";
-            super.info = "Восстановить";
+            icon = "buttonComplete.png";
+            info = "Завершить";
         }
-        super.setting();
+        setting();
     }
 }

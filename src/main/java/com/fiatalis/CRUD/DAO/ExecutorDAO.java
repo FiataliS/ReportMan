@@ -78,11 +78,11 @@ public class ExecutorDAO implements DAO {
     @Override
     public boolean saveOrUpdate(Entity entity) {
         Executor executor = (Executor) entity;
-        Executor r = (Executor) findByName(executor.getName());
-        if (r != null && r.getIdReport() == executor.getIdReport()) executor.setId(r.getId());
         if (executor.getId() == -1) {
             return save(executor);
         } else {
+            Executor r = (Executor) findByName(executor.getName());
+            //if (r != null && r.getIdReport() == executor.getIdReport()) executor.setId(r.getId());
             return update(executor);
         }
     }

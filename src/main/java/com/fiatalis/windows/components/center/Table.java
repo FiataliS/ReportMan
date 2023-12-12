@@ -1,6 +1,5 @@
 package com.fiatalis.windows.components.center;
 
-import com.fiatalis.CRUD.DAO.DAO;
 import com.fiatalis.CRUD.DAO.ExecutorDAO;
 import com.fiatalis.CRUD.DAO.ReportsDAO;
 import com.fiatalis.entytis.Entity;
@@ -73,9 +72,9 @@ public class Table extends JTable {
         this.getMyModel().deleteRowEntity(this.getSelectedRow());
     }
 
-    public void toHistory() {
+    public void toHistoryAndBack() {
         if (this.getMyModel() instanceof ReportModel)
-            ((ReportModel) this.getMyModel()).toHistory(this.getSelectedRow());
+            ((ReportModel) this.getMyModel()).toHistoryAndBack(this.getSelectedRow());
     }
 
     public void openCloseHistory() {
@@ -159,14 +158,14 @@ public class Table extends JTable {
             ButtonBack.getInstance().setVisible(true);
             ButtonOpenFile.getInstance().setVisible(false);
             ButtonToHistoryAndBack.getInstance().setVisible(false);
-            ButtonHistory.getInstance().setVisible(false);
+            ButtonOpenCloseHistory.getInstance().setVisible(false);
         } else if (Table.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
             optionTableReport();
             ButtonBack.getInstance().setVisible(false);
             ButtonOpenFile.getInstance().setVisible(true);
             ButtonToHistoryAndBack.getInstance().setVisible(true);
-            ButtonHistory.getInstance().setVisible(true);
+            ButtonOpenCloseHistory.getInstance().setVisible(true);
         }
 
         this.getMyModel().update(isHistory);

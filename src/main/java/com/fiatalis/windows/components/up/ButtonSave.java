@@ -23,7 +23,6 @@ public class ButtonSave extends ButtonMenuItem {
         this.setVisible(false);
     }
 
-
     @Override
     protected void action() {
         Table.getInstance().save();

@@ -40,7 +40,7 @@ public class ButtonNewFile extends ButtonMenuItem {
     protected void action() {
         if (Table.getInstance().getModel() instanceof ReportModel) {
             if (Table.getInstance().getSelectedRow() < 0) {
-                super.alert("Ошибка!", "Строка не выбрана!");
+                alert("Ошибка!", "Строка не выбрана!");
                 return;
             }
             addFile(Table.getInstance().getSelectedRow());

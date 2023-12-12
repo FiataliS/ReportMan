@@ -46,19 +46,17 @@ public class ReportModel extends Model {
     public void update(boolean isHistory) {
         this.isHistory = isHistory;
         this.setRowCount(0);
-        List<Entity> list = dao.findAll(null);
-        for (int i = 0; i < list.size(); i++) {
-            Report report = (Report) list.get(i);
-            if (report.getHistory() != isHistory) {
-                list.remove(i);
+        List<Entity> list = new ArrayList<>();
+        for (Entity e : dao.findAll(null)) {
+            Report report = (Report) e;
+            if (report.getHistory() == isHistory) {
+                list.add(e);
             }
         }
         this.setEntityListFromDataBase(list);
         for (Entity e : entityListFromDataBase) {
             Report r = (Report) e;
-            if (r.getHistory() == isHistory) {
-                this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency().getName(), r.getSubmitted(), r.getLink(), r.getHistory()});
-            }
+            this.addRow(new Object[]{r.getId(), r.getName(), r.getDateString(), r.getFrequency().getName(), r.getSubmitted(), r.getLink(), r.getHistory()});
         }
     }
 
@@ -85,12 +83,13 @@ public class ReportModel extends Model {
         this.removeRow(selectedRow);
     }
 
-    public void toHistory(int selectedRow) {
+    public void toHistoryAndBack(int selectedRow) {
         this.setValueAt(!isHistory, selectedRow, 6);
-        Long id = (Long) this.getValueAt(selectedRow,0);
+        this.setValueAt(false, selectedRow, 4);
+        Long id = (Long) this.getValueAt(selectedRow, 0);
         List<Entity> reports = this.getEntityListFromModel(!isHistory);
-        for (Entity e:reports             ) {
-            if (e.getId()==id) {
+        for (Entity e : reports) {
+            if (e.getId() == id) {
                 dao.saveOrUpdate(e);
             }
         }

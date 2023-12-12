@@ -27,7 +27,7 @@ public class ButtonDelete extends ButtonMenuItem {
     @Override
     protected void action() {
         if (Table.getInstance().getSelectedRow() < 0) {
-            super.alert("Ошибка!", "Строка не выбрана!");
+            alert("Ошибка!", "Строка не выбрана!");
             return;
         }
         if (MessageUtils.alertChoice("Внимание!", "Удаление будет не обратимо после сохранения!"))

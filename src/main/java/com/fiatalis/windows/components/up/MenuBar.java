@@ -11,7 +11,7 @@ public class MenuBar extends JMenuBar {
         p.add(ButtonCreated.getInstance());
         p.add(ButtonDelete.getInstance());
         p.add(ButtonToHistoryAndBack.getInstance());
-        p.add(ButtonHistory.getInstance());
+        p.add(ButtonOpenCloseHistory.getInstance());
         for (int i = 0; i < 11; i++) {
             p.add(Box.createGlue());
         }

@@ -14,7 +14,6 @@ public abstract class Model extends DefaultTableModel {
     List<Entity> entityListFromDataBase = null;
     DAO dao;
 
-
     public abstract void listeners();
 
     public abstract void update(boolean isHistory);

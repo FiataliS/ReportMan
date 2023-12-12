@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class ButtonOpenFile extends ButtonMenuItem {
-
     private static volatile ButtonOpenFile instance;
 
     public static ButtonOpenFile getInstance() {
@@ -31,16 +30,16 @@ public class ButtonOpenFile extends ButtonMenuItem {
     @Override
     protected void action() {
         if (Table.getInstance().getSelectedRow() < 0) {
-            super.alert("Ошибка!", "Строка не выбрана!");
+            alert("Ошибка!", "Строка не выбрана!");
             return;
         }
-        openFile(Table.getInstance().getSelectedRow());
+        openFile();
     }
 
-    private void openFile(int selectedRow) throws NullPointerException {
+    private void openFile() throws NullPointerException {
         String s = Table.getInstance().getFileFromReport();
         if (s.equals("null") || s.equals("")) {
-            super.alert("Ошибка!", "Документ отсутствует!");
+            alert("Ошибка!", "Документ отсутствует!");
             return;
         }
         File file = new File(s);
