@@ -84,9 +84,16 @@ public class ReportModel extends Model {
         this.removeRow(selectedRow);
     }
 
-    @Override
     public void toHistory(int selectedRow) {
-        this.setValueAt(true, selectedRow, 6);
+        this.setValueAt(!isHistory, selectedRow, 6);
+        Long id = (Long) this.getValueAt(selectedRow,0);
+        List<Entity> reports = this.getEntityListFromModel(!isHistory);
+        for (Entity e:reports             ) {
+            if (e.getId()==id) {
+                dao.saveOrUpdate(e);
+            }
+        }
+        update(isHistory);
     }
 
     @Override

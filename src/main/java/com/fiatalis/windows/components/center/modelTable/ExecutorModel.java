@@ -81,11 +81,6 @@ public class ExecutorModel extends Model {
     }
 
     @Override
-    public void toHistory(int selectedRow) {
-        this.setValueAt(true, selectedRow, 5);
-    }
-
-    @Override
     public int getIndexColumn(Integer searchColumn) {
         for (int i = 0; i < this.getColumnCount(); i++) {
             if (this.getColumnName(i).equals(employee[searchColumn])) {

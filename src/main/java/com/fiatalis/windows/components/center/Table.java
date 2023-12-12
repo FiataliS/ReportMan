@@ -9,20 +9,14 @@ import com.fiatalis.entytis.Report;
 import com.fiatalis.utils.MessageUtils;
 import com.fiatalis.windows.components.center.modelTable.LineWrapCellRenderer;
 import com.fiatalis.windows.components.center.modelTable.Model;
-import com.fiatalis.windows.components.up.ButtonBack;
+import com.fiatalis.windows.components.up.*;
 import com.fiatalis.windows.components.center.modelTable.ReportModel;
 import com.fiatalis.windows.components.center.modelTable.ExecutorModel;
-import com.fiatalis.windows.components.up.ButtonNewFile;
-import com.fiatalis.windows.components.up.ButtonOpenFile;
-import com.fiatalis.windows.components.up.ButtonSave;
 import org.jdesktop.swingx.table.DatePickerCellEditor;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +56,7 @@ public class Table extends JTable {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2 && !ReportModel.getInstance().getIsEditable()) {
                     if (ButtonSave.getInstance().isVisible()) {
-                        MessageUtils.alert("Ошибка!", "Нельзя продолжить работу не сохранив!","deleteRowFiled.png",JOptionPane.WARNING_MESSAGE,JOptionPane.OK_OPTION);
+                        MessageUtils.alert("Ошибка!", "Нельзя продолжить работу не сохранив!", "deleteRowFiled.png", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION);
                         return;
                     }
                     if (Table.this.getModel() instanceof ReportModel) switchModel();
@@ -80,7 +74,15 @@ public class Table extends JTable {
     }
 
     public void toHistory() {
-        this.getMyModel().toHistory(this.getSelectedRow());
+        int selectedRow = this.getSelectedRow();
+        Long id = (Long) this.getMyModel().getValueAt(selectedRow, 0);
+        ((ReportModel) this.getMyModel()).toHistory(selectedRow);
+        ExecutorDAO executorDAO = new ExecutorDAO();
+        List<Entity> entities = executorDAO.findAll(id);
+        for (Entity e : entities) {
+            ((Executor) e).setHistory(!isHistory);
+            executorDAO.saveOrUpdate(e);
+        }
     }
 
     public void openCloseHistory() {
@@ -147,11 +149,15 @@ public class Table extends JTable {
             optionTableExecutor();
             ButtonBack.getInstance().setVisible(true);
             ButtonOpenFile.getInstance().setVisible(false);
+            ButtonToHistoryAndBack.getInstance().setVisible(false);
+            ButtonHistory.getInstance().setVisible(false);
         } else if (Table.getInstance().getModel() instanceof ExecutorModel) {
             this.setModel(ReportModel.getInstance());
             optionTableReport();
             ButtonBack.getInstance().setVisible(false);
             ButtonOpenFile.getInstance().setVisible(true);
+            ButtonToHistoryAndBack.getInstance().setVisible(true);
+            ButtonHistory.getInstance().setVisible(true);
         }
         this.getMyModel().update(isHistory);
         this.repaint();

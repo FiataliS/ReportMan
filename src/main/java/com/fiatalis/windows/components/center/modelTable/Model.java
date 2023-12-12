@@ -23,8 +23,6 @@ public abstract class Model extends DefaultTableModel {
 
     public abstract void deleteRowEntity(int selectedRow);
 
-    public abstract void toHistory(int selectedRow);
-
     public abstract int getIndexColumn(Integer searchColumn);
 
     public void setEditableModel(boolean editableModel) {

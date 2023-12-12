@@ -22,6 +22,7 @@ public class ButtonHistory extends ButtonMenuItem {
 
     public ButtonHistory() {
         super("buttonHistory.png", "Открыть историю");
+        setVisible(true);
     }
 
     @Override
