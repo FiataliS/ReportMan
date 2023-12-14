@@ -20,7 +20,7 @@ JRE - Java Runtime Environment — минимальная реализация �
 2. Приложение работает с базой данных SQLite, которая создается при первом запуске в локальной папке приложения /date/report.db
 ### Кнопки:
   - ![кнопка](src/main/resources/com.fiatalis/image/buttonEditableLock.png) разрешает редактирование поля.
-  - ![кнопка](src/main/resources/com.fiatalis/image/buttonEditableUnLock.png) запрещает редактирование поля.
+  - ![кнопка](src/main/resources/com.fiatalis/image/buttonEditableUnlock.png) запрещает редактирование поля.
   - ![кнопка](src/main/resources/com.fiatalis/image/buttonCreate.png) добавляет новую строку.
   - ![кнопка](src/main/resources/com.fiatalis/image/buttonDelete.png) удаляет строку.
   - ![кнопка](src/main/resources/com.fiatalis/image/buttonComplete.png) завершает отчет.
